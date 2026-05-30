@@ -1,80 +1,61 @@
 ---
 type: "permanent"
-status: "wiki-standardized"
+status: "wiki-expanded"
 created: "2026-05-30"
 updated: "2026-05-30"
 reviewed: "2026-05-30"
 tags:
   - 'llm_wiki'
-  - 'langgraph'
   - 'llm'
+  - 'langgraph'
 source:
   - 'C:\lecture'
+  - 'C:\MinHyeok\skn26_3rd_3rd\3rd_project'
+  - 'C:\MinHyeok\skn26_4th_1st\4th_project'
 ---
 
 # LangGraph State
 
-태그: #langgraph #llm #llm_wiki
+태그: #llm_wiki #llm #langgraph
 
 ## 한 줄 정의
 
-그래프 실행 중 노드들이 공유하고 갱신하는 데이터 구조다.
+LangGraph State는 그래프의 node들이 공유하고 갱신하는 데이터 구조다.
 
-## 왜 중요한가
+## 내 말로 다시 설명
 
-상태 설계를 잘해야 노드가 느슨하게 연결되고, 디버깅 가능한 워크플로우가 된다.
+State는 agent의 작업 메모리다. 사용자 질문, route, slot payload, 검색 후보, 답변, 대화 상태처럼 각 node가 다음 node에 넘길 값을 담는다. State가 흐릿하면 agent 전체가 흐릿해진다.
 
-## 핵심 개념
+## 언제 쓰는가
 
-- TypedDict나 Pydantic으로 구조를 정의할 수 있다.
-- 메시지, 검색 결과, 중간 판단을 담는다.
-- 누적 방식과 덮어쓰기 방식을 구분한다.
+- node 사이에 질문, route, 검색 결과, 답변을 넘겨야 할 때
+- 후속 질문을 위해 대화방별 agent state를 보존해야 할 때
+- 평가에서 route_payload, restaurant_list, used_restaurant_list를 확인해야 할 때
 
-## 예제
+## 언제 쓰면 안 되는가
 
-```python
-class State(TypedDict):
-    question: str
-    docs: list
-    answer: str
-```
+- node 내부 지역 변수로 충분한 값을 state에 계속 쌓는 경우
+- 타입과 기본값 없이 dict key를 임의로 추가하는 경우
+- 사용자별/세션별로 분리해야 할 값을 전역 변수로 두는 경우
 
-## 실무 활용
+## 프로젝트 예시
 
-RAG 파이프라인, 에이전트 메모리, 조건부 라우팅의 공통 컨텍스트로 사용한다.
+[[SKN26 3차 프로젝트 - PICKLE RAG 챗봇]]의 `GraphState`는 `question`, `session_id`, `route`, `route_payload`, `restaurant_list`, `used_restaurant_list`, `answer`를 가진다. [[SKN26 4차 프로젝트 - LG Home]]은 `ConversationState`, `product_type`, `slots`, `intent`, `manual_results`, `response_tail`까지 포함한다.
+
+## 실패 조건
+
+- `total=False` state에서 필드 누락을 기본값으로 처리하지 않으면 runtime error가 난다.
+- 오래된 agent_state를 새 질문에 잘못 병합하면 후속 질문이 틀어진다.
+- 검색 후보 전체와 LLM에 실제 전달한 후보를 구분하지 않으면 평가가 어려워진다.
 
 ## 관련 개념
 
 - [[LangGraph]]
-- [[Python 타입 힌트]]
-- [[LangGraph Conditional Edge]]
+- [[LangGraph Node와 Edge]]
+- [[RAG 평가]]
+- [[Django Chatbot]]
 
-자료 힌트: 08_llm_workspace/08_langgraph
+## 먼저 확인할 질문
 
-## 내 말로 다시 설명
-
-LangGraph State은/는 강의에서 나온 개념을 정의, 사용 조건, 주의점, 연결 개념으로 다시 설명하기 위한 LLM wiki 원자 노트다. 단순 암기보다 실제 문제에서 언제 꺼내 쓸지 판단하는 데 초점을 둔다.
-
-## 언제 쓰는가
-
-- 강의 실습 코드에서 같은 개념을 다시 만날 때
-- 프로젝트에서 관련 오류나 설계 결정을 설명해야 할 때
-- [[LangGraph]], [[Python 타입 힌트]], [[LangGraph Conditional Edge]]와 함께 문제 원인을 좁힐 때
-
-## 언제 쓰면 안 되는가
-
-- 구체적인 API 버전, 파라미터, 보안 정책이 필요한 경우에는 공식 문서를 먼저 확인한다.
-- 예제 하나만 보고 모든 상황에 일반화해야 할 때는 보류한다.
-- 이미 더 좁고 구체적인 노트가 있는 경우에는 그 노트로 이동한다.
-
-## 자주 헷갈리는 점
-
-- 이름이 비슷한 인접 개념과 책임 범위가 다를 수 있다.
-- 강의 예제의 상황과 실제 프로젝트의 데이터, 환경, 버전 차이를 분리해야 한다.
-- "동작한다"와 "운영에서 유지보수 가능하다"는 다른 기준이다.
-
-## 확인 질문
-
-- LangGraph State을/를 쓰면 어떤 문제를 더 단순하게 설명할 수 있는가?
-- 관련 개념과 구분되는 핵심 기준은 무엇인가?
-- 실제 프로젝트에 적용하면 먼저 검증해야 할 실패 조건은 무엇인가?
+- 이 필드는 어느 node가 만들고 어느 node가 소비하는가?
+- 세션별로 저장해야 하는 state와 요청 1회용 state가 분리되어 있는가?

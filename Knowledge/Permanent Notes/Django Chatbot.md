@@ -1,6 +1,6 @@
 ---
 type: "permanent"
-status: "wiki-standardized"
+status: "wiki-expanded"
 created: "2026-05-30"
 updated: "2026-05-30"
 reviewed: "2026-05-30"
@@ -8,71 +8,57 @@ tags:
   - 'llm_wiki'
   - 'django'
   - 'llm'
-  - 'web_server'
 source:
   - 'C:\lecture'
+  - 'C:\MinHyeok\skn26_4th_1st\4th_project'
 ---
 
 # Django Chatbot
 
-태그: #django #llm #web_server #llm_wiki
+태그: #llm_wiki #django #llm
 
 ## 한 줄 정의
 
-Django 웹 서버에서 LLM API를 호출해 사용자 메시지에 응답하는 챗봇 애플리케이션 구조다.
-
-## 왜 중요한가
-
-프론트엔드 입력, 서버 세션, 외부 모델 API, 응답 렌더링을 하나의 웹 서비스로 통합한다.
-
-## 핵심 개념
-
-- View가 사용자 메시지를 받는다.
-- LLM API 호출 결과를 저장하거나 화면에 반환한다.
-- 세션 또는 DB로 대화 기록을 관리한다.
-
-## 예제
-
-```text
-browser -> Django view -> LLM API -> response -> template/json
-```
-
-## 실무 활용
-
-사내 Q&A, 학습 도우미, 문서 검색 챗봇의 웹 서버 기반 구현에 사용한다.
-
-## 관련 개념
-
-- [[OpenAI API]]
-- [[Django Session과 Auth]]
-- [[RAG]]
-
-자료 힌트: 11_web_server_workspace/_06_chatbot
+Django Chatbot은 Django view, session/auth, DB model, JavaScript 요청, LLM/RAG pipeline을 연결해 웹에서 대화형 기능을 제공하는 구조다.
 
 ## 내 말로 다시 설명
 
-Django Chatbot은/는 강의에서 나온 개념을 정의, 사용 조건, 주의점, 연결 개념으로 다시 설명하기 위한 LLM wiki 원자 노트다. 단순 암기보다 실제 문제에서 언제 꺼내 쓸지 판단하는 데 초점을 둔다.
+챗봇은 LLM 호출 하나가 아니라 사용자, 대화방, 이전 메시지, agent state, 검색 결과, 최종 응답을 저장하고 이어가는 웹 기능이다. Django에서는 view가 요청 검증과 권한을 맡고, LangGraph나 RAG는 비즈니스 흐름을 맡게 분리하는 것이 중요하다.
 
 ## 언제 쓰는가
 
-- 강의 실습 코드에서 같은 개념을 다시 만날 때
-- 프로젝트에서 관련 오류나 설계 결정을 설명해야 할 때
-- [[OpenAI API]], [[Django Session과 Auth]], [[RAG]]와 함께 문제 원인을 좁힐 때
+- 로그인 사용자별 대화방과 메시지를 유지해야 할 때
+- LLM 답변이 DB 검색, vector search, 후속 질문 state와 연결될 때
+- AJAX로 채팅을 보내고 페이지 새로고침 없이 응답을 보여줘야 할 때
 
 ## 언제 쓰면 안 되는가
 
-- 구체적인 API 버전, 파라미터, 보안 정책이 필요한 경우에는 공식 문서를 먼저 확인한다.
-- 예제 하나만 보고 모든 상황에 일반화해야 할 때는 보류한다.
-- 이미 더 좁고 구체적인 노트가 있는 경우에는 그 노트로 이동한다.
+- view 안에 prompt, 검색, 모델 호출, 응답 포맷을 모두 몰아넣는 경우
+- 사용자 소유 chatroom 검증 없이 `chat_id`만 믿는 경우
+- API key나 vector DB 연결 실패가 Django import/check를 막는 경우
 
-## 자주 헷갈리는 점
+## 프로젝트 예시
 
-- 이름이 비슷한 인접 개념과 책임 범위가 다를 수 있다.
-- 강의 예제의 상황과 실제 프로젝트의 데이터, 환경, 버전 차이를 분리해야 한다.
-- "동작한다"와 "운영에서 유지보수 가능하다"는 다른 기준이다.
+[[SKN26 4차 프로젝트 - LG Home]]의 `api\views.py`는 `send_chat`에서 로그인, JSON body, `user_input`, chatroom 소유 여부를 확인한 뒤 `common.llm.add_chat()`을 호출한다. `common\llm.py`는 LangGraph로 제품군 분류, 조건 검색, 매뉴얼 RAG 답변을 처리한다.
 
-## 확인 질문
+프로젝트 회고상 가장 어렵게 느낀 부분은 후속 질문 처리였다. 사용자의 다음 발화가 이전 조건을 이어가는지, 새로운 제품 상담인지, 매뉴얼 질문인지 구분하지 못하면 state가 잘못 병합된다.
 
-- Django Chatbot을/를 쓰면 어떤 문제를 더 단순하게 설명할 수 있는가?
-- 관련 개념과 구분되는 핵심 기준은 무엇인가?
-- 실제 프로젝트에 적용하면 먼저 검증해야 할 실패 조건은 무엇인가?
+## 실패 조건
+
+- 대화 state가 사용자별로 분리되지 않으면 다른 대화의 조건이 섞인다.
+- 검색 결과가 너무 많을 때 목록을 전부 답변에 넣으면 UX와 비용이 나빠진다.
+- 오류 응답 shape이 불안정하면 프론트 채팅 UI가 실패를 표현하지 못한다.
+
+## 관련 개념
+
+- [[Django JSON API]]
+- [[Django Session과 Auth]]
+- [[LangGraph]]
+- [[RAG]]
+- [[Django CSRF]]
+
+## 먼저 확인할 질문
+
+- chat request에서 사용자 권한, 입력 유효성, chatroom 소유권을 검증했는가?
+- LLM pipeline 실패가 사용자에게 어떤 메시지로 보이는가?
+- 후속 질문일 때 이어받아야 하는 state와 새로 덮어써야 하는 state를 구분했는가?

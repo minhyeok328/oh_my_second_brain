@@ -1,77 +1,61 @@
 ---
 type: "permanent"
-status: "wiki-standardized"
+status: "wiki-expanded"
 created: "2026-05-30"
 updated: "2026-05-30"
 reviewed: "2026-05-30"
 tags:
   - 'llm_wiki'
-  - 'langgraph'
   - 'llm'
+  - 'langgraph'
 source:
   - 'C:\lecture'
+  - 'C:\MinHyeok\skn26_3rd_3rd\3rd_project'
+  - 'C:\MinHyeok\skn26_4th_1st\4th_project'
 ---
 
 # LangGraph Conditional Edge
 
-태그: #langgraph #llm #llm_wiki
+태그: #llm_wiki #llm #langgraph
 
 ## 한 줄 정의
 
-상태를 검사해 다음 실행 노드를 동적으로 선택하는 분기 연결이다.
-
-## 왜 중요한가
-
-LLM 앱은 검색 결과 부족, 답변 검증 실패, 도구 필요 여부 같은 조건에 따라 경로가 달라져야 한다.
-
-## 핵심 개념
-
-- 라우터 함수가 다음 노드 이름을 반환한다.
-- 분기 조건은 관측 가능한 상태에 기반해야 한다.
-- 무한 루프 방지를 위한 종료 조건이 필요하다.
-
-## 예제
-
-```python
-# if state['score'] < threshold: return 'retrieve_again'
-```
-
-## 실무 활용
-
-답변 품질 검증, 도구 선택, 사용자 승인 단계 분기에 사용한다.
-
-## 관련 개념
-
-- [[LangGraph Node와 Edge]]
-- [[Python match case]]
-- [[Multi-Agent]]
-
-자료 힌트: 08_llm_workspace/08_langgraph
+LangGraph Conditional Edge는 현재 state 값을 보고 다음에 실행할 node를 고르는 조건부 연결이다.
 
 ## 내 말로 다시 설명
 
-LangGraph Conditional Edge은/는 강의에서 나온 개념을 정의, 사용 조건, 주의점, 연결 개념으로 다시 설명하기 위한 LLM wiki 원자 노트다. 단순 암기보다 실제 문제에서 언제 꺼내 쓸지 판단하는 데 초점을 둔다.
+챗봇은 모든 질문을 같은 방식으로 처리하면 안 된다. 특정 식당명 질문은 fixed 검색, 분위기 질문은 embedding 검색, 상담 범위 밖 질문은 종료처럼 state의 route 값에 따라 다음 길을 바꿔야 한다.
 
 ## 언제 쓰는가
 
-- 강의 실습 코드에서 같은 개념을 다시 만날 때
-- 프로젝트에서 관련 오류나 설계 결정을 설명해야 할 때
-- [[LangGraph Node와 Edge]], [[Python match case]], [[Multi-Agent]]와 함께 문제 원인을 좁힐 때
+- route 결과에 따라 fixed/embedding 검색 경로를 나눌 때
+- 검색 결과가 0건인지, 너무 많은지, 적당한지에 따라 답변 방식을 바꿀 때
+- 후속 질문인지 새 질문인지에 따라 제품군 분류 단계를 건너뛰거나 유지할 때
 
 ## 언제 쓰면 안 되는가
 
-- 구체적인 API 버전, 파라미터, 보안 정책이 필요한 경우에는 공식 문서를 먼저 확인한다.
-- 예제 하나만 보고 모든 상황에 일반화해야 할 때는 보류한다.
-- 이미 더 좁고 구체적인 노트가 있는 경우에는 그 노트로 이동한다.
+- 조건 함수가 LLM 자유문장을 그대로 비교하는 경우
+- fallback 경로가 없어 예외 값에서 그래프가 멈추는 경우
+- 조건이 많아졌는데 평가 케이스가 없는 경우
 
-## 자주 헷갈리는 점
+## 프로젝트 예시
 
-- 이름이 비슷한 인접 개념과 책임 범위가 다를 수 있다.
-- 강의 예제의 상황과 실제 프로젝트의 데이터, 환경, 버전 차이를 분리해야 한다.
-- "동작한다"와 "운영에서 유지보수 가능하다"는 다른 기준이다.
+[[SKN26 3차 프로젝트 - PICKLE RAG 챗봇]]은 `route`가 `embedding`이면 embedding slot node로, `fixed`이면 fixed slot node로 보낸다. [[SKN26 4차 프로젝트 - LG Home]]은 fall case, 후속 질문, 제품군 분류, 검색 결과 수에 따라 여러 조건 분기를 둔다.
 
-## 확인 질문
+## 실패 조건
 
-- LangGraph Conditional Edge을/를 쓰면 어떤 문제를 더 단순하게 설명할 수 있는가?
-- 관련 개념과 구분되는 핵심 기준은 무엇인가?
-- 실제 프로젝트에 적용하면 먼저 검증해야 할 실패 조건은 무엇인가?
+- route 값 표준화가 없으면 `"fixed."`, `"Fixed"` 같은 출력에 취약하다.
+- 조건 분기가 많아질수록 각 분기에 대한 최소 테스트 질문이 필요하다.
+- 조건 node가 너무 많은 책임을 가지면 실제 실패 지점이 숨겨진다.
+
+## 관련 개념
+
+- [[LangGraph]]
+- [[LangGraph State]]
+- [[RAG 평가]]
+- [[Function Calling]]
+
+## 먼저 확인할 질문
+
+- 가능한 route 값이 코드와 prompt 양쪽에서 같은 이름으로 정의되어 있는가?
+- 알 수 없는 route가 나오면 어디로 fallback되는가?

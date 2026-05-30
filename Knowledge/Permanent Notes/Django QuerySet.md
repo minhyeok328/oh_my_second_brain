@@ -8,75 +8,53 @@ tags:
   - 'llm_wiki'
   - 'django'
   - 'orm'
-  - 'database'
 source:
   - 'C:\lecture'
-external:
-  - 'https://docs.djangoproject.com/en/6.0/ref/models/querysets/'
+  - 'C:\MinHyeok\skn26_4th_1st\4th_project'
 ---
 
 # Django QuerySet
 
-태그: #llm_wiki #django #orm #database
+태그: #llm_wiki #django #orm
 
 ## 한 줄 정의
 
-Django QuerySet은 Django ORM에서 데이터베이스 조회 조건을 누적하고, 필요할 때 SQL로 평가되는 지연 실행 객체다.
+Django QuerySet은 Django ORM에서 DB 조회 조건을 지연 평가되는 Python 객체로 표현한 것이다.
 
 ## 내 말로 다시 설명
 
-QuerySet은 "아직 실행되지 않은 DB 질문"이다. `filter()`, `exclude()`, `order_by()`를 이어 붙이면 질문이 더 구체화되고, 반복하거나 `list()`로 만들거나 값을 꺼낼 때 실제 query가 실행된다. Django 성능 문제는 QuerySet이 언제 평가되는지 모를 때 자주 생긴다.
-
-## 핵심 개념
-
-- lazy evaluation: QuerySet은 생성만으로 DB에 가지 않는다.
-- chaining: 조건을 이어 붙여도 원본 QuerySet은 보통 변경되지 않는다.
-- filtering: `filter`, `exclude`, field lookup으로 WHERE를 만든다.
-- related loading: `select_related`, `prefetch_related`로 N+1 query를 줄인다.
-- aggregation: `annotate`, `aggregate`로 DB에서 집계한다.
+QuerySet은 SQL을 바로 실행한 결과가 아니라 "이런 조건으로 조회하겠다"는 쿼리 표현이다. 조건을 체이닝하며 좁힐 수 있고, 실제 평가 시점에 DB query가 실행된다.
 
 ## 언제 쓰는가
 
-- [[Django ORM Model]] 데이터를 조건별로 조회할 때
-- View에서 목록, 상세, 검색, 페이지네이션을 만들 때
-- DB가 잘하는 필터링과 정렬을 Python 반복문 대신 맡길 때
+- 사용자 필터 조건을 ORM 조회로 바꿀 때
+- 로그인 사용자 소유 데이터만 조회해야 할 때
+- `__in`, `__icontains`, `gte`, `lte` 같은 lookup으로 동적 검색 조건을 구성할 때
 
 ## 언제 쓰면 안 되는가
 
-- 이미 메모리에 있는 작은 리스트를 단순 변환하는 경우
-- 복잡한 분석 처리를 ORM으로 억지로 표현해 SQL이 불투명해지는 경우
-- QuerySet 평가 시점을 모른 채 template에서 반복 접근하는 경우
+- 사용자가 준 필드명을 검증 없이 ORM lookup key로 만드는 경우
+- 반복문 안에서 관련 객체를 계속 조회해 N+1 query가 생기는 경우
+- QuerySet 평가 시점을 모른 채 캐싱이나 pagination을 섞는 경우
 
-## 자주 헷갈리는 점
+## 프로젝트 예시
 
-- `get()`은 객체 하나를 바로 평가해서 반환하고, 없거나 여러 개면 예외가 난다.
-- `filter()`는 0개여도 QuerySet을 반환한다.
-- QuerySet을 template에서 반복하면서 related field를 매번 읽으면 N+1 query가 될 수 있다.
+[[SKN26 4차 프로젝트 - LG Home]]은 제품군별 상품 검색 조건을 Django ORM lookup으로 변환한다. `common\llm.py`의 조건 병합 로직은 `gte`, `lte`, `in`, `icontains`의 병합 규칙을 분리해 자연어 슬롯을 검색 조건으로 바꾼다.
 
-## 작은 예제
+## 실패 조건
 
-```python
-posts = (
-    Post.objects
-    .filter(is_public=True)
-    .select_related("author")
-    .order_by("-created_at")
-)
-```
+- 빈 값 조건을 제거하지 않으면 의도치 않은 전체 검색이나 0건 검색이 생긴다.
+- `in` 조건을 단순 덮어쓰면 이전 조건과 새 조건의 교집합 의미가 사라진다.
+- 사용자 입력을 lookup key로 직접 허용하면 예측 불가능한 필터가 생긴다.
 
 ## 관련 개념
 
 - [[Django ORM Model]]
 - [[Django View]]
-- [[Django Migration]]
-- [[SQL SELECT와 WHERE]]
-- [[SQL JOIN]]
+- [[Django JSON API]]
+- [[Function Calling]]
 
-## 확인 질문
+## 먼저 확인할 질문
 
-- 이 QuerySet은 어느 줄에서 실제 DB에 접근하는가?
-- related object 접근으로 query가 반복되지 않는가?
-
-## 외부 참조
-
-- https://docs.djangoproject.com/en/6.0/ref/models/querysets/
+- 이 조건은 정확 검색, 범위 검색, 포함 검색 중 무엇인가?
+- QuerySet이 실제로 실행되는 시점과 query 수를 확인했는가?

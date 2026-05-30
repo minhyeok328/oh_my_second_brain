@@ -1,81 +1,62 @@
 ---
 type: "permanent"
-status: "wiki-standardized"
+status: "wiki-expanded"
 created: "2026-05-30"
 updated: "2026-05-30"
 reviewed: "2026-05-30"
 tags:
   - 'llm_wiki'
-  - 'streamlit'
   - 'python'
-  - 'web'
+  - 'streamlit'
 source:
   - 'C:\lecture'
+  - 'C:\MinHyeok\skn26_1st_2nd\joy-riders'
+  - 'C:\MinHyeok\skn26_2nd_1st\2nd_project'
 ---
 
 # Streamlit 기본 UI
 
-태그: #streamlit #python #web #llm_wiki
+태그: #llm_wiki #python #streamlit
 
 ## 한 줄 정의
 
-Python 코드만으로 텍스트, 표, 입력 위젯, 미디어를 배치하는 데이터 앱 프레임워크다.
+Streamlit 기본 UI는 Python 코드만으로 입력 위젯, 표, 차트, 페이지 레이아웃을 빠르게 구성하는 데이터 앱 화면 패턴이다.
 
-## 왜 중요한가
+## 내 말로 다시 설명
 
-분석 결과와 모델 데모를 빠르게 공유할 수 있다. 백엔드와 프론트엔드 지식이 부족해도 인터랙티브 화면을 만들 수 있다.
+Streamlit은 분석 코드와 화면을 가깝게 붙여준다. 모델 결과나 계산 로직을 빠르게 보여주기 좋지만, 상태 관리와 UI 구조를 정리하지 않으면 notebook 같은 script가 화면 전체를 지배하게 된다.
 
-## 핵심 개념
+## 언제 쓰는가
 
-- `st.title`, `st.write`, `st.dataframe`으로 출력한다.
-- 버튼, 슬라이더, 텍스트 입력 위젯을 제공한다.
-- 이미지, 오디오, 비디오 표시가 가능하다.
+- 데이터 분석 결과나 모델 예측을 빠르게 대시보드로 보여줄 때
+- 사용자가 입력값을 바꾸면 계산 결과가 바로 갱신되는 도구를 만들 때
+- 팀 프로젝트에서 백엔드/프론트 분리 전에 프로토타입을 검증할 때
 
-## 예제
+## 언제 쓰면 안 되는가
 
-```python
-import streamlit as st
-st.title("Demo")
-name = st.text_input("name")
-st.write(name)
-```
+- 복잡한 프론트 라우팅, 권한, 대규모 컴포넌트 상태가 필요한 경우
+- DB/API 호출을 매 rerun마다 무제한 반복하는 경우
+- session state 없이 단계형 UX를 억지로 구현하는 경우
 
-## 실무 활용
+## 프로젝트 예시
 
-EDA 대시보드, 모델 추론 데모, 내부 데이터 품질 점검 도구에 적합하다.
+- [[SKN26 1차 프로젝트 - 차량 TCO]]는 Streamlit에서 차량 모델, 등급, 연도를 입력받고 DB 조회 결과와 TCO 계산 결과를 보여준다.
+- [[SKN26 2차 프로젝트 - 카드 이탈 예측]]은 Streamlit으로 분석 대시보드, 모델별 확률, 전략 보고서 페이지를 구성했다.
+
+## 실패 조건
+
+- `st.session_state`를 쓰지 않으면 검색 후 선택 상태가 rerun 때 사라진다.
+- `st.cache_data`를 무분별하게 쓰면 오래된 DB/API 결과를 보여줄 수 있다.
+- CSS를 과하게 주입하면 Streamlit 버전 변화에 취약하다.
 
 ## 관련 개념
 
 - [[Streamlit Session State]]
 - [[Pandas DataFrame]]
-- [[OpenAI API]]
+- [[MLflow]]
+- [[XGBoost]]
 
-자료 힌트: 01_python_workspace/_10_streamlit
+## 먼저 확인할 질문
 
-## 내 말로 다시 설명
-
-Streamlit 기본 UI은/는 강의에서 나온 개념을 정의, 사용 조건, 주의점, 연결 개념으로 다시 설명하기 위한 LLM wiki 원자 노트다. 단순 암기보다 실제 문제에서 언제 꺼내 쓸지 판단하는 데 초점을 둔다.
-
-## 언제 쓰는가
-
-- 강의 실습 코드에서 같은 개념을 다시 만날 때
-- 프로젝트에서 관련 오류나 설계 결정을 설명해야 할 때
-- [[Streamlit Session State]], [[Pandas DataFrame]], [[OpenAI API]]와 함께 문제 원인을 좁힐 때
-
-## 언제 쓰면 안 되는가
-
-- 구체적인 API 버전, 파라미터, 보안 정책이 필요한 경우에는 공식 문서를 먼저 확인한다.
-- 예제 하나만 보고 모든 상황에 일반화해야 할 때는 보류한다.
-- 이미 더 좁고 구체적인 노트가 있는 경우에는 그 노트로 이동한다.
-
-## 자주 헷갈리는 점
-
-- 이름이 비슷한 인접 개념과 책임 범위가 다를 수 있다.
-- 강의 예제의 상황과 실제 프로젝트의 데이터, 환경, 버전 차이를 분리해야 한다.
-- "동작한다"와 "운영에서 유지보수 가능하다"는 다른 기준이다.
-
-## 확인 질문
-
-- Streamlit 기본 UI을/를 쓰면 어떤 문제를 더 단순하게 설명할 수 있는가?
-- 관련 개념과 구분되는 핵심 기준은 무엇인가?
-- 실제 프로젝트에 적용하면 먼저 검증해야 할 실패 조건은 무엇인가?
+- 이 화면은 분석용 prototype인가, 운영 서비스 UI인가?
+- rerun이 발생해도 사용자의 선택과 계산 결과가 일관되게 유지되는가?

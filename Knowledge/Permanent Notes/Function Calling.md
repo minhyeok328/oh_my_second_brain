@@ -1,6 +1,6 @@
 ---
 type: "permanent"
-status: "wiki-standardized"
+status: "wiki-expanded"
 created: "2026-05-30"
 updated: "2026-05-30"
 reviewed: "2026-05-30"
@@ -10,68 +10,52 @@ tags:
   - 'tools'
 source:
   - 'C:\lecture'
+  - 'C:\MinHyeok\skn26_3rd_3rd\3rd_project'
+  - 'C:\MinHyeok\skn26_4th_1st\4th_project'
 ---
 
 # Function Calling
 
-태그: #llm #tools #llm_wiki
+태그: #llm_wiki #llm #tools
 
 ## 한 줄 정의
 
-LLM이 자연어 요청을 구조화된 함수 인자 형태로 변환해 외부 도구를 호출하게 하는 패턴이다.
+Function Calling은 LLM이 자연어를 정해진 함수명과 인자 schema에 맞는 구조화 데이터로 바꾸고, 실제 실행은 코드가 담당하게 하는 패턴이다.
 
-## 왜 중요한가
+## 내 말로 다시 설명
 
-모델 혼자 답하기보다 검색, 계산, DB 조회 같은 확정적 도구를 연결하면 신뢰성과 실행력을 높일 수 있다.
+모델에게 "검색해줘"라고 말하게 하는 것이 아니라, `{restaurant: "유태우스시", menu: "회전초밥"}`처럼 다음 코드가 안전하게 사용할 수 있는 인자를 만들게 하는 방식이다. 실행 권한은 모델이 아니라 애플리케이션 코드가 가진다.
 
-## 핵심 개념
+## 언제 쓰는가
 
-- 도구 이름, 설명, 입력 스키마를 모델에 제공한다.
-- 모델 출력은 실제 함수 실행과 분리해 검증한다.
-- 결과를 다시 모델에 제공해 최종 답변을 만든다.
+- 자연어 질문에서 DB 검색 조건을 추출할 때
+- route별로 다른 slot schema가 필요한 경우
+- LLM 출력이 JSON처럼 downstream 코드의 입력이 되는 경우
 
-## 예제
+## 언제 쓰면 안 되는가
 
-```json
-{"tool": "search_docs", "arguments": {"query": "RAG"}}
-```
+- schema가 너무 느슨해 자유 텍스트와 다르지 않은 경우
+- 모델이 만든 인자를 검증하지 않고 바로 DB/API에 넘기는 경우
+- 단순 UI filter처럼 사용자가 이미 구조화된 값을 고른 경우
 
-## 실무 활용
+## 프로젝트 예시
 
-에이전트, 업무 자동화, 예약/조회 챗봇, LangGraph 노드 실행에 활용한다.
+[[SKN26 3차 프로젝트 - PICKLE RAG 챗봇]]의 `slot_extractor.py`는 embedding 경로와 fixed 경로에 다른 schema를 두고, LangGraph node에서 `.invoke()`로 슬롯을 추출한다. [[SKN26 4차 프로젝트 - LG Home]]은 Pydantic structured output으로 제품군, 후속 질문, 조건 슬롯을 추출한다.
+
+## 실패 조건
+
+- route가 틀리면 올바른 function/schema도 선택되지 않는다.
+- 빈 문자열과 누락 값의 의미가 정리되지 않으면 검색 조건이 과도하게 넓어진다.
+- schema와 DB 필드 이름이 어긋나면 검색 결과가 없어도 원인을 찾기 어렵다.
 
 ## 관련 개념
 
 - [[OpenAI API]]
+- [[Prompt Engineering]]
 - [[LangGraph Node와 Edge]]
-- [[Multi-Agent]]
+- [[Django QuerySet]]
 
-자료 힌트: 08_llm_workspace/03_openai_api
+## 먼저 확인할 질문
 
-## 내 말로 다시 설명
-
-Function Calling은/는 강의에서 나온 개념을 정의, 사용 조건, 주의점, 연결 개념으로 다시 설명하기 위한 LLM wiki 원자 노트다. 단순 암기보다 실제 문제에서 언제 꺼내 쓸지 판단하는 데 초점을 둔다.
-
-## 언제 쓰는가
-
-- 강의 실습 코드에서 같은 개념을 다시 만날 때
-- 프로젝트에서 관련 오류나 설계 결정을 설명해야 할 때
-- [[OpenAI API]], [[LangGraph Node와 Edge]], [[Multi-Agent]]와 함께 문제 원인을 좁힐 때
-
-## 언제 쓰면 안 되는가
-
-- 구체적인 API 버전, 파라미터, 보안 정책이 필요한 경우에는 공식 문서를 먼저 확인한다.
-- 예제 하나만 보고 모든 상황에 일반화해야 할 때는 보류한다.
-- 이미 더 좁고 구체적인 노트가 있는 경우에는 그 노트로 이동한다.
-
-## 자주 헷갈리는 점
-
-- 이름이 비슷한 인접 개념과 책임 범위가 다를 수 있다.
-- 강의 예제의 상황과 실제 프로젝트의 데이터, 환경, 버전 차이를 분리해야 한다.
-- "동작한다"와 "운영에서 유지보수 가능하다"는 다른 기준이다.
-
-## 확인 질문
-
-- Function Calling을/를 쓰면 어떤 문제를 더 단순하게 설명할 수 있는가?
-- 관련 개념과 구분되는 핵심 기준은 무엇인가?
-- 실제 프로젝트에 적용하면 먼저 검증해야 할 실패 조건은 무엇인가?
+- 이 function의 인자는 어떤 코드가 소비하는가?
+- 각 인자 값이 비었을 때 무시, fallback, 에러 중 무엇으로 처리하는가?

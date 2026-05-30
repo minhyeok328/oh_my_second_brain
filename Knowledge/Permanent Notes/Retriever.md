@@ -1,77 +1,62 @@
 ---
 type: "permanent"
-status: "wiki-standardized"
+status: "wiki-expanded"
 created: "2026-05-30"
 updated: "2026-05-30"
 reviewed: "2026-05-30"
 tags:
   - 'llm_wiki'
+  - 'llm'
   - 'retriever'
-  - 'rag'
 source:
   - 'C:\lecture'
+  - 'C:\MinHyeok\skn26_3rd_3rd\3rd_project'
+  - 'C:\MinHyeok\skn26_4th_1st\4th_project'
 ---
 
 # Retriever
 
-태그: #retriever #rag #llm_wiki
+태그: #llm_wiki #llm #retriever
 
 ## 한 줄 정의
 
-질문을 받아 관련 문서를 찾아 반환하는 검색 인터페이스다.
-
-## 왜 중요한가
-
-생성 모델에 넣을 근거를 고르는 단계이므로 RAG 답변의 정확도와 직결된다.
-
-## 핵심 개념
-
-- 벡터 유사도 검색이 대표적이다.
-- MMR은 다양성과 관련성을 균형 잡는다.
-- 검색 결과 수와 필터 조건을 조절한다.
-
-## 예제
-
-```python
-# docs = retriever.invoke("LangGraph State")
-```
-
-## 실무 활용
-
-문서 QA, 챗봇 근거 검색, 멀티모달 프레임 검색에 사용한다.
-
-## 관련 개념
-
-- [[Vector Store]]
-- [[Reranking]]
-- [[RAG]]
-
-자료 힌트: 08_llm_workspace/07_advanced_rag/01_retrieval_optimization
+Retriever는 사용자 질문을 받아 RAG 답변에 넣을 후보 문서, DB row, 식당, 매뉴얼 chunk를 가져오는 검색 컴포넌트다.
 
 ## 내 말로 다시 설명
 
-Retriever은/는 강의에서 나온 개념을 정의, 사용 조건, 주의점, 연결 개념으로 다시 설명하기 위한 LLM wiki 원자 노트다. 단순 암기보다 실제 문제에서 언제 꺼내 쓸지 판단하는 데 초점을 둔다.
+Retriever는 LLM에게 넘길 "재료"를 고르는 단계다. 이 단계가 틀리면 generator가 아무리 좋아도 정답을 만들기 어렵다. 그래서 어떤 후보를 가져왔고, 어떤 후보를 최종 사용했는지 기록해야 한다.
 
 ## 언제 쓰는가
 
-- 강의 실습 코드에서 같은 개념을 다시 만날 때
-- 프로젝트에서 관련 오류나 설계 결정을 설명해야 할 때
-- [[Vector Store]], [[Reranking]], [[RAG]]와 함께 문제 원인을 좁힐 때
+- 질문에 맞는 문서 chunk나 DB entity를 top-k로 가져와야 할 때
+- keyword, SQL, embedding, metadata filter를 조합해야 할 때
+- 검색 후보를 reranking하거나 교집합으로 좁혀야 할 때
 
 ## 언제 쓰면 안 되는가
 
-- 구체적인 API 버전, 파라미터, 보안 정책이 필요한 경우에는 공식 문서를 먼저 확인한다.
-- 예제 하나만 보고 모든 상황에 일반화해야 할 때는 보류한다.
-- 이미 더 좁고 구체적인 노트가 있는 경우에는 그 노트로 이동한다.
+- 사용자가 이미 정확한 primary key를 제공해 단일 row 조회면 충분한 경우
+- 검색 품질 평가 없이 top-k 숫자만 늘리는 경우
+- 후보가 없을 때 fallback이나 "모른다" 처리가 없는 경우
 
-## 자주 헷갈리는 점
+## 프로젝트 예시
 
-- 이름이 비슷한 인접 개념과 책임 범위가 다를 수 있다.
-- 강의 예제의 상황과 실제 프로젝트의 데이터, 환경, 버전 차이를 분리해야 한다.
-- "동작한다"와 "운영에서 유지보수 가능하다"는 다른 기준이다.
+[[SKN26 3차 프로젝트 - PICKLE RAG 챗봇]]은 slot별 검색 결과를 restaurant_code 기준으로 교차시키고, 최종 후보를 LLM에 넘긴다. [[SKN26 4차 프로젝트 - LG Home]]은 ORM 상품 검색과 Pinecone 매뉴얼 검색을 분리해 제품 추천과 사용설명서 Q&A에 각각 사용한다.
 
-## 확인 질문
+## 실패 조건
 
-- Retriever을/를 쓰면 어떤 문제를 더 단순하게 설명할 수 있는가?
-- 관련 개념과 구분되는 핵심 기준은 무엇인가?
-- 실제 프로젝트에 적용하면 먼저 검증해야 할 실패 조건은 무엇인가?
+- 검색 후보 수가 0인데 generator가 임의 답변을 만들면 hallucination이 된다.
+- 정확 검색과 의미 검색을 같은 기준으로 섞으면 route 실패를 찾기 어렵다.
+- 재랭킹 후 최종 후보를 기록하지 않으면 평가와 디버깅이 어렵다.
+
+## 관련 개념
+
+- [[RAG]]
+- [[Embedding]]
+- [[Vector Store]]
+- [[Reranking]]
+- [[RAG 평가]]
+
+## 먼저 확인할 질문
+
+- 후보를 넓히는 단계와 좁히는 단계가 분리되어 있는가?
+- 검색 결과가 틀렸을 때 route, slot, vector, SQL 중 어디를 먼저 볼 것인가?

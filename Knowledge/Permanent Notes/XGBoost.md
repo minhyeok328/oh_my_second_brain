@@ -1,78 +1,61 @@
 ---
 type: "permanent"
-status: "wiki-standardized"
+status: "wiki-expanded"
 created: "2026-05-30"
 updated: "2026-05-30"
 reviewed: "2026-05-30"
 tags:
   - 'llm_wiki'
-  - 'machinelearning'
+  - 'machine_learning'
   - 'xgboost'
-  - 'ensemble'
 source:
   - 'C:\lecture'
+  - 'C:\MinHyeok\skn26_2nd_1st\2nd_project'
 ---
 
 # XGBoost
 
-태그: #machinelearning #xgboost #ensemble #llm_wiki
+태그: #llm_wiki #machine_learning #xgboost
 
 ## 한 줄 정의
 
-그래디언트 부스팅 트리를 효율적으로 구현한 고성능 탭ular 모델이다.
-
-## 왜 중요한가
-
-정형 데이터에서 강력한 성능을 내며 결측 처리, 규제, 병렬화가 잘 갖춰져 있다.
-
-## 핵심 개념
-
-- 이전 모델의 오류를 다음 트리가 보완한다.
-- 학습률, 트리 깊이, 추정기 수가 중요하다.
-- 과적합 방지를 위해 검증셋과 조기 종료를 쓴다.
-
-## 예제
-
-```python
-# XGBClassifier(max_depth=4, learning_rate=0.05, n_estimators=300)
-```
-
-## 실무 활용
-
-고객 예측, 신용평가, 추천 랭킹 등 정형 데이터 문제의 강력한 후보 모델이다.
-
-## 관련 개념
-
-- [[앙상블 학습]]
-- [[하이퍼파라미터 튜닝]]
-- [[과적합]]
-
-자료 힌트: 05_machine_learning_workspace/04_classification/homework_26_03_06_xgb.ipynb
+XGBoost는 gradient boosting tree 기반의 강력한 지도학습 모델로, tabular 데이터의 분류·회귀 문제에서 자주 쓰인다.
 
 ## 내 말로 다시 설명
 
-XGBoost은/는 강의에서 나온 개념을 정의, 사용 조건, 주의점, 연결 개념으로 다시 설명하기 위한 LLM wiki 원자 노트다. 단순 암기보다 실제 문제에서 언제 꺼내 쓸지 판단하는 데 초점을 둔다.
+XGBoost는 여러 약한 결정트리를 순차적으로 쌓아 이전 모델의 오류를 줄인다. 성능이 좋지만 튜닝과 검증을 잘못하면 train 성능만 높고 실제 일반화는 낮을 수 있다.
 
 ## 언제 쓰는가
 
-- 강의 실습 코드에서 같은 개념을 다시 만날 때
-- 프로젝트에서 관련 오류나 설계 결정을 설명해야 할 때
-- [[앙상블 학습]], [[하이퍼파라미터 튜닝]], [[과적합]]와 함께 문제 원인을 좁힐 때
+- tabular feature로 이탈, 등급, 위험도 같은 label을 예측할 때
+- 선형 모델보다 변수 간 비선형 관계와 상호작용이 중요할 때
+- feature importance와 성능 비교가 필요한 ML 프로젝트에서 baseline 이후 강한 모델이 필요할 때
 
 ## 언제 쓰면 안 되는가
 
-- 구체적인 API 버전, 파라미터, 보안 정책이 필요한 경우에는 공식 문서를 먼저 확인한다.
-- 예제 하나만 보고 모든 상황에 일반화해야 할 때는 보류한다.
-- 이미 더 좁고 구체적인 노트가 있는 경우에는 그 노트로 이동한다.
+- 데이터 수가 너무 작아 검증 분산이 큰 경우
+- class imbalance와 overfitting을 평가하지 않고 정확도만 보는 경우
+- 모델 결과를 비즈니스 전략으로 연결할 설명이 없는 경우
 
-## 자주 헷갈리는 점
+## 프로젝트 예시
 
-- 이름이 비슷한 인접 개념과 책임 범위가 다를 수 있다.
-- 강의 예제의 상황과 실제 프로젝트의 데이터, 환경, 버전 차이를 분리해야 한다.
-- "동작한다"와 "운영에서 유지보수 가능하다"는 다른 기준이다.
+[[SKN26 2차 프로젝트 - 카드 이탈 예측]]에서 XGBoost는 카드 고객 이탈과 Income 예측 실험에 사용되었다. `model_evaluation.md`에서는 multi-class income 정확도가 낮았고, Low/High binary 재구성 실험에서 높은 성능을 확인했다.
 
-## 확인 질문
+## 실패 조건
 
-- XGBoost을/를 쓰면 어떤 문제를 더 단순하게 설명할 수 있는가?
-- 관련 개념과 구분되는 핵심 기준은 무엇인가?
-- 실제 프로젝트에 적용하면 먼저 검증해야 할 실패 조건은 무엇인가?
+- train/test 성능 차이를 보지 않으면 과적합을 놓친다.
+- multi-class가 낮은 이유를 데이터 분포나 class 경계로 분석하지 않으면 모델만 바꾸는 반복이 된다.
+- Unknown 값 보정 모델을 실제 pipeline에 반영했는지와 실험 결과만 있는지를 구분해야 한다.
+
+## 관련 개념
+
+- [[결정트리]]
+- [[앙상블 학습]]
+- [[Feature Engineering]]
+- [[과적합]]
+- [[MLflow]]
+
+## 먼저 확인할 질문
+
+- 이 모델의 목표는 최종 예측인가, 결측/Unknown 보정인가?
+- 성능 지표가 비즈니스 의사결정에 필요한 오류 비용을 반영하는가?

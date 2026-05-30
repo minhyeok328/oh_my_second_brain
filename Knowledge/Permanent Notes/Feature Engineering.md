@@ -1,6 +1,6 @@
 ---
 type: "permanent"
-status: "wiki-standardized"
+status: "wiki-expanded"
 created: "2026-05-30"
 updated: "2026-05-30"
 reviewed: "2026-05-30"
@@ -8,70 +8,79 @@ tags:
   - 'llm_wiki'
   - 'machinelearning'
   - 'data_analysis'
+  - 'feature_engineering'
 source:
   - 'C:\lecture'
+  - 'C:\MinHyeok\skn26_2nd_1st\2nd_project\README.md'
+  - 'C:\MinHyeok\skn26_2nd_1st\2nd_project\model_evaluation.md'
 ---
 
 # Feature Engineering
 
-태그: #machinelearning #data_analysis #llm_wiki
+태그: #machinelearning #data_analysis #feature_engineering #llm_wiki
 
 ## 한 줄 정의
 
-원본 데이터에서 모델 성능과 해석에 도움이 되는 피처를 생성, 변환, 선택하는 과정이다.
+Feature Engineering은 원본 데이터를 모델이 더 잘 학습하고 사람이 더 잘 해석할 수 있는 변수 표현으로 바꾸는 과정이다.
 
 ## 왜 중요한가
 
-모델 알고리즘보다 피처 표현이 성능을 더 크게 좌우하는 경우가 많다. 좋은 피처는 도메인 의미를 수치적으로 드러내고 노이즈를 줄인다.
+모델 성능은 알고리즘만으로 결정되지 않는다. 카드 이탈처럼 행동 변화가 중요한 문제에서는 단순 고객 속성보다 거래 횟수 변화, 사용률, 비활성 기간, 고객센터 접촉 같은 행동 피처가 더 강한 신호가 된다. 좋은 feature는 모델 성능과 비즈니스 해석을 동시에 돕는다.
 
 ## 핵심 개념
 
-- 기존 컬럼을 조합해 새 변수를 만든다.
-- 범주형 인코딩, 스케일링, 로그 변환 등을 적용한다.
-- 데이터 누수를 만들지 않도록 학습 시점에 알 수 있는 정보만 사용한다.
+- 원본 컬럼을 조합해 행동 변화나 비율을 만든다.
+- 범주형 변수는 모델이 읽을 수 있게 encoding한다.
+- numeric feature는 필요한 경우 scaling한다.
+- target 이후에만 알 수 있는 정보는 feature로 쓰면 안 된다.
+- feature importance는 모델 설명의 출발점이지 곧바로 인과 해석은 아니다.
 
-## 예제
+## 프로젝트 예시
 
-```python
-df["family_size"] = df["sibsp"] + df["parch"] + 1
-```
+[[SKN26 2차 프로젝트 - 카드 이탈 예측]]은 카드 고객의 이탈 신호를 고객 속성보다 행동 변수에서 더 강하게 찾았다.
 
-## 실무 활용
+- `Total_Trans_Ct`: 연간 총 거래 횟수
+- `Total_Trans_Amt`: 연간 총 거래 금액
+- `Avg_Utilization_Ratio`: 신용 한도 대비 사용률
+- `Total_Ct_Chng_Q4_Q1`: 거래량 변화율
+- `Months_Inactive_12_mon`: 최근 12개월 비활성 개월 수
+- `Contacts_Count_12_mon`: 고객센터 연락 횟수
 
-타이타닉 생존 예측, 추천 시스템 사용자/아이템 특징 생성, RAG 문서 메타데이터 설계에 활용한다.
+Unknown Income 보정 실험에서는 income이 있는 known 데이터와 unknown 데이터를 분리하고, 고객 속성/행동 feature로 income class를 예측했다. multi-class 성능이 낮게 나오자 Low/High binary 재구성이라는 문제 정의 변경도 feature 해석 결과와 함께 검토했다.
+
+## 언제 쓰는가
+
+- 원본 컬럼만으로 모델이 도메인 신호를 잡기 어려울 때
+- 비율, 변화량, 기간, 빈도처럼 해석 가능한 행동 지표가 필요할 때
+- Unknown 값 보정이나 고객 세그먼트 분류처럼 feature 분포 비교가 중요한 때
+- 모델 결과를 비즈니스 전략으로 설명해야 할 때
+
+## 언제 쓰면 안 되는가
+
+- target 정보를 직접 또는 간접적으로 담은 컬럼을 feature로 만들 때
+- test나 unknown 데이터 분포를 보고 feature를 과하게 맞출 때
+- 모델 성능만 보고 사람이 설명할 수 없는 feature를 무작정 늘릴 때
+- 결측/Unknown의 의미를 확인하지 않고 단순 숫자 대체만 할 때
+
+## 실패 조건
+
+- feature가 많아져도 신호보다 노이즈가 늘면 test 성능은 떨어질 수 있다.
+- train/test 분리 전에 encoding, scaling, imputation을 fit하면 데이터 누수가 생긴다.
+- Unknown 값을 학습 라벨처럼 다루면 예측 보정 모델이 오염된다.
+- feature importance를 인과관계로 해석하면 잘못된 비즈니스 전략이 나올 수 있다.
+- 데이터셋의 마스킹된 범주나 임계치를 실제 금융 운영 기준처럼 단정하면 위험하다.
 
 ## 관련 개념
 
 - [[데이터 전처리]]
-- [[Pandas Merge]]
-- [[과적합]]
+- [[Train Test Split]]
+- [[분류 평가 지표]]
+- [[XGBoost]]
+- [[SKN26 2차 프로젝트 - 카드 이탈 예측]]
 
-자료 힌트: 04_data_analysis_workspace/04_eda, 05_machine_learning_workspace
+## 먼저 확인할 질문
 
-## 내 말로 다시 설명
-
-Feature Engineering은/는 강의에서 나온 개념을 정의, 사용 조건, 주의점, 연결 개념으로 다시 설명하기 위한 LLM wiki 원자 노트다. 단순 암기보다 실제 문제에서 언제 꺼내 쓸지 판단하는 데 초점을 둔다.
-
-## 언제 쓰는가
-
-- 강의 실습 코드에서 같은 개념을 다시 만날 때
-- 프로젝트에서 관련 오류나 설계 결정을 설명해야 할 때
-- [[데이터 전처리]], [[Pandas Merge]], [[과적합]]와 함께 문제 원인을 좁힐 때
-
-## 언제 쓰면 안 되는가
-
-- 구체적인 API 버전, 파라미터, 보안 정책이 필요한 경우에는 공식 문서를 먼저 확인한다.
-- 예제 하나만 보고 모든 상황에 일반화해야 할 때는 보류한다.
-- 이미 더 좁고 구체적인 노트가 있는 경우에는 그 노트로 이동한다.
-
-## 자주 헷갈리는 점
-
-- 이름이 비슷한 인접 개념과 책임 범위가 다를 수 있다.
-- 강의 예제의 상황과 실제 프로젝트의 데이터, 환경, 버전 차이를 분리해야 한다.
-- "동작한다"와 "운영에서 유지보수 가능하다"는 다른 기준이다.
-
-## 확인 질문
-
-- Feature Engineering을/를 쓰면 어떤 문제를 더 단순하게 설명할 수 있는가?
-- 관련 개념과 구분되는 핵심 기준은 무엇인가?
-- 실제 프로젝트에 적용하면 먼저 검증해야 할 실패 조건은 무엇인가?
+- 이 feature는 예측 시점에 실제로 알 수 있는 값인가?
+- 이 feature가 모델 성능뿐 아니라 결과 해석에도 도움이 되는가?
+- Unknown이나 결측값은 삭제, 별도 class, 예측 보정 중 어떤 의미로 처리하는가?
+- feature 생성과 전처리가 train/test split 이후 올바른 순서로 적용되는가?

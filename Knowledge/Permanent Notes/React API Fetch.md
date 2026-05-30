@@ -8,94 +8,57 @@ tags:
   - 'llm_wiki'
   - 'react'
   - 'api'
-  - 'frontend'
 source:
   - 'C:\lecture'
-external:
-  - 'https://react.dev/reference/react/useEffect'
-  - 'https://react.dev/learn/you-might-not-need-an-effect'
+  - 'C:\MinHyeok\skn26_4th_1st\4th_project'
+  - 'C:\MinHyeok\skn26_4th_1st\4th_project_change_react'
 ---
 
 # React API Fetch
 
-태그: #llm_wiki #react #api #frontend
+태그: #llm_wiki #react #api
 
 ## 한 줄 정의
 
-React API Fetch는 컴포넌트나 라우트가 서버 API에서 데이터를 받아 화면 상태와 동기화하는 프론트엔드 데이터 로딩 패턴이다.
+React API Fetch는 React 화면에서 서버 JSON API를 호출하고, 로딩·성공·실패·인증 상태를 UI 상태로 반영하는 패턴이다.
 
 ## 내 말로 다시 설명
 
-React에서 API 호출은 단순히 `fetch()`를 쓰는 문제가 아니다. 언제 요청할지, 로딩과 에러를 어떻게 보여줄지, 이전 요청이 늦게 도착했을 때 어떻게 막을지, 컴포넌트가 사라질 때 정리할지가 함께 따라온다.
-
-## 기본 흐름
-
-- 요청에 필요한 입력 상태를 정한다.
-- loading, data, error 상태를 분리한다.
-- 요청 성공 시 data를 갱신한다.
-- 실패 시 사용자에게 보여줄 error를 저장한다.
-- 컴포넌트 unmount나 입력 변경 시 stale response를 막는다.
+fetch는 단순히 URL을 부르는 함수가 아니다. session cookie, CSRF token, content-type, 401 redirect, JSON parse 실패, network error를 화면 정책으로 정해야 한다. 이 규칙을 페이지마다 흩뿌리면 API 실패 UX가 깨진다.
 
 ## 언제 쓰는가
 
-- 서버 데이터가 화면 렌더링에 필요할 때
-- 사용자의 검색 조건, 페이지, 필터에 따라 API를 다시 호출해야 할 때
-- 작은 앱에서 별도 data fetching 라이브러리 없이 처리해도 충분할 때
+- React SPA가 Django backend에서 검색 결과, 상품 상세, 채팅, 계정 정보를 받아올 때
+- POST 요청에 CSRF와 credentials가 필요한 경우
+- API 실패를 alert, inline message, redirect 중 하나로 일관되게 처리해야 할 때
 
 ## 언제 쓰면 안 되는가
 
-- 서버 상태 캐싱, 중복 요청 제거, pagination, mutation invalidation이 복잡한 경우
-- 라우터 loader나 query library가 이미 데이터 흐름을 맡고 있는 경우
-- 렌더링 중 계산 가능한 값을 굳이 API 상태로 분리하는 경우
+- 서버 렌더링 template context로 충분한 정적 화면인 경우
+- API 응답 shape과 에러 shape이 정해지지 않은 상태에서 화면부터 만드는 경우
+- 인증 실패를 HTML redirect와 JSON 401로 섞어 처리하는 경우
 
-## 자주 헷갈리는 점
+## 프로젝트 예시
 
-- `useEffect` 안 fetch는 race condition을 만들 수 있다.
-- HTTP 에러와 네트워크 에러를 구분해야 한다.
-- API 응답 shape가 바뀌면 화면 상태와 타입도 같이 깨진다.
+[[SKN26 4차 프로젝트 - LG Home]]의 공식 프로젝트는 vanilla JS `api-response.js`로 fetch JSON 응답과 CSRF POST init을 공통화했다. 개인 확장 `4th_project_change_react`는 `frontend\src\api\client.ts`에서 `fetchJson`, `jsonPost`, `formPost`, `ApiError`로 React SPA fetch 계층을 분리했다.
 
-## 작은 예제
+프론트 QA 평가서 기준으로 `fetchJson` 통합, 필터 에러 배너, 찜 in-flight 처리는 개선됐지만, 챗봇 세션 만료 401에서 로그인 유도 경로가 명확하지 않은 점은 잔여 리스크로 남았다.
 
-```jsx
-useEffect(() => {
-  let ignore = false;
-  setLoading(true);
+## 실패 조건
 
-  fetch(`/api/posts?q=${query}`)
-    .then((res) => {
-      if (!res.ok) throw new Error("Request failed");
-      return res.json();
-    })
-    .then((data) => {
-      if (!ignore) setPosts(data);
-    })
-    .catch((error) => {
-      if (!ignore) setError(error.message);
-    })
-    .finally(() => {
-      if (!ignore) setLoading(false);
-    });
-
-  return () => {
-    ignore = true;
-  };
-}, [query]);
-```
+- `credentials`를 빼면 session 인증이 유지되지 않는다.
+- JSON이 아닌 HTML redirect를 JSON으로 parse하려 하면 화면이 조용히 실패할 수 있다.
+- POST인데 `X-CSRFToken`이 없으면 Django에서 거절된다.
 
 ## 관련 개념
 
+- [[React SPA]]
+- [[Django JSON API]]
+- [[Django CSRF]]
 - [[useEffect]]
-- [[React State]]
-- [[JavaScript 비동기]]
-- [[Requests]]
-- [[Django View]]
 
-## 확인 질문
+## 먼저 확인할 질문
 
-- 이 데이터는 서버 상태인가, 컴포넌트 내부 상태인가?
-- 요청이 늦게 도착했을 때 이전 화면을 덮어쓰지 않는가?
-
-## 외부 참조
-
-- https://react.dev/reference/react/useEffect
-- https://react.dev/learn/you-might-not-need-an-effect
+- 이 API 호출은 GET인가, 상태 변경 POST인가?
+- 실패 응답을 사용자가 이해할 수 있는 UI 상태로 바꾸고 있는가?
+- 401 또는 세션 만료가 발생했을 때 로그인으로 이동할지, 현재 화면에서 안내할지 정했는가?
