@@ -1,0 +1,287 @@
+{
+  "source_root": "C:\\lecture",
+  "roots": [
+    "C:\\lecture\\01_python_workspace\\SeoMinHyeok",
+    "C:\\lecture\\02_mysql_workspace\\SeoMinHyeok",
+    "C:\\lecture\\03_data_collection_workspace\\SeoMinHyeok",
+    "C:\\lecture\\04_data_analysis_workspace\\SeoMinHyeok",
+    "C:\\lecture\\05_machine_learning_workspace\\SeoMinHyeok",
+    "C:\\lecture\\06_deep_learning_basic_workspace\\SeoMinHyeok",
+    "C:\\lecture\\07_deep_learning_nlp_workspace\\SeoMinHyeok",
+    "C:\\lecture\\08_llm_workspace\\SeoMinHyeok",
+    "C:\\lecture\\09_deep_learning_multimodal_workspace\\SeoMinHyeok",
+    "C:\\lecture\\10_web_client_workspace\\SeoMinHyeok",
+    "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok",
+    "C:\\lecture\\12_devops_workspace\\SeoMinHyeok",
+    "C:\\lecture\\13_react-cicd_workspace",
+    "C:\\lecture\\git_workspace\\SeoMinHyeok"
+  ],
+  "file_count": 1445,
+  "text_record_count": 1115,
+  "total_bytes": 1549074865,
+  "by_extension": [
+    [
+      ".py",
+      365
+    ],
+    [
+      ".ipynb",
+      189
+    ],
+    [
+      ".html",
+      152
+    ],
+    [
+      ".png",
+      143
+    ],
+    [
+      ".java",
+      138
+    ],
+    [
+      ".js",
+      126
+    ],
+    [
+      ".jpg",
+      49
+    ],
+    [
+      ".csv",
+      45
+    ],
+    [
+      "[no extension]",
+      40
+    ],
+    [
+      ".json",
+      31
+    ],
+    [
+      ".md",
+      29
+    ],
+    [
+      ".txt",
+      24
+    ],
+    [
+      ".sql",
+      15
+    ],
+    [
+      ".gz",
+      9
+    ],
+    [
+      ".tsv",
+      7
+    ],
+    [
+      ".sqlite3",
+      7
+    ],
+    [
+      ".bin",
+      7
+    ],
+    [
+      ".zip",
+      6
+    ],
+    [
+      ".jsonl",
+      6
+    ],
+    [
+      ".css",
+      6
+    ],
+    [
+      ".ico",
+      6
+    ],
+    [
+      ".properties",
+      5
+    ],
+    [
+      ".yml",
+      4
+    ],
+    [
+      ".tfevents",
+      4
+    ],
+    [
+      ".mp4",
+      4
+    ],
+    [
+      ".lock",
+      4
+    ],
+    [
+      ".pdf",
+      3
+    ],
+    [
+      ".mp3",
+      2
+    ],
+    [
+      ".mat",
+      2
+    ],
+    [
+      ".gif",
+      2
+    ],
+    [
+      ".gradle",
+      2
+    ],
+    [
+      ".ps1",
+      1
+    ],
+    [
+      ".xml",
+      1
+    ],
+    [
+      ".pth",
+      1
+    ],
+    [
+      ".db",
+      1
+    ],
+    [
+      ".faiss",
+      1
+    ],
+    [
+      ".pkl",
+      1
+    ],
+    [
+      ".http",
+      1
+    ],
+    [
+      ".conf",
+      1
+    ],
+    [
+      ".bat",
+      1
+    ],
+    [
+      ".probe",
+      1
+    ],
+    [
+      ".jar",
+      1
+    ],
+    [
+      ".ini",
+      1
+    ],
+    [
+      ".config",
+      1
+    ]
+  ],
+  "by_kind": [
+    [
+      "code",
+      806
+    ],
+    [
+      "document",
+      245
+    ],
+    [
+      "asset",
+      220
+    ],
+    [
+      "other",
+      68
+    ],
+    [
+      "data",
+      64
+    ],
+    [
+      "config",
+      42
+    ]
+  ],
+  "by_root": {
+    "C:\\lecture\\01_python_workspace\\SeoMinHyeok": {
+      "files": 71,
+      "bytes": 986923
+    },
+    "C:\\lecture\\02_mysql_workspace\\SeoMinHyeok": {
+      "files": 14,
+      "bytes": 51576
+    },
+    "C:\\lecture\\03_data_collection_workspace\\SeoMinHyeok": {
+      "files": 14,
+      "bytes": 227547
+    },
+    "C:\\lecture\\04_data_analysis_workspace\\SeoMinHyeok": {
+      "files": 38,
+      "bytes": 460976671
+    },
+    "C:\\lecture\\05_machine_learning_workspace\\SeoMinHyeok": {
+      "files": 77,
+      "bytes": 102210966
+    },
+    "C:\\lecture\\06_deep_learning_basic_workspace\\SeoMinHyeok": {
+      "files": 18,
+      "bytes": 68349946
+    },
+    "C:\\lecture\\07_deep_learning_nlp_workspace\\SeoMinHyeok": {
+      "files": 40,
+      "bytes": 203537161
+    },
+    "C:\\lecture\\08_llm_workspace\\SeoMinHyeok": {
+      "files": 82,
+      "bytes": 132123523
+    },
+    "C:\\lecture\\09_deep_learning_multimodal_workspace\\SeoMinHyeok": {
+      "files": 73,
+      "bytes": 527920065
+    },
+    "C:\\lecture\\10_web_client_workspace\\SeoMinHyeok": {
+      "files": 107,
+      "bytes": 27956727
+    },
+    "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok": {
+      "files": 162,
+      "bytes": 2772199
+    },
+    "C:\\lecture\\12_devops_workspace\\SeoMinHyeok": {
+      "files": 118,
+      "bytes": 4155091
+    },
+    "C:\\lecture\\13_react-cicd_workspace": {
+      "files": 629,
+      "bytes": 15391479
+    },
+    "C:\\lecture\\git_workspace\\SeoMinHyeok": {
+      "files": 2,
+      "bytes": 2414991
+    }
+  },
+  "duplicate_group_count": 51,
+  "duplicate_file_count": 243,
+  "errors": []
+}

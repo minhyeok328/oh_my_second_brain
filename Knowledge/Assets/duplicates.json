@@ -1,0 +1,602 @@
+[
+  {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0,
+    "count": 75,
+    "paths": [
+      "C:\\lecture\\01_python_workspace\\SeoMinHyeok\\chap01\\01_python_workspace\\_07_module\\skn\\__init__.py",
+      "C:\\lecture\\02_mysql_workspace\\SeoMinHyeok\\.gitkeep",
+      "C:\\lecture\\02_mysql_workspace\\SeoMinHyeok\\01_create_user_database.sql",
+      "C:\\lecture\\03_data_collection_workspace\\SeoMinHyeok\\test.txt",
+      "C:\\lecture\\04_data_analysis_workspace\\SeoMinHyeok\\.gitkeep",
+      "C:\\lecture\\05_machine_learning_workspace\\SeoMinHyeok\\.gitkeep",
+      "C:\\lecture\\06_deep_learning_basic_workspace\\SeoMinHyeok\\.gitkeep",
+      "C:\\lecture\\07_deep_learning_nlp_workspace\\SeoMinHyeok\\.gitkeep",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\db.sqlite3",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\first\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\first\\migrations\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\second\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\second\\migrations\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\_01_django_project\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_02_django_template\\db.sqlite3",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_02_django_template\\app\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_02_django_template\\app\\migrations\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_02_django_template\\_02_django_template\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\post\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\post\\migrations\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\product\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\product\\migrations\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\_03_django_orm\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\qna\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\qna\\migrations\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\uauth\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\uauth\\migrations\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\_04_qna\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_05_django_session\\app\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_05_django_session\\app\\migrations\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_05_django_session\\_05_django_session\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_06_chatbot\\app\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_06_chatbot\\app\\migrations\\__init__.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_06_chatbot\\_06_chatbot\\__init__.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\02_docker\\_01_django_image\\db.sqlite3",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\02_docker\\_01_django_image\\app\\__init__.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\02_docker\\_01_django_image\\app\\migrations\\__init__.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\02_docker\\_01_django_image\\_01_django_image\\__init__.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\03_wsgi_asgi\\01_wsgi\\db.sqlite3",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\03_wsgi_asgi\\01_wsgi\\_01_wsgi_project\\__init__.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\03_wsgi_asgi\\02_asgi\\_02_asgi_project\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac\\.gradle\\8.10\\gc.properties",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac\\.gradle\\8.10\\dependencies-accessors\\gc.properties",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac\\.gradle\\vcs-1\\gc.properties",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap01_creational\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap01_creational\\section01_singleton\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap01_creational\\section02_factory\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap01_creational\\section03_abstractfactory\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap01_creational\\section04_builder\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap01_creational\\section05_prototype\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap02_structural\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap02_structural\\section01_adapter\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap02_structural\\section02_bridge\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap02_structural\\section03_composite\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap02_structural\\section04_decorator\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap02_structural\\section05_facade\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap02_structural\\section05_facade\\subsystem\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap02_structural\\section06_flyweight\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap02_structural\\section07_proxy\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section01_chain\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section01_chain\\supports\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section02_command\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section03_interpreter\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section04_iterator\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section05_mediator\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section06_memento\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section07_observer\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section08_state\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section09_strategy\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section10_template\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\02_design_pattern\\patternPrac_python\\chap03_behavioral\\section11_visitor\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\03_gha_cicd\\sample_app\\config\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\03_gha_cicd\\sample_app\\hello\\__init__.py",
+      "C:\\lecture\\13_react-cicd_workspace\\03_gha_cicd\\sample_app\\hello\\migrations\\__init__.py"
+    ]
+  },
+  {
+    "sha256": "dae0da7efdcdb3a7fb572d5e914b60631099122d4a4727ac6434c016161c5fe1",
+    "size": 63,
+    "count": 11,
+    "paths": [
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\first\\tests.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\second\\tests.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_02_django_template\\app\\tests.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\post\\tests.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\product\\tests.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\qna\\tests.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\uauth\\tests.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_05_django_session\\app\\tests.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_06_chatbot\\app\\tests.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\02_docker\\_01_django_image\\app\\tests.py",
+      "C:\\lecture\\13_react-cicd_workspace\\03_gha_cicd\\sample_app\\hello\\tests.py"
+    ]
+  },
+  {
+    "sha256": "a7ac68a753eeb831b6530bf71bf6917e577139f0734d17cc6a8666391564ab25",
+    "size": 66,
+    "count": 10,
+    "paths": [
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\first\\admin.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\second\\admin.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_02_django_template\\app\\admin.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\post\\admin.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\product\\admin.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\uauth\\admin.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_05_django_session\\app\\admin.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_06_chatbot\\app\\admin.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\02_docker\\_01_django_image\\app\\admin.py",
+      "C:\\lecture\\13_react-cicd_workspace\\03_gha_cicd\\sample_app\\hello\\admin.py"
+    ]
+  },
+  {
+    "sha256": "20afc17b6358bfdf5d74513225cd4a73443fa0bd15b944af71e143f694a5cf7c",
+    "size": 1721,
+    "count": 6,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\01_react-router-config\\public\\index.html",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\02_navbar\\public\\index.html",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\index.html",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\04_etc\\public\\index.html",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\03_redux-project-structure\\public\\index.html",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\index.html"
+    ]
+  },
+  {
+    "sha256": "3d10f7da6c603178340081668c4ac5b3ae9743ca9a262ab0fcd312fbb9f48bdd",
+    "size": 3870,
+    "count": 6,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\01_react-router-config\\public\\favicon.ico",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\02_navbar\\public\\favicon.ico",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\favicon.ico",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\04_etc\\public\\favicon.ico",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\03_redux-project-structure\\public\\favicon.ico",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\favicon.ico"
+    ]
+  },
+  {
+    "sha256": "50b3d8c3903af3f78d871b94557ab14f4e39ca192eaca3d2cfa863c867279a14",
+    "size": 492,
+    "count": 6,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\01_react-router-config\\public\\manifest.json",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\02_navbar\\public\\manifest.json",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\manifest.json",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\04_etc\\public\\manifest.json",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\03_redux-project-structure\\public\\manifest.json",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\manifest.json"
+    ]
+  },
+  {
+    "sha256": "70eafbc7a5fd466aa3213b5a7e1b2a41383cbe5d4e6fc5f4582efc58bdb509d1",
+    "size": 3359,
+    "count": 6,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\01_react-router-config\\README.md",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\02_navbar\\README.md",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\README.md",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\04_etc\\README.md",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\03_redux-project-structure\\README.md",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\README.md"
+    ]
+  },
+  {
+    "sha256": "90d24bc3bf698ac1e173739502298ccca72adf1f564fab05f484b8c48d1cadd2",
+    "size": 67,
+    "count": 6,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\01_react-router-config\\public\\robots.txt",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\02_navbar\\public\\robots.txt",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\robots.txt",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\04_etc\\public\\robots.txt",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\03_redux-project-structure\\public\\robots.txt",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\robots.txt"
+    ]
+  },
+  {
+    "sha256": "9ea4f4da7050c0cc408926f6a39c253624e9babb1d43c7977cd821445a60b461",
+    "size": 9664,
+    "count": 6,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\01_react-router-config\\public\\logo512.png",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\02_navbar\\public\\logo512.png",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\logo512.png",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\04_etc\\public\\logo512.png",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\03_redux-project-structure\\public\\logo512.png",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\logo512.png"
+    ]
+  },
+  {
+    "sha256": "c386396ec70db3608075b5fbfaac4ab1ccaa86ba05a68ab393ec551eb66c3e00",
+    "size": 5347,
+    "count": 6,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\01_react-router-config\\public\\logo192.png",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\02_navbar\\public\\logo192.png",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\logo192.png",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\04_etc\\public\\logo192.png",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\03_redux-project-structure\\public\\logo192.png",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\logo192.png"
+    ]
+  },
+  {
+    "sha256": "d373417ea2a8844e3b7a1515aab123e90fbeb4b7225144d55d243d9f6f04f73a",
+    "size": 310,
+    "count": 6,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\01_react-router-config\\.gitignore",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\02_navbar\\.gitignore",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\.gitignore",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\04_etc\\.gitignore",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\03_redux-project-structure\\.gitignore",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\.gitignore"
+    ]
+  },
+  {
+    "sha256": "e0e54c7030f1f5f56004427dd41edd7cc106d8d8b52d148b24e2b322454fb0aa",
+    "size": 60,
+    "count": 6,
+    "paths": [
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\first\\models.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_01_django_project\\second\\models.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_02_django_template\\app\\models.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_05_django_session\\app\\models.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\02_docker\\_01_django_image\\app\\models.py",
+      "C:\\lecture\\13_react-cicd_workspace\\03_gha_cicd\\sample_app\\hello\\models.py"
+    ]
+  },
+  {
+    "sha256": "06d17789ae99cf33289a8c228660f78977e0df1c7c161d928e971fa21f2b4d0b",
+    "size": 14916,
+    "count": 4,
+    "paths": [
+      "C:\\lecture\\08_llm_workspace\\SeoMinHyeok\\07_advanced_rag\\01_retrieval_optimization\\01_data\\documents.csv",
+      "C:\\lecture\\08_llm_workspace\\SeoMinHyeok\\07_advanced_rag\\01_retrieval_optimization\\02_data\\documents.csv",
+      "C:\\lecture\\08_llm_workspace\\SeoMinHyeok\\07_advanced_rag\\01_retrieval_optimization\\03_data\\documents.csv",
+      "C:\\lecture\\08_llm_workspace\\SeoMinHyeok\\07_advanced_rag\\01_retrieval_optimization\\04_data\\documents.csv"
+    ]
+  },
+  {
+    "sha256": "0a8ac62d1d0f0cce31d248ca75afbae418768f11adc81e026244498629c93678",
+    "size": 930,
+    "count": 4,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\03_gha_cicd\\sample_app\\.elasticbeanstalk\\app_versions\\app-7bca-260520_171044165216.zip",
+      "C:\\lecture\\13_react-cicd_workspace\\03_gha_cicd\\sample_app\\.elasticbeanstalk\\app_versions\\app-7bca-260520_172910803302.zip",
+      "C:\\lecture\\13_react-cicd_workspace\\03_gha_cicd\\sample_app\\.elasticbeanstalk\\app_versions\\app-7bca-260520_173649763376.zip",
+      "C:\\lecture\\13_react-cicd_workspace\\03_gha_cicd\\sample_app\\.elasticbeanstalk\\app_versions\\app-7bca-260520_173817213118.zip"
+    ]
+  },
+  {
+    "sha256": "4a437fde05fe5264e1701a7387ac6fb75393772ba38bb2c9c566405af5af4bd7",
+    "size": 60302,
+    "count": 4,
+    "paths": [
+      "C:\\lecture\\04_data_analysis_workspace\\SeoMinHyeok\\02_pandas\\data\\titanic.csv",
+      "C:\\lecture\\04_data_analysis_workspace\\SeoMinHyeok\\03_data_visualization\\data\\titanic.csv",
+      "C:\\lecture\\04_data_analysis_workspace\\SeoMinHyeok\\04_eda\\data\\titanic.csv",
+      "C:\\lecture\\05_machine_learning_workspace\\SeoMinHyeok\\02_ml_basics\\data\\titanic_train.csv"
+    ]
+  },
+  {
+    "sha256": "6726f8715421e35aa588fff4b9c397b04cc12a88d5d348a5b640e72d64ac61da",
+    "size": 86,
+    "count": 4,
+    "paths": [
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_02_django_template\\app\\apps.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_05_django_session\\app\\apps.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_06_chatbot\\app\\apps.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\02_docker\\_01_django_image\\app\\apps.py"
+    ]
+  },
+  {
+    "sha256": "86a992a716d31c35df434e4e3f828da9ea52d1c744be45165016fc365226a850",
+    "size": 6805,
+    "count": 4,
+    "paths": [
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\media\\profiles\\110abf7727ff4d31a89172eb70931ae1.jpg",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\media\\profiles\\219be4319aa247ec8eb97ec1ef515b85.jpg",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\media\\profiles\\8b296042ab0f4da799cca0e4da1c10a7.jpg",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\media\\profiles\\Golden-Retriever.jpg"
+    ]
+  },
+  {
+    "sha256": "e79b83354f954c5eaee4481124ac394fff388be73003c4415034fe4933828aa5",
+    "size": 5005,
+    "count": 4,
+    "paths": [
+      "C:\\lecture\\01_python_workspace\\SeoMinHyeok\\chap01\\01_python_workspace\\_08_io\\pikachu.png",
+      "C:\\lecture\\01_python_workspace\\SeoMinHyeok\\chap01\\01_python_workspace\\_08_io\\pikachu_copy.png",
+      "C:\\lecture\\01_python_workspace\\SeoMinHyeok\\chap01\\01_python_workspace\\_10_streamlit\\_01_basics\\data\\pikachu.png",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_04_qna\\media\\profiles\\21de8c64f92a45c6b669765bde106bd9.png"
+    ]
+  },
+  {
+    "sha256": "27f465737948a20ba3d58952c7a3fce2e7f5721a558ec48c651e11af4a0a2299",
+    "size": 2188,
+    "count": 3,
+    "paths": [
+      "C:\\lecture\\08_llm_workspace\\SeoMinHyeok\\07_advanced_rag\\01_retrieval_optimization\\02_data\\queries.csv",
+      "C:\\lecture\\08_llm_workspace\\SeoMinHyeok\\07_advanced_rag\\01_retrieval_optimization\\03_data\\queries.csv",
+      "C:\\lecture\\08_llm_workspace\\SeoMinHyeok\\07_advanced_rag\\01_retrieval_optimization\\04_data\\queries.csv"
+    ]
+  },
+  {
+    "sha256": "6466f0752d39e48ca4e2105876cec24c90fe15d592c54845a2a0b397539e5b24",
+    "size": 163,
+    "count": 3,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\02_navbar\\src\\index.js",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\src\\index.js",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\04_etc\\src\\index.js"
+    ]
+  },
+  {
+    "sha256": "be57cc359863f2f2b4de4e5ca8b2a597604d94bd6d2c274de3257ec48db413d5",
+    "size": 111,
+    "count": 3,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\02_navbar\\src\\components\\Header.js",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\src\\components\\Header.js",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\04_etc\\src\\components\\Header.js"
+    ]
+  },
+  {
+    "sha256": "04840385ec812ec9518fcabce07a8cc3193bc0b1b8b17638b20f9f03ff6c3da2",
+    "size": 91837,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\13.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\13.PNG"
+    ]
+  },
+  {
+    "sha256": "0974295d26d833a1092fa35f5081969bf3ded480f241c1d43b981c28b7c98efb",
+    "size": 110998,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\21.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\21.PNG"
+    ]
+  },
+  {
+    "sha256": "1ec112645b10164676a3460799865ef397bcfc07cf8b054e2e0e9d9ad7446780",
+    "size": 541792,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\8.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\8.PNG"
+    ]
+  },
+  {
+    "sha256": "234fad01d1ec37d2a1dbbc2799b3f861756d9defdc229f30b3ca72c48b104cab",
+    "size": 163774,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\02_docker\\docker-handout\\images\\6_compose\\docker-composeup1.png",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\02_docker\\docker-handout\\images\\6_compose\\docker-composeup2.png"
+    ]
+  },
+  {
+    "sha256": "2d9f939bb1249ff805a656ed6b42537d93100515e2a0db419d856d2a44c6e820",
+    "size": 76901,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\17.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\17.PNG"
+    ]
+  },
+  {
+    "sha256": "2f385535b75d473b66161b91f2774f65ed52158997e7a9c056af15026eb35399",
+    "size": 455603,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\14.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\14.PNG"
+    ]
+  },
+  {
+    "sha256": "3e196202b1e9da6418d517848c33a9573711d419c9501bce29d901e4edba5510",
+    "size": 5308,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\05_machine_learning_workspace\\SeoMinHyeok\\01_overview\\data\\fish_csv_data.csv",
+      "C:\\lecture\\05_machine_learning_workspace\\SeoMinHyeok\\02_ml_basics\\data\\fish_csv_data.csv"
+    ]
+  },
+  {
+    "sha256": "408146a6083d49ed84f429fcbe95593c9ffe449dcccbd8ae833898e05d8b5daf",
+    "size": 49636,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\7.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\7.PNG"
+    ]
+  },
+  {
+    "sha256": "4ed146b608bdc0d947b4b761bb7fd6527cc72f9c508daa4ae24ccf985691cf00",
+    "size": 227015,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\1.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\1.PNG"
+    ]
+  },
+  {
+    "sha256": "527ca83b33a33ca48b06c6155956af80d3cbf613fdd6cd1acc185c0622159fc6",
+    "size": 588745,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\16.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\16.PNG"
+    ]
+  },
+  {
+    "sha256": "59a5cd04f1ed6f767169a8eea1fcdb0d3a0930c1cf297d2d6747e79e4c8e6748",
+    "size": 62813,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\20.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\20.PNG"
+    ]
+  },
+  {
+    "sha256": "5bb9ccd757089522afcca0e997e3b088effecc3a477eaee5df1742bb772d66c7",
+    "size": 301,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\03_redux-project-structure\\src\\index.js",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\src\\index.js"
+    ]
+  },
+  {
+    "sha256": "6af5753234123752b5e20638817167b950247a321b9fdac32414b2b01f693e9d",
+    "size": 308,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\03_redux-project-structure\\src\\layouts\\Layout.js",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\src\\layouts\\Layout.js"
+    ]
+  },
+  {
+    "sha256": "6e90dc0eb960d462bb29ec60ad2c0c116d52ebb77889ae979121eb2dda072943",
+    "size": 136771,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\10.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\10.PNG"
+    ]
+  },
+  {
+    "sha256": "6fd458d8f6136b6b8c8f3720c9fd859e3f2af34d55a377cbc38f9fd5e793defb",
+    "size": 222326,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\15.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\15.PNG"
+    ]
+  },
+  {
+    "sha256": "729746fbf97dfcec16a260c0144db8591f3f1b96ef6ca94a540a0ea69ddf2be3",
+    "size": 145002,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\9.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\9.PNG"
+    ]
+  },
+  {
+    "sha256": "8f53e9e84a39fad930657f8ea006e7ce12952dd3605b3df056a17cf0a0b6bff1",
+    "size": 57605,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\12.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\12.PNG"
+    ]
+  },
+  {
+    "sha256": "9e9e8b1bdbe90b0263416643c73a28a930584e75384abee67b406ac58b36cf64",
+    "size": 112838,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\4.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\4.PNG"
+    ]
+  },
+  {
+    "sha256": "a78eefdf14a6b614cee66063f3beada344923d848ae4e3d37d93ad4e978c5082",
+    "size": 447,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\03_wsgi_asgi\\01_wsgi\\.dockerignore",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\03_wsgi_asgi\\02_asgi\\.dockerignore"
+    ]
+  },
+  {
+    "sha256": "a99aafb59b323517039cf1b91fda077aba6544a560698a8ae4febd50efccff4a",
+    "size": 41777,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\19.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\19.PNG"
+    ]
+  },
+  {
+    "sha256": "bb41612fb453e5bc9fe4895c9d910cadc1f64ce9d091d7d1414d928ed036ea6d",
+    "size": 66,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\post\\views.py",
+      "C:\\lecture\\11_web_server_workspace\\SeoMinHyeok\\_03_django_orm\\product\\views.py"
+    ]
+  },
+  {
+    "sha256": "bff68841b25093e0c740d51712350b3eee8e153e423aa24757930fdc2a46d7f5",
+    "size": 202782,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\5.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\5.PNG"
+    ]
+  },
+  {
+    "sha256": "c5e362edd3aafb5366b41f015ed7a42924c1e6cf1ea178fd66da2161512f9a68",
+    "size": 27324,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\3.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\3.PNG"
+    ]
+  },
+  {
+    "sha256": "c9215a491f4bf6e17d06fa9a0e597e4b3af5ecc0c6a82b12d2988afe9e7686a6",
+    "size": 855,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\03_wsgi_asgi\\01_wsgi\\_01_wsgi_project\\urls.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\03_wsgi_asgi\\02_asgi\\_02_asgi_project\\urls.py"
+    ]
+  },
+  {
+    "sha256": "d1a60c12f7587db04123f8dc091c9bbf15e748536104c2fc0da451bccbe120cb",
+    "size": 972,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\03_wsgi_asgi\\01_wsgi\\_01_wsgi_project\\views.py",
+      "C:\\lecture\\12_devops_workspace\\SeoMinHyeok\\03_wsgi_asgi\\02_asgi\\_02_asgi_project\\views.py"
+    ]
+  },
+  {
+    "sha256": "d8d36a817346dfdb2a22dfc63e5f889bef0b4125137e7913f27901e3dfec18f7",
+    "size": 27234,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\2.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\2.PNG"
+    ]
+  },
+  {
+    "sha256": "e999ae558b00a5361b70e68ad8d0586635bd6afd539418e304e239add1f354f2",
+    "size": 41,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\01_python_workspace\\SeoMinHyeok\\chap01\\01_python_workspace\\_08_io\\helloworld.txt",
+      "C:\\lecture\\01_python_workspace\\SeoMinHyeok\\chap01\\01_python_workspace\\_08_io\\helloworld_copy.txt"
+    ]
+  },
+  {
+    "sha256": "f31d39e30986ab53964b4d5df109667eb09dac6e877d148cbccfb57c88e5ea86",
+    "size": 119003,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\6.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\6.PNG"
+    ]
+  },
+  {
+    "sha256": "fc47e2818ead8a03ae59b5bfaa812af2dbdac95b51050e8a207b1af162b8623d",
+    "size": 69318,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\11.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\11.PNG"
+    ]
+  },
+  {
+    "sha256": "fc5ed6479510f3dffd1a931004f01096031093e40df972424849e12388ad67b8",
+    "size": 68399,
+    "count": 2,
+    "paths": [
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\05_router\\03_params\\public\\images\\18.PNG",
+      "C:\\lecture\\13_react-cicd_workspace\\01_react\\06_redux\\04_redux-project-structure2\\public\\images\\18.PNG"
+    ]
+  }
+]

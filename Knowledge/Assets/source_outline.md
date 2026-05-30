@@ -1,0 +1,1276 @@
+---
+type: "asset"
+status: "source-outline"
+created: "2026-05-30"
+updated: "2026-05-30"
+reviewed: "2026-05-30"
+tags:
+  - 'llm_wiki'
+aliases:
+  - 'Source Outline'
+---
+
+# Source Outline
+
+태그: #llm_wiki
+## 01_python_workspace
+
+- files: 71, extensions: .py 39, .ipynb 14, .txt 5, [no extension] 3, .png 3, .csv 2, .md 2, .json 1, .yml 1, .ps1 1
+- chap01/01_python_workspace/_02_data_type: 14
+- chap01/01_python_workspace/_10_streamlit: 12
+- chap01/01_python_workspace/_06_oop: 8
+- chap01/01_python_workspace/_08_io: 8
+- chap01/01_python_workspace/_03_control_flow: 6
+- chap01/01_python_workspace/_07_module: 5
+- .: 4
+- chap01/01_python_workspace/_04_function: 4
+- chap01/01_python_workspace/_09_exception: 3
+- selftest: 3
+- chap01/01_python_workspace/_01_variable: 2
+- chap01/01_python_workspace/_05_api: 2
+
+## 02_mysql_workspace
+
+- files: 14, extensions: .sql 11, .md 2, [no extension] 1
+- .: 14
+
+## 03_data_collection_workspace
+
+- files: 14, extensions: .ipynb 5, [no extension] 2, .json 2, .md 1, .xml 1, .html 1, .txt 1, .py 1
+- .: 14
+
+## 04_data_analysis_workspace
+
+- files: 38, extensions: .ipynb 26, .csv 10, [no extension] 1, .png 1
+- 01_numpy: 9
+- 02_pandas: 7
+- 02_pandas/data: 4
+- 03_data_visualization: 4
+- mhtest: 4
+- mhtest/data: 3
+- .: 2
+- 03_data_visualization/data: 2
+- 04_eda: 2
+- 04_eda/data: 1
+
+## 05_machine_learning_workspace
+
+- files: 77, extensions: .ipynb 37, .csv 19, .tsv 7, .png 4, .tfevents 4, .json 3, [no extension] 1, .zip 1, .txt 1
+- 06_ensemble: 8
+- 04_classification: 7
+- 02_ml_basics: 6
+- 09_recommendation_system/data/ml-latest-small: 6
+- 05_algorithm/01_decisiontree: 5
+- 04_classification/data: 4
+- 09_recommendation_system/catboost_info: 4
+- 01_overview: 3
+- 02_ml_basics/data: 3
+- 03_regression: 3
+- 04_classification/catboost_info: 3
+- 06_ensemble/catboost_info: 3
+- 08_clustering: 3
+- 09_recommendation_system: 3
+- 09_recommendation_system/data: 3
+- 01_overview/data: 2
+- 05_algorithm/02_svm: 2
+- .: 1
+- 03_regression/data: 1
+- 04_classification/catboost_info/learn: 1
+- 05_algorithm/01_decisiontree/data: 1
+- 06_ensemble/catboost_info/learn: 1
+- 06_ensemble/data: 1
+- 07_dimensionality_reduction: 1
+- 09_recommendation_system/catboost_info/learn: 1
+- 09_recommendation_system/catboost_info/test: 1
+
+## 06_deep_learning_basic_workspace
+
+- files: 18, extensions: .ipynb 9, [no extension] 5, .gz 4
+- .: 10
+- data/MNIST/raw: 8
+
+## 07_deep_learning_nlp_workspace
+
+- files: 40, extensions: .ipynb 35, .txt 3, [no extension] 1, .pth 1
+- 02_preprocessing: 9
+- 03_text_vectorization: 6
+- 04_sequence_model: 5
+- 10_transfer_learning: 4
+- 07_language_modeling: 3
+- 05_nlp_tasks/01_text_classification: 2
+- 06_subword_tokenizer: 2
+- 08_seq2seq: 2
+- 08_seq2seq/data: 2
+- 09_transformer: 2
+- .: 1
+- 01_nlp_overview: 1
+- 08_seq2seq/model: 1
+
+## 08_llm_workspace
+
+- files: 82, extensions: .ipynb 50, .csv 11, .jsonl 6, .pdf 3, [no extension] 2, .py 2, .txt 2, .json 2, .mp3 1, .db 1
+- 05_lanchain/02_langchain_component: 7
+- 07_advanced_rag/01_retrieval_optimization: 7
+- 10_sllm: 7
+- 03_openai_api: 6
+- 08_langgraph: 6
+- 03_openai_api/06_voicebot: 5
+- 04_gpt_finetuning: 5
+- 07_advanced_rag/02_generation_optimization: 5
+- 04_gpt_finetuning/data: 4
+- 03_openai_api/data: 3
+- 06_rag: 3
+- 02_prompt_engineering: 2
+- 05_lanchain/01_langchain_overview: 2
+- 05_lanchain/02_langchain_component/data: 2
+- 05_lanchain/02_langchain_component/db: 2
+- 06_rag/data: 2
+- 07_advanced_rag/01_retrieval_optimization/02_data: 2
+- 07_advanced_rag/01_retrieval_optimization/03_data: 2
+- 07_advanced_rag/01_retrieval_optimization/04_data: 2
+- 09_langgraph_multi_agent: 2
+- .: 1
+- 01_llm_overview: 1
+- 07_advanced_rag/01_retrieval_optimization/01_data: 1
+- 10_sllm/data: 1
+- homework_20260417/data: 1
+- homework_20260417: 1
+
+## 09_deep_learning_multimodal_workspace
+
+- files: 73, extensions: .jpg 43, .ipynb 13, .gz 5, [no extension] 4, .csv 3, .mp4 3, .mat 2
+- 05_multimodal_rag/video_rag/frames: 34
+- 01_CNN/data/FashionMNIST: 8
+- 05_multimodal_rag/data: 8
+- 03_clip_blip: 5
+- 01_CNN: 4
+- 01_CNN/data: 3
+- 05_multimodal_rag/video_rag/comments: 3
+- 05_multimodal_rag/video_rag/videos: 3
+- 04_image_generation: 2
+- 05_multimodal_rag: 2
+- 02_vision_transformer: 1
+
+## 10_web_client_workspace
+
+- files: 107, extensions: .js 52, .html 41, .png 11, .css 1, .mp3 1, .mp4 1
+- 02_css: 17
+- 03_js/01_js_core/01_variable: 12
+- 02_css/sample/image: 11
+- 01_html: 8
+- 03_js/01_js_core/03_object-literal: 7
+- 03_js/01_js_core/04_function: 7
+- 03_js/01_js_core/09_standard-built-in-object: 5
+- 03_js/01_js_core/02_operator: 4
+- 03_js/01_js_core/05_scope: 4
+- 03_js/02_javascript_es6/03_distructuring-assignment: 4
+- 03_js/03_js_browser/01_DOM: 4
+- 03_js/03_js_browser/05_async: 4
+- 03_js/03_js_browser/03_Event: 3
+- 03_js/01_js_core/06_object-constructor: 2
+- 03_js/01_js_core/07_prototype_inheritance: 2
+- 03_js/01_js_core/08_array: 2
+- 03_js/02_javascript_es6/02_spread-syntax: 2
+- 03_js/03_js_browser/02_BOM: 2
+- 03_js/03_js_browser/04_Timer: 2
+- 02_css/css: 1
+- 02_css/sample/audio: 1
+- 02_css/sample/video: 1
+- 03_js/02_javascript_es6/01_arrow-function: 1
+- .: 1
+
+## 11_web_server_workspace
+
+- files: 162, extensions: .py 116, .html 22, .jpg 5, .sqlite3 4, .sql 4, .css 2, .js 2, .txt 2, .png 2, .gif 1
+- _06_chatbot/app: 10
+- _01_django_project/first: 7
+- _01_django_project/second: 7
+- _02_django_template/app: 7
+- _02_django_template/templates/app: 7
+- _03_django_orm/post: 7
+- _03_django_orm/product: 7
+- _04_qna/qna: 7
+- _04_qna/uauth: 7
+- _05_django_session/app: 7
+- _04_qna/media/profiles: 6
+- _01_django_project/_01_django_project: 5
+- _02_django_template/_02_django_template: 5
+- _03_django_orm/_03_django_orm: 5
+- _04_qna/_04_qna: 5
+- _05_django_session/_05_django_session: 5
+- _06_chatbot/_06_chatbot: 5
+- _04_qna/templates/qna: 4
+- _06_chatbot: 4
+- _02_django_template/templates/layout: 3
+- _03_django_orm/product/migrations: 3
+- _04_qna/templates/layout: 3
+- _01_django_project: 2
+- _02_django_template: 2
+- _03_django_orm: 2
+- _03_django_orm/post/migrations: 2
+- _03_django_orm/sql: 2
+- _04_qna/qna/migrations: 2
+- _04_qna/sql: 2
+- _04_qna/templates/uauth: 2
+- _04_qna/uauth/migrations: 2
+- _05_django_session: 2
+- _06_chatbot/app/migrations: 2
+- _01_django_project/first/migrations: 1
+- _01_django_project/second/migrations: 1
+
+## 12_devops_workspace
+
+- files: 118, extensions: .png 65, .py 28, .md 11, [no extension] 6, .txt 3, .sqlite3 2, .conf 1, .yml 1, .gif 1
+- 02_docker/docker-handout/images: 66
+- 02_docker/_01_django_image/app: 8
+- 02_docker/docker-handout/mds: 7
+- 03_wsgi_asgi/01_wsgi/_01_wsgi_project: 6
+- 03_wsgi_asgi/02_asgi/_02_asgi_project: 6
+- 02_docker/_01_django_image: 5
+- 02_docker/_01_django_image/_01_django_image: 5
+- 03_wsgi_asgi/01_wsgi: 5
+- 03_wsgi_asgi/02_asgi: 4
+- 02_docker/02_docker_compose: 3
+- 01_aws: 1
+- 02_docker: 1
+- 03_wsgi_asgi: 1
+
+## git_workspace
+
+- files: 2, extensions: .md 1, .jpg 1
+- .: 2
+
+## lecture
+
+- files: 629, extensions: .py 179, .java 138, .html 88, .js 72, .png 57, .json 23, [no extension] 13, .md 12, .txt 7, .bin 7
+- 02_design_pattern/patternPrac/src: 138
+- 02_design_pattern/patternPrac_python/chap03_behavioral: 87
+- 01_react/06_redux/04_redux-project-structure2: 63
+- 02_design_pattern/patternPrac_python/chap02_structural: 47
+- 01_react/05_router/03_params: 46
+- 02_design_pattern/patternPrac_python/chap01_creational: 31
+- 01_react/06_redux/03_redux-project-structure: 23
+- 01_react/05_router/04_etc: 19
+- 01_react/05_router/02_navbar: 18
+- 02_design_pattern/patternPrac/.gradle: 16
+- 01_react/05_router/01_react-router-config: 15
+- 03_gha_cicd/sample_app: 8
+- 03_gha_cicd/sample_app/hello: 8
+- 01_react/02_component/01_JSX: 7
+- 01_react/02_component/06_event: 7
+- 01_react/03_hooks/01_useEffect: 6
+- 01_react/06_redux/02_redux-middleware: 6
+- 02_design_pattern/patternPrac: 6
+- 03_gha_cicd/sample_app/.elasticbeanstalk: 6
+- 01_react/06_redux/01_basic: 5
+- 03_gha_cicd/sample_app/config: 5
+- 01_react/02_component/04_props: 4
+- 01_react/02_component/05_state: 4
+- 01_react/02_component/08_lifecycle: 4
+- 01_react/03_hooks/03_useMemo: 4
+- 01_react/04_async/01_intro: 4
+- 01_react/04_async/02_api: 4
+- 01_react/04_async/03_data-component: 4
+- .: 3
+- 01_react/02_component/02_rendering: 3
+- 01_react/02_component/03_component: 3
+- 01_react/02_component/07_iteration: 3
+- 01_react/03_hooks/04_useCallBack: 3
+- 01_react/03_hooks/05_useRef: 3
+- 01_react/01_intro: 2
+
+# Keyword Evidence
+
+
+## analysis: 139 files
+
+- .gitignore
+- environment.yml
+- chap01\01_python_workspace\_04_function\_01_function.py
+- chap01\01_python_workspace\_06_oop\_04_inhertitance\_01_inheritance.ipynb
+- chap01\01_python_workspace\_10_streamlit\_01_basics\_02_data.py
+- chap01\01_python_workspace\_10_streamlit\_02_playground\LICENSE
+- .gitignore
+- 01_openapi.ipynb
+- 03_정적웹페이지_스크랩핑.ipynb
+- homework_다차원배열_260210.ipynb
+- 01_numpy\01_ndarray.ipynb
+- 01_numpy\02_indexing_slicing.ipynb
+- 01_numpy\03_operation.ipynb
+- 01_numpy\04_statistics.ipynb
+- 01_numpy\05_sort.ipynb
+- 01_numpy\06_merge_split.ipynb
+- 01_numpy\07_reshape.ipynb
+- 01_numpy\homework_통계_260210.ipynb
+- 02_pandas\01_series.ipynb
+- 02_pandas\02_dataframe.ipynb
+- 02_pandas\03_preprocessing.ipynb
+- 02_pandas\04_aggregation.ipynb
+- 02_pandas\05_merge_join.ipynb
+- 02_pandas\homework_dataframe_260212.ipynb
+- 02_pandas\homework_titanic_agg_260211.ipynb
+- 03_data_visualization\01_matplotlib.ipynb
+- 03_data_visualization\02_matplotlib_chart.ipynb
+- 03_data_visualization\homework_plot_260212.ipynb
+- 04_eda\01_eda.ipynb
+- 04_eda\02_eda_titanic.ipynb
+- mhtest\mhtest_card.ipynb
+- mhtest\mhtest_card2.ipynb
+- mhtest\seoul_air.ipynb
+- mhtest\seoul_traffic.ipynb
+- 01_overview\01_classification_overview.ipynb
+- 01_overview\02_regression_overview.ipynb
+- 02_ml_basics\02_preprocessing.ipynb
+- 02_ml_basics\03_01_classification_evaluation.ipynb
+- 02_ml_basics\03_02_regression_evaluation.ipynb
+- 02_ml_basics\04_cross_validation.ipynb
+- 02_ml_basics\05_hyperparameter_tuning.ipynb
+- 03_regression\01_gradient_descent.ipynb
+- 03_regression\02_LinearRegression.ipynb
+- 03_regression\03_regularized_linear_model.ipynb
+- 04_classification\01_LogisticRegression.ipynb
+- 04_classification\homework_26_03_06.ipynb
+- 04_classification\homework_26_03_06_2.ipynb
+- 04_classification\homework_26_03_06_catboost.ipynb
+- 04_classification\homework_26_03_06_subject_included.ipynb
+- 04_classification\homework_26_03_06_xgb.ipynb
+- 05_algorithm\01_decisiontree\01_DecisionTreeClassifier.ipynb
+- 05_algorithm\01_decisiontree\02_DecisionTreeRegressor.ipynb
+- 05_algorithm\02_svm\01_SVC.ipynb
+- 05_algorithm\02_svm\02_SVR.ipynb
+- 06_ensemble\01_ensemble_voting.ipynb
+- 06_ensemble\02_bagging.ipynb
+- 06_ensemble\03_boosting.ipynb
+- 06_ensemble\04_stacking.ipynb
+- 06_ensemble\05_XGBoost.ipynb
+- 06_ensemble\06_LightGBM.ipynb
+- 06_ensemble\07_CatBoost.ipynb
+- 06_ensemble\08_HyperOpt.ipynb
+- 07_dimensionality_reduction\01_pca_lda.ipynb
+- 08_clustering\01_Kmeans.ipynb
+- 08_clustering\02_DBSCAN.ipynb
+- 08_clustering\03_rmf_customer_segmentation.ipynb
+- 09_recommendation_system\01_content_based_filtering.ipynb
+- 09_recommendation_system\02_reg_based_recommendation.ipynb
+- 09_recommendation_system\03_item_based_collaborative_filtering.ipynb
+- 09_recommendation_system\data\tmdb_5000_movies.csv
+- 01_perceptron.ipynb
+- 02_activation_function.ipynb
+- 03_torch_tensor.ipynb
+- 04_output_layer.ipynb
+- 05_loss_function.ipynb
+- 06_differentiation_gradient.ipynb
+- 07_backpropagation.ipynb
+- 08_optimizer.ipynb
+- 09_regularlization.ipynb
+- 02_preprocessing\05_integer_encoding_padding.ipynb
+
+## collection: 98 files
+
+- .gitignore
+- chap01\01_python_workspace\_02_data_type\_07_dict.py
+- chap01\01_python_workspace\_02_data_type\_08_set.py
+- chap01\01_python_workspace\_05_api\_01_builtins.ipynb
+- .env
+- .gitignore
+- 01_openapi.ipynb
+- 03_정적웹페이지_스크랩핑.ipynb
+- 04_동적웹페이지_스크랩핑.ipynb
+- README.md
+- test.ipynb
+- whyrano.py
+- 03_data_visualization\01_matplotlib.ipynb
+- 02_ml_basics\01_scikit_learn.ipynb
+- 06_ensemble\03_boosting.ipynb
+- 06_ensemble\06_LightGBM.ipynb
+- 06_ensemble\07_CatBoost.ipynb
+- 08_optimizer.ipynb
+- 02_preprocessing\01_toeknization.ipynb
+- .env
+- 01_llm_overview\01_llm_overview.ipynb
+- 02_prompt_engineering\02_chat_completion_api.ipynb
+- 03_openai_api\01_chat_completions_api.ipynb
+- 03_openai_api\02_tts_stt.ipynb
+- 03_openai_api\03_embeddings.ipynb
+- 03_openai_api\04_moderation.ipynb
+- 03_openai_api\05_function_calling.ipynb
+- 03_openai_api\homework_260403.ipynb
+- 03_openai_api\06_voicebot\.env
+- 03_openai_api\06_voicebot\openai_service.py
+- 04_gpt_finetuning\01_sarcastic_chatbot.ipynb
+- 04_gpt_finetuning\02_korquad.ipynb
+- 05_lanchain\01_langchain_overview\01_langchain_overview.ipynb
+- 05_lanchain\01_langchain_overview\02_langsmith.ipynb
+- 05_lanchain\02_langchain_component\01_model_io.ipynb
+- 05_lanchain\02_langchain_component\02_retrieval.ipynb
+- 05_lanchain\02_langchain_component\03_chains.ipynb
+- 05_lanchain\02_langchain_component\05_agent_tool.ipynb
+- 05_lanchain\02_langchain_component\homework_260409.ipynb
+- 06_rag\01_2-stage_rag.ipynb
+- 06_rag\02_ai_sommelier.ipynb
+- 06_rag\03_ai_sommelier_rag.ipynb
+- 07_advanced_rag\01_retrieval_optimization\01_indexing.ipynb
+- 07_advanced_rag\01_retrieval_optimization\02_bm25_dense_comparison.ipynb
+- 07_advanced_rag\01_retrieval_optimization\03_rrf.ipynb
+- 07_advanced_rag\01_retrieval_optimization\04_hyde.ipynb
+- 07_advanced_rag\01_retrieval_optimization\05_cohere_rerank.ipynb
+- 07_advanced_rag\01_retrieval_optimization\06_contextual_compression.ipynb
+- 07_advanced_rag\01_retrieval_optimization\07_metadata_filtering_self_query_retriever.ipynb
+- 07_advanced_rag\02_generation_optimization\01_rag_cot.ipynb
+- 07_advanced_rag\02_generation_optimization\02_rag_self_consistency.ipynb
+- 07_advanced_rag\02_generation_optimization\03_rag_prompt_compression.ipynb
+- 07_advanced_rag\02_generation_optimization\04_rag_structured_output.ipynb
+- 07_advanced_rag\02_generation_optimization\05_rag_tot.ipynb
+- 08_langgraph\01_langgraph_overview.ipynb
+- 08_langgraph\02_singleturn_chatbot.ipynb
+- 08_langgraph\03_chatbot_with_tools.ipynb
+- 08_langgraph\04_chatbot_with_mcp_server.ipynb
+- 08_langgraph\05_chatbot_with_memory.ipynb
+- 08_langgraph\06_chatbot_with_HITL.ipynb
+- 09_langgraph_multi_agent\01_agentic_rag.ipynb
+- 09_langgraph_multi_agent\02_agent_supervisor.ipynb
+- 10_sllm\01_sllm.ipynb
+- 10_sllm\04_news2stock_analyser_data.ipynb
+- 10_sllm\05_news2stock_LoRA.ipynb
+- 10_sllm\05_news2stock_LoRA_runpod.ipynb
+- 10_sllm\06_news2stock_QLoRA_runpod.ipynb
+- homework_20260417\my_own_bot.ipynb
+- 01_CNN\04_pretrained_cnn_models.ipynb
+- 02_vision_transformer\01_vision_transformer.ipynb
+- 05_multimodal_rag\01_simple_multimodal_rag.ipynb
+- 05_multimodal_rag\02_video_rag_frame_extraction.ipynb
+- 03_js\03_js_browser\02_BOM\01_open_alert-confirm-prompt.html
+- _02_django_template\app\views.py
+- _06_chatbot\.env
+- _06_chatbot\app\views.py
+- _06_chatbot\app\views_inmemory.py
+- 02_docker\docker-handout\mds\5_Docker이미지만들기.md
+- 02_docker\docker-handout\mds\7_Docker볼륨.md
+- 01_react\05_router\03_params\src\pages\Menu.js
+
+## deep_learning: 63 files
+
+- README.md
+- 02_ml_basics\01_scikit_learn.ipynb
+- 04_classification\01_LogisticRegression.ipynb
+- 07_dimensionality_reduction\01_pca_lda.ipynb
+- 01_perceptron.ipynb
+- 02_activation_function.ipynb
+- 03_torch_tensor.ipynb
+- 04_output_layer.ipynb
+- 05_loss_function.ipynb
+- 06_differentiation_gradient.ipynb
+- 07_backpropagation.ipynb
+- 08_optimizer.ipynb
+- 09_regularlization.ipynb
+- 01_nlp_overview\01_nlp_overview.ipynb
+- 02_preprocessing\01_toeknization.ipynb
+- 02_preprocessing\05_integer_encoding_padding.ipynb
+- 02_preprocessing\06_one_hot_encoding.ipynb
+- 02_preprocessing\homework_web_review_preprocessing_260323.ipynb
+- 03_text_vectorization\01_text_vectorization.ipynb
+- 03_text_vectorization\03_word_embedding.ipynb
+- 03_text_vectorization\04_torch_embedding.ipynb
+- 03_text_vectorization\homework_little_price_embedding_ver_20260326.ipynb
+- 04_sequence_model\01_sequential_data_rnn.ipynb
+- 04_sequence_model\02_lstm.ipynb
+- 04_sequence_model\03_gru.ipynb
+- 04_sequence_model\04_nsmc.ipynb
+- 04_sequence_model\05_lstm_based_stock_price_prediction.ipynb
+- 05_nlp_tasks\01_text_classification\01_naive_beyes_classifier.ipynb
+- 05_nlp_tasks\01_text_classification\02_multi_label_classification.ipynb
+- 06_subword_tokenizer\01_sentencepiece.ipynb
+- 06_subword_tokenizer\02_BertWordPieceTokenizer.ipynb
+- 07_language_modeling\01_language_modeling.ipynb
+- 07_language_modeling\03_nnlm.ipynb
+- 08_seq2seq\01_seq2seq_translation.ipynb
+- 09_transformer\01_attention.ipynb
+- 09_transformer\02_transformer.ipynb
+- 10_transfer_learning\01_bert_overview.ipynb
+- 10_transfer_learning\02_bert_transfer_learning.ipynb
+- 10_transfer_learning\03_pipeline_nlp_tasks.ipynb
+- 10_transfer_learning\homework_260402.ipynb
+- 01_llm_overview\01_llm_overview.ipynb
+- 03_openai_api\01_chat_completions_api.ipynb
+- 05_lanchain\01_langchain_overview\01_langchain_overview.ipynb
+- 05_lanchain\02_langchain_component\02_retrieval.ipynb
+- 06_rag\01_2-stage_rag.ipynb
+- 07_advanced_rag\02_generation_optimization\02_rag_self_consistency.ipynb
+- 10_sllm\01_sllm.ipynb
+- 10_sllm\02_sllm_finetuning_overview.ipynb
+- 10_sllm\03_lora.ipynb
+- 10_sllm\05_news2stock_LoRA.ipynb
+- 10_sllm\05_news2stock_LoRA_runpod.ipynb
+- 10_sllm\06_news2stock_QLoRA_runpod.ipynb
+- 01_CNN\01_conv.ipynb
+- 01_CNN\02_grayscale_fashion_mnist.ipynb
+- 01_CNN\03_color_cifar10.ipynb
+- 01_CNN\04_pretrained_cnn_models.ipynb
+- 02_vision_transformer\01_vision_transformer.ipynb
+- 03_clip_blip\01_clip.ipynb
+- 03_clip_blip\02_multimodal_overview.ipynb
+- 03_clip_blip\03_blip_image_captioning.ipynb
+- 03_clip_blip\04_blip_vqa.ipynb
+- 04_image_generation\02_stable_diffusion.ipynb
+- 01_react\06_redux\04_redux-project-structure2\mock\db.json
+
+## devops: 70 files
+
+- chap01\01_python_workspace\_10_streamlit\_02_playground\.devcontainer\devcontainer.json
+- 06_differentiation_gradient.ipynb
+- 09_regularlization.ipynb
+- 02_prompt_engineering\02_chat_completion_api.ipynb
+- 01_CNN\03_color_cifar10.ipynb
+- 01_CNN\04_pretrained_cnn_models.ipynb
+- _01_django_project\_01_django_project\asgi.py
+- _01_django_project\_01_django_project\settings.py
+- _01_django_project\_01_django_project\wsgi.py
+- _02_django_template\_02_django_template\asgi.py
+- _02_django_template\_02_django_template\settings.py
+- _02_django_template\_02_django_template\wsgi.py
+- _03_django_orm\_03_django_orm\asgi.py
+- _03_django_orm\_03_django_orm\settings.py
+- _03_django_orm\_03_django_orm\wsgi.py
+- _04_qna\_04_qna\asgi.py
+- _04_qna\_04_qna\settings.py
+- _04_qna\_04_qna\urls.py
+- _04_qna\_04_qna\wsgi.py
+- _05_django_session\_05_django_session\asgi.py
+- _05_django_session\_05_django_session\settings.py
+- _05_django_session\_05_django_session\wsgi.py
+- _06_chatbot\_06_chatbot\asgi.py
+- _06_chatbot\_06_chatbot\settings.py
+- _06_chatbot\_06_chatbot\wsgi.py
+- 01_aws\about_aws.md
+- 02_docker\about_dockeer.md
+- 02_docker\02_docker_compose\about_docker_compose.md
+- 02_docker\02_docker_compose\default.conf
+- 02_docker\02_docker_compose\docker-compose.yml
+- 02_docker\docker-handout\mds\1_Docker개요.md
+- 02_docker\docker-handout\mds\2_Docker설치하기.md
+- 02_docker\docker-handout\mds\3_Docker사용하기.md
+- 02_docker\docker-handout\mds\4_Docker기본명령어.md
+- 02_docker\docker-handout\mds\5_Docker이미지만들기.md
+- 02_docker\docker-handout\mds\6_Docker컴포즈.md
+- 02_docker\docker-handout\mds\7_Docker볼륨.md
+- 02_docker\_01_django_image\.dockerignore
+- 02_docker\_01_django_image\Dockerfile
+- 02_docker\_01_django_image\_01_django_image\asgi.py
+- 02_docker\_01_django_image\_01_django_image\settings.py
+- 02_docker\_01_django_image\_01_django_image\wsgi.py
+- 03_wsgi_asgi\about_wsgi_asgi.md
+- 03_wsgi_asgi\01_wsgi\.dockerignore
+- 03_wsgi_asgi\01_wsgi\Dockerfile
+- 03_wsgi_asgi\01_wsgi\manage.py
+- 03_wsgi_asgi\01_wsgi\requirements.txt
+- 03_wsgi_asgi\01_wsgi\_01_wsgi_project\asgi.py
+- 03_wsgi_asgi\01_wsgi\_01_wsgi_project\settings.py
+- 03_wsgi_asgi\01_wsgi\_01_wsgi_project\urls.py
+- 03_wsgi_asgi\01_wsgi\_01_wsgi_project\views.py
+- 03_wsgi_asgi\01_wsgi\_01_wsgi_project\wsgi.py
+- 03_wsgi_asgi\02_asgi\.dockerignore
+- 03_wsgi_asgi\02_asgi\Dockerfile
+- 03_wsgi_asgi\02_asgi\manage.py
+- 03_wsgi_asgi\02_asgi\requirements.txt
+- 03_wsgi_asgi\02_asgi\_02_asgi_project\asgi.py
+- 03_wsgi_asgi\02_asgi\_02_asgi_project\settings.py
+- 03_wsgi_asgi\02_asgi\_02_asgi_project\urls.py
+- 03_wsgi_asgi\02_asgi\_02_asgi_project\views.py
+- 03_wsgi_asgi\02_asgi\_02_asgi_project\wsgi.py
+- 01_react\06_redux\03_redux-project-structure\src\Store.js
+- 01_react\06_redux\04_redux-project-structure2\src\Store.js
+- 03_gha_cicd\README.md
+- 03_gha_cicd\sample_app\Procfile
+- 03_gha_cicd\sample_app\requirements.txt
+- 03_gha_cicd\sample_app\config\asgi.py
+- 03_gha_cicd\sample_app\config\settings.py
+- 03_gha_cicd\sample_app\config\wsgi.py
+- 03_gha_cicd\sample_app\hello\views.py
+
+## llm: 141 files
+
+- .gitignore
+- chap01\01_python_workspace\_02_data_type\homework_260126.py
+- chap01\01_python_workspace\_09_exception\_02_raise_exception.ipynb
+- selftest\_02_Quiz05.py
+- .gitignore
+- README.md
+- sample.html
+- 02_ml_basics\01_scikit_learn.ipynb
+- 02_ml_basics\03_01_classification_evaluation.ipynb
+- 02_ml_basics\04_cross_validation.ipynb
+- 03_regression\01_gradient_descent.ipynb
+- 03_regression\02_LinearRegression.ipynb
+- 04_classification\homework_26_03_06.ipynb
+- 05_algorithm\02_svm\01_SVC.ipynb
+- 05_algorithm\02_svm\02_SVR.ipynb
+- 06_ensemble\04_stacking.ipynb
+- 09_recommendation_system\01_content_based_filtering.ipynb
+- 09_recommendation_system\data\tmdb_5000_movies.csv
+- 09_recommendation_system\data\ml-latest-small\README.txt
+- 08_optimizer.ipynb
+- 01_nlp_overview\01_nlp_overview.ipynb
+- 02_preprocessing\01_toeknization.ipynb
+- 02_preprocessing\03_stemming_lemmatization.ipynb
+- 02_preprocessing\06_one_hot_encoding.ipynb
+- 03_text_vectorization\01_text_vectorization.ipynb
+- 03_text_vectorization\02_bow_tfidf.ipynb
+- 03_text_vectorization\03_word_embedding.ipynb
+- 03_text_vectorization\04_torch_embedding.ipynb
+- 03_text_vectorization\05_fasttext.ipynb
+- 04_sequence_model\02_lstm.ipynb
+- 04_sequence_model\03_gru.ipynb
+- 04_sequence_model\04_nsmc.ipynb
+- 05_nlp_tasks\01_text_classification\01_naive_beyes_classifier.ipynb
+- 05_nlp_tasks\01_text_classification\02_multi_label_classification.ipynb
+- 06_subword_tokenizer\01_sentencepiece.ipynb
+- 07_language_modeling\03_nnlm.ipynb
+- 08_seq2seq\01_seq2seq_translation.ipynb
+- 08_seq2seq\data\eng_kor.txt
+- 09_transformer\01_attention.ipynb
+- 09_transformer\02_transformer.ipynb
+- 10_transfer_learning\01_bert_overview.ipynb
+- 10_transfer_learning\homework_260402.ipynb
+- 01_llm_overview\01_llm_overview.ipynb
+- 02_prompt_engineering\01_prompt_engineering.ipynb
+- 02_prompt_engineering\02_chat_completion_api.ipynb
+- 03_openai_api\03_embeddings.ipynb
+- 03_openai_api\05_function_calling.ipynb
+- 03_openai_api\homework_260403.ipynb
+- 03_openai_api\06_voicebot\app.py
+- 03_openai_api\data\fine_food_reviews_1k_embedding.csv
+- 04_gpt_finetuning\02_korquad.ipynb
+- 04_gpt_finetuning\KorQuAD_v1.0_dev.json
+- 05_lanchain\01_langchain_overview\01_langchain_overview.ipynb
+- 05_lanchain\01_langchain_overview\02_langsmith.ipynb
+- 05_lanchain\02_langchain_component\01_model_io.ipynb
+- 05_lanchain\02_langchain_component\02_retrieval.ipynb
+- 05_lanchain\02_langchain_component\03_chains.ipynb
+- 05_lanchain\02_langchain_component\04_LECL.ipynb
+- 05_lanchain\02_langchain_component\05_agent_tool.ipynb
+- 05_lanchain\02_langchain_component\homework_260409.ipynb
+- 05_lanchain\02_langchain_component\data\fine_food_reviews_1k_embedding.csv
+- 06_rag\01_2-stage_rag.ipynb
+- 06_rag\02_ai_sommelier.ipynb
+- 06_rag\03_ai_sommelier_rag.ipynb
+- 07_advanced_rag\01_retrieval_optimization\01_indexing.ipynb
+- 07_advanced_rag\01_retrieval_optimization\02_bm25_dense_comparison.ipynb
+- 07_advanced_rag\01_retrieval_optimization\03_rrf.ipynb
+- 07_advanced_rag\01_retrieval_optimization\04_hyde.ipynb
+- 07_advanced_rag\01_retrieval_optimization\05_cohere_rerank.ipynb
+- 07_advanced_rag\01_retrieval_optimization\06_contextual_compression.ipynb
+- 07_advanced_rag\01_retrieval_optimization\07_metadata_filtering_self_query_retriever.ipynb
+- 07_advanced_rag\02_generation_optimization\01_rag_cot.ipynb
+- 07_advanced_rag\02_generation_optimization\02_rag_self_consistency.ipynb
+- 07_advanced_rag\02_generation_optimization\03_rag_prompt_compression.ipynb
+- 07_advanced_rag\02_generation_optimization\04_rag_structured_output.ipynb
+- 07_advanced_rag\02_generation_optimization\05_rag_tot.ipynb
+- 08_langgraph\01_langgraph_overview.ipynb
+- 08_langgraph\02_singleturn_chatbot.ipynb
+- 08_langgraph\03_chatbot_with_tools.ipynb
+- 08_langgraph\04_chatbot_with_mcp_server.ipynb
+
+## machine_learning: 72 files
+
+- 02_pandas\04_aggregation.ipynb
+- 04_eda\02_eda_titanic.ipynb
+- mhtest\mhtest_card.ipynb
+- mhtest\mhtest_card2.ipynb
+- 01_overview\01_classification_overview.ipynb
+- 01_overview\02_regression_overview.ipynb
+- 02_ml_basics\01_scikit_learn.ipynb
+- 02_ml_basics\02_preprocessing.ipynb
+- 02_ml_basics\03_01_classification_evaluation.ipynb
+- 02_ml_basics\03_02_regression_evaluation.ipynb
+- 02_ml_basics\04_cross_validation.ipynb
+- 02_ml_basics\05_hyperparameter_tuning.ipynb
+- 03_regression\01_gradient_descent.ipynb
+- 03_regression\02_LinearRegression.ipynb
+- 03_regression\03_regularized_linear_model.ipynb
+- 04_classification\01_LogisticRegression.ipynb
+- 04_classification\homework_26_03_06.ipynb
+- 04_classification\homework_26_03_06_2.ipynb
+- 04_classification\homework_26_03_06_catboost.ipynb
+- 04_classification\homework_26_03_06_subject_included.ipynb
+- 04_classification\homework_26_03_06_xgb.ipynb
+- 05_algorithm\01_decisiontree\01_DecisionTreeClassifier.ipynb
+- 05_algorithm\01_decisiontree\02_DecisionTreeRegressor.ipynb
+- 05_algorithm\02_svm\01_SVC.ipynb
+- 05_algorithm\02_svm\02_SVR.ipynb
+- 06_ensemble\01_ensemble_voting.ipynb
+- 06_ensemble\02_bagging.ipynb
+- 06_ensemble\03_boosting.ipynb
+- 06_ensemble\04_stacking.ipynb
+- 06_ensemble\05_XGBoost.ipynb
+- 06_ensemble\06_LightGBM.ipynb
+- 06_ensemble\07_CatBoost.ipynb
+- 06_ensemble\08_HyperOpt.ipynb
+- 07_dimensionality_reduction\01_pca_lda.ipynb
+- 08_clustering\01_Kmeans.ipynb
+- 08_clustering\02_DBSCAN.ipynb
+- 08_clustering\03_rmf_customer_segmentation.ipynb
+- 09_recommendation_system\01_content_based_filtering.ipynb
+- 09_recommendation_system\02_reg_based_recommendation.ipynb
+- 09_recommendation_system\03_item_based_collaborative_filtering.ipynb
+- 01_perceptron.ipynb
+- 04_output_layer.ipynb
+- 05_loss_function.ipynb
+- 06_differentiation_gradient.ipynb
+- 08_optimizer.ipynb
+- 09_regularlization.ipynb
+- 01_nlp_overview\01_nlp_overview.ipynb
+- 03_text_vectorization\01_text_vectorization.ipynb
+- 03_text_vectorization\02_bow_tfidf.ipynb
+- 03_text_vectorization\05_fasttext.ipynb
+- 04_sequence_model\01_sequential_data_rnn.ipynb
+- 04_sequence_model\05_lstm_based_stock_price_prediction.ipynb
+- 05_nlp_tasks\01_text_classification\01_naive_beyes_classifier.ipynb
+- 05_nlp_tasks\01_text_classification\02_multi_label_classification.ipynb
+- 07_language_modeling\03_nnlm.ipynb
+- 08_seq2seq\01_seq2seq_translation.ipynb
+- 10_transfer_learning\01_bert_overview.ipynb
+- 10_transfer_learning\02_bert_transfer_learning.ipynb
+- 10_transfer_learning\03_pipeline_nlp_tasks.ipynb
+- 10_transfer_learning\homework_260402.ipynb
+- 03_openai_api\03_embeddings.ipynb
+- 07_advanced_rag\01_retrieval_optimization\02_bm25_dense_comparison.ipynb
+- 07_advanced_rag\01_retrieval_optimization\03_rrf.ipynb
+- 07_advanced_rag\01_retrieval_optimization\05_cohere_rerank.ipynb
+- 07_advanced_rag\01_retrieval_optimization\06_contextual_compression.ipynb
+- 07_advanced_rag\02_generation_optimization\02_rag_self_consistency.ipynb
+- 10_sllm\02_sllm_finetuning_overview.ipynb
+- 01_CNN\01_conv.ipynb
+- 01_CNN\02_grayscale_fashion_mnist.ipynb
+- 01_CNN\04_pretrained_cnn_models.ipynb
+- 02_vision_transformer\01_vision_transformer.ipynb
+- 03_clip_blip\01_clip.ipynb
+
+## python: 562 files
+
+- .gitignore
+- environment.yml
+- README.md
+- chap01\01_python_workspace\_02_data_type\homework_260122.py
+- chap01\01_python_workspace\_02_data_type\homework_260126.py
+- chap01\01_python_workspace\_02_data_type\_05_list.py
+- chap01\01_python_workspace\_02_data_type\_06_tuple.py
+- chap01\01_python_workspace\_02_data_type\_07_dict.py
+- chap01\01_python_workspace\_02_data_type\_08_set.py
+- chap01\01_python_workspace\_02_data_type\_10_type_hint.py
+- chap01\01_python_workspace\_02_data_type\_11_enum.py
+- chap01\01_python_workspace\_02_data_type\_data_
+- chap01\01_python_workspace\_03_control_flow\_01_operator.py
+- chap01\01_python_workspace\_03_control_flow\_02_conditional_if.py
+- chap01\01_python_workspace\_03_control_flow\_03_match_case.py
+- chap01\01_python_workspace\_03_control_flow\_04_for_loop.py
+- chap01\01_python_workspace\_03_control_flow\_05_while_loop.py
+- chap01\01_python_workspace\_03_control_flow\_06_comprehension.py
+- chap01\01_python_workspace\_04_function\homework_260128.py
+- chap01\01_python_workspace\_04_function\test.ipynb
+- chap01\01_python_workspace\_04_function\_01_function.py
+- chap01\01_python_workspace\_04_function\_02_lambda.py
+- chap01\01_python_workspace\_05_api\_01_builtins.ipynb
+- chap01\01_python_workspace\_05_api\_02_map_filter_reduce.ipynb
+- chap01\01_python_workspace\_06_oop\homework_wishlist_260129.ipynb.py
+- chap01\01_python_workspace\_06_oop\_01_oop\_01_oop.ipynb
+- chap01\01_python_workspace\_06_oop\_02_encapsulation\_01_encapsulation.ipynb
+- chap01\01_python_workspace\_06_oop\_02_encapsulation\_02_getter_setter.ipynb
+- chap01\01_python_workspace\_06_oop\_03_car\_01_car.ipynb
+- chap01\01_python_workspace\_06_oop\_04_inhertitance\_01_inheritance.ipynb
+- chap01\01_python_workspace\_06_oop\_04_inhertitance\_02_has_a_is_a.ipynb
+- chap01\01_python_workspace\_06_oop\_05_polymorphism\_01_abstract_class.ipynb
+- chap01\01_python_workspace\_07_module\_01_scope.py
+- chap01\01_python_workspace\_07_module\_03_namespace.py
+- chap01\01_python_workspace\_07_module\skn\my_math.py
+- chap01\01_python_workspace\_08_io\_01_os.ipynb
+- chap01\01_python_workspace\_08_io\_02_io.ipynb
+- chap01\01_python_workspace\_09_exception\_01_exception_error.ipynb
+- chap01\01_python_workspace\_09_exception\_02_raise_exception.ipynb
+- chap01\01_python_workspace\_10_streamlit\_01_basics\_01_text.py
+- chap01\01_python_workspace\_10_streamlit\_01_basics\_02_data.py
+- chap01\01_python_workspace\_10_streamlit\_01_basics\_03_input_widget.py
+- chap01\01_python_workspace\_10_streamlit\_01_basics\_04_media.py
+- chap01\01_python_workspace\_10_streamlit\_01_basics\_05_session_state.py
+- chap01\01_python_workspace\_10_streamlit\_02_playground\app.py
+- chap01\01_python_workspace\_10_streamlit\_02_playground\requirements.txt
+- chap01\01_python_workspace\_10_streamlit\_02_playground\.devcontainer\devcontainer.json
+- selftest\_01_Quiz04.py
+- selftest\_02_Quiz05.py
+- selftest\_03_.py
+- 02_table_datatype.sql
+- .gitignore
+- 01_openapi.ipynb
+- 02_mysql_connector_python.ipynb
+- 03_정적웹페이지_스크랩핑.ipynb
+- 04_동적웹페이지_스크랩핑.ipynb
+- sample.html
+- test.ipynb
+- whyrano.py
+- 01_numpy\01_ndarray.ipynb
+- 01_numpy\04_statistics.ipynb
+- 02_pandas\01_series.ipynb
+- 02_pandas\02_dataframe.ipynb
+- 02_pandas\03_preprocessing.ipynb
+- 02_pandas\04_aggregation.ipynb
+- 02_pandas\homework_dataframe_260212.ipynb
+- 02_pandas\data\titanic.csv
+- 03_data_visualization\02_matplotlib_chart.ipynb
+- 03_data_visualization\data\titanic.csv
+- 04_eda\02_eda_titanic.ipynb
+- 04_eda\data\titanic.csv
+- mhtest\mhtest_card.ipynb
+- mhtest\mhtest_card2.ipynb
+- mhtest\seoul_air.ipynb
+- mhtest\seoul_traffic.ipynb
+- 01_overview\01_classification_overview.ipynb
+- 01_overview\02_regression_overview.ipynb
+- 02_ml_basics\01_scikit_learn.ipynb
+- 02_ml_basics\02_preprocessing.ipynb
+- 02_ml_basics\03_01_classification_evaluation.ipynb
+
+## sql: 25 files
+
+- 02_table_datatype.sql
+- 03_dql_select.sql
+- 04_dql_select2.sql
+- 05_dql_join_subquery.sql
+- 06_dml.sql
+- 07_tcl.sql
+- 08_ddl.sql
+- employeedb_260130.sql
+- menudb_260129.sql
+- 01_openapi.ipynb
+- 02_mysql_connector_python.ipynb
+- 03_정적웹페이지_스크랩핑.ipynb
+- mhtest\mhtest_card.ipynb
+- 09_recommendation_system\data\ml-latest-small\README.txt
+- 08_seq2seq\data\eng_kor.txt
+- 05_lanchain\02_langchain_component\05_agent_tool.ipynb
+- _03_django_orm\post\post_django_shell.py
+- _03_django_orm\product\product_django_shell.py
+- _03_django_orm\sql\product_data.sql
+- _04_qna\qna\views.py
+- _04_qna\sql\qna.sql
+- _04_qna\uauth\views.py
+- 02_docker\docker-handout\mds\7_Docker볼륨.md
+- 01_react\06_redux\04_redux-project-structure2\src\components\form\MenuModifyForm.js
+- 01_react\06_redux\04_redux-project-structure2\src\components\form\MenuRegistForm.js
+
+## web_client: 197 files
+
+- .gitignore
+- README.md
+- chap01\01_python_workspace\_02_data_type\_07_dict.py
+- chap01\01_python_workspace\_10_streamlit\_01_basics\_01_text.py
+- chap01\01_python_workspace\_10_streamlit\_01_basics\_04_media.py
+- 04_dql_select2.sql
+- .gitignore
+- 01_openapi.ipynb
+- 02_mysql_connector_python.ipynb
+- 03_정적웹페이지_스크랩핑.ipynb
+- 04_동적웹페이지_스크랩핑.ipynb
+- README.md
+- response.json
+- sample.html
+- 02_pandas\01_series.ipynb
+- 03_data_visualization\01_matplotlib.ipynb
+- 01_overview\02_regression_overview.ipynb
+- 02_ml_basics\01_scikit_learn.ipynb
+- 03_regression\02_LinearRegression.ipynb
+- 03_regression\03_regularized_linear_model.ipynb
+- 05_algorithm\01_decisiontree\02_DecisionTreeRegressor.ipynb
+- 05_algorithm\02_svm\01_SVC.ipynb
+- 05_algorithm\02_svm\02_SVR.ipynb
+- 06_ensemble\01_ensemble_voting.ipynb
+- 06_ensemble\04_stacking.ipynb
+- 06_ensemble\05_XGBoost.ipynb
+- 06_ensemble\06_LightGBM.ipynb
+- 07_dimensionality_reduction\01_pca_lda.ipynb
+- 08_clustering\01_Kmeans.ipynb
+- 08_clustering\02_DBSCAN.ipynb
+- 08_clustering\03_rmf_customer_segmentation.ipynb
+- 04_output_layer.ipynb
+- 08_optimizer.ipynb
+- 09_regularlization.ipynb
+- 02_preprocessing\01_toeknization.ipynb
+- 02_preprocessing\homework_web_review_preprocessing_260323.ipynb
+- 02_prompt_engineering\01_prompt_engineering.ipynb
+- 02_prompt_engineering\02_chat_completion_api.ipynb
+- 03_openai_api\06_voicebot\app.py
+- 05_lanchain\01_langchain_overview\01_langchain_overview.ipynb
+- 05_lanchain\02_langchain_component\02_retrieval.ipynb
+- 05_lanchain\02_langchain_component\05_agent_tool.ipynb
+- 01_CNN\03_color_cifar10.ipynb
+- 01_CNN\04_pretrained_cnn_models.ipynb
+- 01_html\02_목룍관련태그.html
+- 02_css\01_css선택자1.html
+- 02_css\03_css선택자_우선순위.html
+- 02_css\05_텍스트스타일.html
+- 02_css\07_목록스타일.html
+- 03_js\01_js_core\01_variable\02_dynamically-typed-language\01_dynamically-typed-language.js
+- 03_js\01_js_core\01_variable\03_explict-coercion\03_convert-to-boolean.js
+- 03_js\01_js_core\01_variable\04_implicit-coercion\02_convert-to-number.js
+- 03_js\01_js_core\01_variable\04_implicit-coercion\03_convert-to-boolean.js
+- 03_js\01_js_core\04_function\03_various-type-functions\02_callback-function.js
+- 03_js\01_js_core\08_array\02_array-method.js
+- 03_js\01_js_core\09_standard-built-in-object\03_RegExp\01_RegExp.js
+- 03_js\01_js_core\09_standard-built-in-object\03_RegExp\02_Regexp-method.js
+- 03_js\01_js_core\09_standard-built-in-object\03_RegExp\03_flag-and-patterns.js
+- 03_js\03_js_browser\01_DOM\01_get-element-node\03_use-css-selector.html
+- 03_js\03_js_browser\01_DOM\01_get-element-node\04_insertAdjacentHTML.html
+- 03_js\03_js_browser\02_BOM\01_open_alert-confirm-prompt.html
+- 03_js\03_js_browser\03_Event\01_event-handler\01_event-handler-attribute.html
+- _01_django_project\first\views.py
+- _01_django_project\second\views.py
+- _01_django_project\_01_django_project\settings.py
+- _02_django_template\app\views.py
+- _02_django_template\templates\app\01_variables_filters.html
+- _02_django_template\templates\app\03_layout.html
+- _02_django_template\templates\app\06_bootstrap.html
+- _02_django_template\templates\layout\base.html
+- _02_django_template\_02_django_template\settings.py
+- _03_django_orm\product\product_django_shell.py
+- _03_django_orm\_03_django_orm\settings.py
+- _04_qna\qna\views.py
+- _04_qna\templates\layout\base.html
+- _04_qna\templates\qna\index.html
+- _04_qna\templates\qna\question_detail.html
+- _04_qna\templates\qna\question_form.html
+- _04_qna\templates\uauth\login.html
+- _04_qna\templates\uauth\signup.html
+
+## web_server: 219 files
+
+- .gitignore
+- chap01\01_python_workspace\_10_streamlit\_01_basics\_05_session_state.py
+- chap01\01_python_workspace\_10_streamlit\_02_playground\app.py
+- chap01\01_python_workspace\_10_streamlit\_02_playground\LICENSE
+- .gitignore
+- 04_classification\homework_26_03_06.ipynb
+- 04_classification\homework_26_03_06_2.ipynb
+- 04_classification\homework_26_03_06_catboost.ipynb
+- 04_classification\homework_26_03_06_xgb.ipynb
+- 05_loss_function.ipynb
+- 06_differentiation_gradient.ipynb
+- 03_openai_api\06_voicebot\app.py
+- 05_lanchain\01_langchain_overview\01_langchain_overview.ipynb
+- 05_lanchain\02_langchain_component\01_model_io.ipynb
+- 05_lanchain\02_langchain_component\02_retrieval.ipynb
+- 05_lanchain\02_langchain_component\03_chains.ipynb
+- 05_lanchain\02_langchain_component\04_LECL.ipynb
+- 05_lanchain\02_langchain_component\05_agent_tool.ipynb
+- 06_rag\01_2-stage_rag.ipynb
+- 06_rag\02_ai_sommelier.ipynb
+- 06_rag\03_ai_sommelier_rag.ipynb
+- 07_advanced_rag\01_retrieval_optimization\04_hyde.ipynb
+- 07_advanced_rag\01_retrieval_optimization\06_contextual_compression.ipynb
+- 07_advanced_rag\01_retrieval_optimization\07_metadata_filtering_self_query_retriever.ipynb
+- 07_advanced_rag\02_generation_optimization\01_rag_cot.ipynb
+- 07_advanced_rag\02_generation_optimization\02_rag_self_consistency.ipynb
+- 07_advanced_rag\02_generation_optimization\03_rag_prompt_compression.ipynb
+- 07_advanced_rag\02_generation_optimization\04_rag_structured_output.ipynb
+- 07_advanced_rag\02_generation_optimization\05_rag_tot.ipynb
+- 09_langgraph_multi_agent\01_agentic_rag.ipynb
+- 09_langgraph_multi_agent\02_agent_supervisor.ipynb
+- 10_sllm\01_sllm.ipynb
+- 10_sllm\04_news2stock_analyser_data.ipynb
+- 10_sllm\05_news2stock_LoRA.ipynb
+- 10_sllm\05_news2stock_LoRA_runpod.ipynb
+- 10_sllm\06_news2stock_QLoRA_runpod.ipynb
+- homework_20260417\my_own_bot.ipynb
+- 05_multimodal_rag\01_simple_multimodal_rag.ipynb
+- 05_multimodal_rag\02_video_rag_frame_extraction.ipynb
+- 03_js\01_js_core\01_variable\01_data-type\02_string.js
+- _01_django_project\manage.py
+- _01_django_project\first\admin.py
+- _01_django_project\first\apps.py
+- _01_django_project\first\models.py
+- _01_django_project\first\tests.py
+- _01_django_project\first\urls.py
+- _01_django_project\first\views.py
+- _01_django_project\second\admin.py
+- _01_django_project\second\apps.py
+- _01_django_project\second\models.py
+- _01_django_project\second\tests.py
+- _01_django_project\second\urls.py
+- _01_django_project\second\views.py
+- _01_django_project\_01_django_project\asgi.py
+- _01_django_project\_01_django_project\settings.py
+- _01_django_project\_01_django_project\urls.py
+- _01_django_project\_01_django_project\wsgi.py
+- _02_django_template\manage.py
+- _02_django_template\app\admin.py
+- _02_django_template\app\apps.py
+- _02_django_template\app\models.py
+- _02_django_template\app\tests.py
+- _02_django_template\app\urls.py
+- _02_django_template\app\views.py
+- _02_django_template\templates\app\01_variables_filters.html
+- _02_django_template\templates\app\02_tags.html
+- _02_django_template\templates\app\03_layout.html
+- _02_django_template\templates\app\index.html
+- _02_django_template\_02_django_template\asgi.py
+- _02_django_template\_02_django_template\settings.py
+- _02_django_template\_02_django_template\urls.py
+- _02_django_template\_02_django_template\wsgi.py
+- _03_django_orm\manage.py
+- _03_django_orm\requirements.txt
+- _03_django_orm\post\admin.py
+- _03_django_orm\post\apps.py
+- _03_django_orm\post\models.py
+- _03_django_orm\post\post_django_shell.py
+- _03_django_orm\post\tests.py
+- _03_django_orm\post\views.py
+
+# Frequent Technical Tokens
+
+- cell: 2525
+- code: 1970
+- self: 1579
+- def: 894
+- https: 784
+- name: 753
+- markdown: 737
+- com: 732
+- django: 607
+- text: 547
+- log: 530
+- true: 518
+- public: 491
+- system: 484
+- content: 476
+- console: 450
+- data: 429
+- none: 415
+- int: 412
+- plt: 391
+- class: 389
+- docker: 379
+- shape: 378
+- pattern: 363
+- torch: 362
+- str: 358
+- app: 348
+- out: 342
+- java: 338
+- react: 332
+- model: 320
+- main: 304
+- src: 302
+- ohgiraffers: 299
+- docs: 298
+- println: 294
+- string: 293
+- type: 289
+- sklearn: 285
+- _design_pattern: 284
+- messages: 272
+- image: 268
+- html: 263
+- document: 260
+- llm: 259
+- path: 258
+- null: 258
+- x_train: 250
+- langchain: 248
+- not: 245
+- index: 240
+- y_train: 236
+- org: 229
+- user: 225
+- role: 223
+- list: 221
+- learn: 221
+- _react: 221
+- void: 221
+- you: 217
+- request: 213
+- babel: 213
+- models: 212
+- new: 208
+- product: 208
+- state: 207
+- create: 206
+- x_test: 206
+- false: 203
+- y_test: 202
+- test: 200
+- ipynb: 194
+- response: 193
+- context: 192
+- values: 190
+- append: 189
+- len: 189
+- png: 189
+- github: 188
+- array: 181
+- contrib: 181
+- function: 179
+- frac: 179
+- version: 178
+- iteration: 178
+- project: 174
+- environ: 171
+- images: 169
+- passed_time: 169
+- remaining_time: 169
+- else: 168
+- score: 168
+- arr: 167
+- question: 166
+- python: 163
+- behavioral: 163
+- description: 162
+- chap03: 162
+- private: 160
+- select: 159
+- post: 158
+- package: 157
+- url: 155
+- get: 155
+- __init__: 153
+- views: 153
+- csv: 152
+- settings: 149
+- run: 148
+- patternprac: 148
+- default: 147
+- const: 146
+- value: 145
+- query: 143
+- key: 141
+- _redux: 141
+- patternprac_python: 141
+- menu: 140
+- insert: 138
+- title: 138
+- override: 138
+- into: 137
+- start: 137
+- txt: 136
+- result: 136
+- build: 133
+- json: 133
+- hello: 132
+- dataframe: 129
+- api: 128
+- output: 128
+- label: 125
+- tokenizer: 125
+- tbl_menu: 123
+- embedding: 123
+- urls: 123
+- age: 122
+- idea: 120
+- component: 120
+- install: 118
+- fit: 117
+- node_modules: 116
+- abc: 115
+- visitor: 114
+- doc: 113
+- sum: 112
+- loss: 112
+- date: 111
+- pandas: 111
+- tokens: 111
+- chain: 111
+- chap01: 110
+- count: 110
+- input: 109
+- gpt: 109
+- static: 108
+- prompt: 108
+- target: 107
+- add: 107
+- mean: 107
+- message: 107
+- tensor: 107
+- openai: 107
+- div: 106
+- invoke: 106
+- numpy: 105
+- axis: 105
+- djangoproject: 104
+- book: 102
+- left: 101
+- color: 101
+- cdot: 101
+- pip: 100
+- xml: 99
+- where: 99
+- token: 99
+- facebook: 99
+- openai_api_key: 99
+- more: 98
+- right: 98
+- show: 98
+- random_state: 98
+- auth: 98
+- see: 97
+- var: 97
+- command: 97
+- dependencies: 96
+- math: 96
+- tools: 96
+- table: 95
+- predict: 95
+- nltk: 95
+- matplotlib: 94
+- pipeline: 94
+- batch_size: 93
+- assistant: 93
+- session_id: 93
+- files: 92
+- file: 92
+- all: 92
+- item: 92
+- application: 92
+- dtype: 91
+- your: 90
+- partial: 90
+- size: 89
+- range: 89
+- langchain_core: 89
+- error: 88
+- search: 88
+- use: 87
+- parser: 87
+- labels: 87
+- dataset: 87
+- middleware: 87
+- expression: 86
+- loc: 86
+- powershell: 86
+- img: 85
+- datasets: 85
+- learning_rate: 85
+- www: 84
+- end: 84
+- include: 84
+- row: 84
+- resolved: 84
+- dom: 83
+- export: 83
+- train: 82
+- history: 82
+- admin: 82
+- wsgi: 82
+- http: 81
+- params: 81
+- y_pred: 81
+- registry: 81
+- npmjs: 81
+- structural: 81
+- config: 80
+- init_chat_model: 80
+- chap02: 80
+- time: 79
+- abstractmethod: 79
+- here: 79
+- eslint: 79
+- arr1: 78
+- head: 78
+- core: 78
+- nginx: 78
+- tgz: 78
