@@ -50,7 +50,7 @@ source:
 - 상세 노트: [[SKN26 1차 프로젝트 - 차량 TCO]]
 - 핵심 경험: Streamlit multi-step 상태 유지, MySQL 조회, 외부 차량/유가 데이터 수집, 월간 TCO 계산
 - 승격된 지식: [[Streamlit Session State]], [[MySQL Connector Python]], [[SQL SELECT와 WHERE]], [[Requests]]
-- 개인 회고: API 수집 영역에 가장 많이 관여했다. 노베이스에 가까운 상태에서 코딩, AI, 에이전트와 친숙해지는 첫 프로젝트라 전반적으로 어려웠고, 코딩은 많이 작성하고 가지고 놀아야 흡수가 빨라진다는 깨달음을 얻었다.
+- 개인 회고: API 수집 영역에 가장 많이 관여했다. 기초가 약한 상태에서 코딩, AI, 에이전트와 친숙해지는 첫 프로젝트라 전반적으로 어려웠고, 코딩은 직접 많이 작성하고 실험해야 흡수가 빨라진다는 깨달음을 얻었다.
 - 추가 입력 필요: 1차 프로젝트 자체를 다시 만든다면 API 수집, DB 조회, Streamlit 상태 관리 중 어떤 구조를 먼저 바꿀지
 
 ### 2차 카드 이탈 예측
@@ -78,7 +78,7 @@ source:
 - 승격된 지식: [[Django Chatbot]], [[Django JSON API]], [[Django CSRF]], [[React SPA]], [[React API Fetch]]
 - 개인 회고: 공식 프로젝트에서는 프론트엔드 파트, 문서 작업, GitHub 조직 관리를 맡았다. Django SSR은 특별히 편하다고 느낀 점보다 React 없이 template와 static JS를 맞추느라 관리 파일이 많아진 불편이 더 컸다.
 - 다음에 가져갈 점: 후속 질문 처리는 챗봇에서 가장 어려운 지점으로 남았고, QA 리포트상 401 세션 만료 UX와 모바일 실기기 검증은 끝까지 확인해야 할 프론트 리스크다.
-- 다시 한다면: React SPA로 분리하고 Django를 DB와 프론트엔드 사이의 JSON API 징검다리로 두는 구조를 더 명확히 잡는다.
+- 다시 한다면: React SPA로 분리하고 Django가 DB, 인증, LLM 호출 결과를 JSON API로 제공하는 구조를 더 명확히 잡는다.
 
 ## 경험 노트 작성 기준
 

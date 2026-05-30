@@ -40,7 +40,7 @@ SSR Django 템플릿은 서버가 화면을 조립한다. React SPA는 첫 HTML 
 
 [[SKN26 4차 프로젝트 - LG Home]]의 공식 산출물은 Django SSR이다. 이후 개인 확장 `4th_project_change_react`에서 React + TypeScript + Tailwind SPA와 Django JSON API 구조로 분리했다.
 
-이 전환을 해보며 Django는 화면 전체를 직접 조립하기보다 DB와 프론트엔드 사이에서 JSON API를 제공하는 징검다리 역할에 집중할 때 책임이 더 명확해진다고 느꼈다.
+이 전환을 해보며 Django는 화면 전체를 직접 조립하기보다 DB, 인증, LLM 호출 결과를 JSON API로 제공하는 역할에 집중할 때 책임이 더 명확해진다고 느꼈다.
 
 ## 자주 헷갈리는 점
 
