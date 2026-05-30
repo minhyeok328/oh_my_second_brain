@@ -1,0 +1,3187 @@
+{
+    "generated_at":  "2026-05-30",
+    "source_root":  "C:\\Obsidian\\KnowledgeVault\\Knowledge",
+    "total_markdown_files":  311,
+    "policy":  {
+                   "primary_answer_index_statuses":  [
+                                                         "project-expanded",
+                                                         "wiki-expanded"
+                                                     ],
+                   "secondary_answer_index_statuses":  [
+                                                           "source-expanded",
+                                                           "reference"
+                                                       ],
+                   "routing_index_statuses":  [
+                                                  "entrypoint",
+                                                  "map",
+                                                  "wiki-map",
+                                                  "operating-guide",
+                                                  "policy"
+                                              ],
+                   "on_demand_context_statuses":  [
+                                                      "active"
+                                                  ],
+                   "quarantine_statuses":  [
+                                               "wiki-standardized",
+                                               "template",
+                                               "migration-report",
+                                               "source-outline"
+                                           ],
+                   "default_answer_index_excludes_wiki_standardized":  true
+               },
+    "counts_by_status":  {
+                             "active":  11,
+                             "entrypoint":  1,
+                             "map":  6,
+                             "migration-report":  1,
+                             "operating-guide":  3,
+                             "policy":  1,
+                             "project-expanded":  4,
+                             "reference":  21,
+                             "source-expanded":  14,
+                             "source-outline":  1,
+                             "template":  1,
+                             "wiki-expanded":  34,
+                             "wiki-map":  14,
+                             "wiki-standardized":  199
+                         },
+    "buckets":  {
+                    "primary_answer_index":  {
+                                                 "count":  38,
+                                                 "paths":  [
+                                                               "Knowledge/Permanent Notes/Django Chatbot.md",
+                                                               "Knowledge/Permanent Notes/Django CSRF.md",
+                                                               "Knowledge/Permanent Notes/Django JSON API.md",
+                                                               "Knowledge/Permanent Notes/Django ORM Model.md",
+                                                               "Knowledge/Permanent Notes/Django QuerySet.md",
+                                                               "Knowledge/Permanent Notes/Docker Compose.md",
+                                                               "Knowledge/Permanent Notes/Embedding.md",
+                                                               "Knowledge/Permanent Notes/FastAPI.md",
+                                                               "Knowledge/Permanent Notes/Feature Engineering.md",
+                                                               "Knowledge/Permanent Notes/Function Calling.md",
+                                                               "Knowledge/Permanent Notes/LangGraph Conditional Edge.md",
+                                                               "Knowledge/Permanent Notes/LangGraph State.md",
+                                                               "Knowledge/Permanent Notes/LangGraph.md",
+                                                               "Knowledge/Permanent Notes/LLM.md",
+                                                               "Knowledge/Permanent Notes/MLflow.md",
+                                                               "Knowledge/Permanent Notes/MySQL Connector Python.md",
+                                                               "Knowledge/Permanent Notes/OpenAI API.md",
+                                                               "Knowledge/Permanent Notes/Pandas DataFrame.md",
+                                                               "Knowledge/Permanent Notes/Prompt Engineering.md",
+                                                               "Knowledge/Permanent Notes/RAG 평가.md",
+                                                               "Knowledge/Permanent Notes/RAG.md",
+                                                               "Knowledge/Permanent Notes/React API Fetch.md",
+                                                               "Knowledge/Permanent Notes/React SPA.md",
+                                                               "Knowledge/Permanent Notes/Requests.md",
+                                                               "Knowledge/Permanent Notes/Retriever.md",
+                                                               "Knowledge/Permanent Notes/SQL SELECT와 WHERE.md",
+                                                               "Knowledge/Permanent Notes/SQLite.md",
+                                                               "Knowledge/Permanent Notes/Streamlit Session State.md",
+                                                               "Knowledge/Permanent Notes/Streamlit 기본 UI.md",
+                                                               "Knowledge/Permanent Notes/Train Test Split.md",
+                                                               "Knowledge/Permanent Notes/useEffect.md",
+                                                               "Knowledge/Permanent Notes/Vector Store.md",
+                                                               "Knowledge/Permanent Notes/XGBoost.md",
+                                                               "Knowledge/Permanent Notes/분류 평가 지표.md",
+                                                               "Knowledge/Projects/SKN26 1차 프로젝트 - 차량 TCO.md",
+                                                               "Knowledge/Projects/SKN26 2차 프로젝트 - 카드 이탈 예측.md",
+                                                               "Knowledge/Projects/SKN26 3차 프로젝트 - PICKLE RAG 챗봇.md",
+                                                               "Knowledge/Projects/SKN26 4차 프로젝트 - LG Home.md"
+                                                           ]
+                                             },
+                    "secondary_answer_index":  {
+                                                   "count":  35,
+                                                   "paths":  [
+                                                                 "Knowledge/Literature Notes/[Lecture] DevOps와 배포.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] Django 웹 서버.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] Git 기초.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] LLM과 RAG.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] MySQL과 관계형 데이터베이스.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] NLP 딥러닝.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] Python 기초와 Streamlit.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] React와 CI CD.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] 데이터 분석.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] 데이터 수집.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] 딥러닝 기초.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] 머신러닝.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] 멀티모달 딥러닝.md",
+                                                                 "Knowledge/Literature Notes/[Lecture] 웹 클라이언트.md",
+                                                                 "Knowledge/Reference Notes/Conda 환경 설정.md",
+                                                                 "Knowledge/Reference Notes/Django 명령어 모음.md",
+                                                                 "Knowledge/Reference Notes/Docker CLI.md",
+                                                                 "Knowledge/Reference Notes/Docker Compose.md",
+                                                                 "Knowledge/Reference Notes/Git 명령어 모음.md",
+                                                                 "Knowledge/Reference Notes/GitHub Actions EB 배포 치트시트.md",
+                                                                 "Knowledge/Reference Notes/JavaScript DOM 치트시트.md",
+                                                                 "Knowledge/Reference Notes/LangChain RAG 치트시트.md",
+                                                                 "Knowledge/Reference Notes/LangGraph 그래프 작성 치트시트.md",
+                                                                 "Knowledge/Reference Notes/MySQL SQL 치트시트.md",
+                                                                 "Knowledge/Reference Notes/NLP 전처리 치트시트.md",
+                                                                 "Knowledge/Reference Notes/OpenAI API 기본 호출.md",
+                                                                 "Knowledge/Reference Notes/Pandas 치트시트.md",
+                                                                 "Knowledge/Reference Notes/Python 치트시트.md",
+                                                                 "Knowledge/Reference Notes/PyTorch 학습 루프 치트시트.md",
+                                                                 "Knowledge/Reference Notes/React Hooks 치트시트.md",
+                                                                 "Knowledge/Reference Notes/React Router 치트시트.md",
+                                                                 "Knowledge/Reference Notes/Scikit-learn 워크플로우.md",
+                                                                 "Knowledge/Reference Notes/Streamlit 치트시트.md",
+                                                                 "Knowledge/Reference Notes/WSGI ASGI 배포 명령어.md",
+                                                                 "Knowledge/Reference Notes/시각화 치트시트.md"
+                                                             ]
+                                               },
+                    "routing_index":  {
+                                          "count":  25,
+                                          "paths":  [
+                                                        "Knowledge/Maps of Content/CI CD MOC.md",
+                                                        "Knowledge/Maps of Content/Data Analysis MOC.md",
+                                                        "Knowledge/Maps of Content/Database MOC.md",
+                                                        "Knowledge/Maps of Content/Deep Learning MOC.md",
+                                                        "Knowledge/Maps of Content/Design Pattern MOC.md",
+                                                        "Knowledge/Maps of Content/DevOps MOC.md",
+                                                        "Knowledge/Maps of Content/Knowledge Index.md",
+                                                        "Knowledge/Maps of Content/LLM RAG MOC.md",
+                                                        "Knowledge/Maps of Content/LLM Wiki 검색 스코프.md",
+                                                        "Knowledge/Maps of Content/LLM Wiki 검색 품질 게이트.md",
+                                                        "Knowledge/Maps of Content/LLM Wiki 운영 원칙.md",
+                                                        "Knowledge/Maps of Content/Machine Learning MOC.md",
+                                                        "Knowledge/Maps of Content/Multimodal MOC.md",
+                                                        "Knowledge/Maps of Content/NLP MOC.md",
+                                                        "Knowledge/Maps of Content/Python MOC.md",
+                                                        "Knowledge/Maps of Content/React MOC.md",
+                                                        "Knowledge/Maps of Content/Web MOC.md",
+                                                        "Knowledge/Maps of Content/노트 링크 관계.md",
+                                                        "Knowledge/Maps of Content/생성 노트 목록.md",
+                                                        "Knowledge/Maps of Content/전체 구조 분석.md",
+                                                        "Knowledge/Maps of Content/전체 노트 트리 구조.md",
+                                                        "Knowledge/Maps of Content/중복 제거 보고서.md",
+                                                        "Knowledge/Maps of Content/태그 체계.md",
+                                                        "Knowledge/README.md",
+                                                        "Knowledge/Sources/외부 참조 정책.md"
+                                                    ]
+                                      },
+                    "on_demand_context":  {
+                                              "count":  11,
+                                              "paths":  [
+                                                            "Knowledge/Maps of Content/LLM Wiki 보강 백로그.md",
+                                                            "Knowledge/Projects/개인 Dev Rules.md",
+                                                            "Knowledge/Projects/프로젝트 경험 MOC.md",
+                                                            "Knowledge/Projects/프로젝트 기반 개발자 정체성.md",
+                                                            "Knowledge/Projects/프로젝트 실패와 디버깅 로그.md",
+                                                            "Knowledge/Projects/프로젝트 의사결정 로그.md",
+                                                            "Knowledge/Projects/프로젝트 적용 로그.md",
+                                                            "Knowledge/Questions/RAG 검색 실패 사례.md",
+                                                            "Knowledge/Questions/RAG 평가 질문 세트.md",
+                                                            "Knowledge/Questions/질문 인박스.md",
+                                                            "Knowledge/Questions/프로젝트 회고 질문 세트.md"
+                                                        ]
+                                          },
+                    "quarantine":  {
+                                       "count":  202,
+                                       "paths":  [
+                                                     "Knowledge/Assets/source_outline.md",
+                                                     "Knowledge/Maps of Content/LLM Wiki 전환 리포트.md",
+                                                     "Knowledge/Permanent Notes/Abstract Factory Pattern.md",
+                                                     "Knowledge/Permanent Notes/Adapter Pattern.md",
+                                                     "Knowledge/Permanent Notes/ASGI.md",
+                                                     "Knowledge/Permanent Notes/Attention.md",
+                                                     "Knowledge/Permanent Notes/AWS EC2.md",
+                                                     "Knowledge/Permanent Notes/AWS Elastic Beanstalk.md",
+                                                     "Knowledge/Permanent Notes/AWS IAM Role.md",
+                                                     "Knowledge/Permanent Notes/BLIP.md",
+                                                     "Knowledge/Permanent Notes/BOM.md",
+                                                     "Knowledge/Permanent Notes/BoW와 TF-IDF.md",
+                                                     "Knowledge/Permanent Notes/Bridge Pattern.md",
+                                                     "Knowledge/Permanent Notes/Builder Pattern.md",
+                                                     "Knowledge/Permanent Notes/CatBoost.md",
+                                                     "Knowledge/Permanent Notes/Chain of Responsibility Pattern.md",
+                                                     "Knowledge/Permanent Notes/Chat Model.md",
+                                                     "Knowledge/Permanent Notes/CI CD.md",
+                                                     "Knowledge/Permanent Notes/CLIP.md",
+                                                     "Knowledge/Permanent Notes/CNN.md",
+                                                     "Knowledge/Permanent Notes/Command Pattern.md",
+                                                     "Knowledge/Permanent Notes/Component Composition.md",
+                                                     "Knowledge/Permanent Notes/Composite Pattern.md",
+                                                     "Knowledge/Permanent Notes/CSS Box Model.md",
+                                                     "Knowledge/Permanent Notes/CSS Flex와 Grid.md",
+                                                     "Knowledge/Permanent Notes/Custom Hook.md",
+                                                     "Knowledge/Permanent Notes/Decorator Pattern.md",
+                                                     "Knowledge/Permanent Notes/Django App.md",
+                                                     "Knowledge/Permanent Notes/Django Form.md",
+                                                     "Knowledge/Permanent Notes/Django Migration.md",
+                                                     "Knowledge/Permanent Notes/Django Project.md",
+                                                     "Knowledge/Permanent Notes/Django Session과 Auth.md",
+                                                     "Knowledge/Permanent Notes/Django Settings.md",
+                                                     "Knowledge/Permanent Notes/Django Static과 Media.md",
+                                                     "Knowledge/Permanent Notes/Django Template.md",
+                                                     "Knowledge/Permanent Notes/Django URL Routing.md",
+                                                     "Knowledge/Permanent Notes/Django View.md",
+                                                     "Knowledge/Permanent Notes/Docker Container.md",
+                                                     "Knowledge/Permanent Notes/Docker Image.md",
+                                                     "Knowledge/Permanent Notes/Docker Network.md",
+                                                     "Knowledge/Permanent Notes/Docker Volume.md",
+                                                     "Knowledge/Permanent Notes/Dockerfile.md",
+                                                     "Knowledge/Permanent Notes/Document Loader.md",
+                                                     "Knowledge/Permanent Notes/DOM Event.md",
+                                                     "Knowledge/Permanent Notes/DOM.md",
+                                                     "Knowledge/Permanent Notes/EB CLI.md",
+                                                     "Knowledge/Permanent Notes/EDA.md",
+                                                     "Knowledge/Permanent Notes/ES6 Spread와 Destructuring.md",
+                                                     "Knowledge/Permanent Notes/ES6 화살표 함수.md",
+                                                     "Knowledge/Permanent Notes/Facade Pattern.md",
+                                                     "Knowledge/Permanent Notes/Factory Method Pattern.md",
+                                                     "Knowledge/Permanent Notes/Feature Scaling.md",
+                                                     "Knowledge/Permanent Notes/Fine-tuning.md",
+                                                     "Knowledge/Permanent Notes/Flyweight Pattern.md",
+                                                     "Knowledge/Permanent Notes/Generation Optimization.md",
+                                                     "Knowledge/Permanent Notes/Git.md",
+                                                     "Knowledge/Permanent Notes/GitHub Actions Secrets.md",
+                                                     "Knowledge/Permanent Notes/GitHub Actions Workflow.md",
+                                                     "Knowledge/Permanent Notes/GitHub Actions.md",
+                                                     "Knowledge/Permanent Notes/GitHub.md",
+                                                     "Knowledge/Permanent Notes/Gunicorn과 Uvicorn.md",
+                                                     "Knowledge/Permanent Notes/HTML.md",
+                                                     "Knowledge/Permanent Notes/Image Generation.md",
+                                                     "Knowledge/Permanent Notes/Interpreter Pattern.md",
+                                                     "Knowledge/Permanent Notes/Iterator Pattern.md",
+                                                     "Knowledge/Permanent Notes/JavaScript 객체 리터럴.md",
+                                                     "Knowledge/Permanent Notes/JavaScript 배열.md",
+                                                     "Knowledge/Permanent Notes/JavaScript 변수와 타입.md",
+                                                     "Knowledge/Permanent Notes/JavaScript 비동기.md",
+                                                     "Knowledge/Permanent Notes/JavaScript 프로토타입.md",
+                                                     "Knowledge/Permanent Notes/JavaScript 함수와 스코프.md",
+                                                     "Knowledge/Permanent Notes/JSON.md",
+                                                     "Knowledge/Permanent Notes/JSX.md",
+                                                     "Knowledge/Permanent Notes/LangChain.md",
+                                                     "Knowledge/Permanent Notes/LangGraph Node와 Edge.md",
+                                                     "Knowledge/Permanent Notes/Language Modeling.md",
+                                                     "Knowledge/Permanent Notes/LSTM.md",
+                                                     "Knowledge/Permanent Notes/Matplotlib.md",
+                                                     "Knowledge/Permanent Notes/Mediator Pattern.md",
+                                                     "Knowledge/Permanent Notes/Memento Pattern.md",
+                                                     "Knowledge/Permanent Notes/Middleware.md",
+                                                     "Knowledge/Permanent Notes/Multi-Agent.md",
+                                                     "Knowledge/Permanent Notes/Multimodal RAG.md",
+                                                     "Knowledge/Permanent Notes/MySQL 사용자와 권한.md",
+                                                     "Knowledge/Permanent Notes/Nginx.md",
+                                                     "Knowledge/Permanent Notes/NLP 전처리.md",
+                                                     "Knowledge/Permanent Notes/NumPy ndarray.md",
+                                                     "Knowledge/Permanent Notes/NumPy 브로드캐스팅.md",
+                                                     "Knowledge/Permanent Notes/Observer Pattern.md",
+                                                     "Knowledge/Permanent Notes/OpenAPI.md",
+                                                     "Knowledge/Permanent Notes/Output Parser.md",
+                                                     "Knowledge/Permanent Notes/Pandas GroupBy.md",
+                                                     "Knowledge/Permanent Notes/Pandas Merge.md",
+                                                     "Knowledge/Permanent Notes/Pandas Series.md",
+                                                     "Knowledge/Permanent Notes/Pandas 결측치 처리.md",
+                                                     "Knowledge/Permanent Notes/Pandas 인덱싱.md",
+                                                     "Knowledge/Permanent Notes/Parser.md",
+                                                     "Knowledge/Permanent Notes/PCA.md",
+                                                     "Knowledge/Permanent Notes/Procfile.md",
+                                                     "Knowledge/Permanent Notes/Prompt Template.md",
+                                                     "Knowledge/Permanent Notes/Prototype Pattern.md",
+                                                     "Knowledge/Permanent Notes/Proxy Pattern.md",
+                                                     "Knowledge/Permanent Notes/Python Enum.md",
+                                                     "Knowledge/Permanent Notes/Python map filter reduce.md",
+                                                     "Knowledge/Permanent Notes/Python match case.md",
+                                                     "Knowledge/Permanent Notes/Python 딕셔너리.md",
+                                                     "Knowledge/Permanent Notes/Python 람다 함수.md",
+                                                     "Knowledge/Permanent Notes/Python 리스트.md",
+                                                     "Knowledge/Permanent Notes/Python 모듈과 네임스페이스.md",
+                                                     "Knowledge/Permanent Notes/Python 문자열.md",
+                                                     "Knowledge/Permanent Notes/Python 반복문.md",
+                                                     "Knowledge/Permanent Notes/Python 변수.md",
+                                                     "Knowledge/Permanent Notes/Python 상속.md",
+                                                     "Knowledge/Permanent Notes/Python 세트.md",
+                                                     "Knowledge/Permanent Notes/Python 연산자.md",
+                                                     "Knowledge/Permanent Notes/Python 예외 처리.md",
+                                                     "Knowledge/Permanent Notes/Python 자료형.md",
+                                                     "Knowledge/Permanent Notes/Python 조건문.md",
+                                                     "Knowledge/Permanent Notes/Python 추상 클래스.md",
+                                                     "Knowledge/Permanent Notes/Python 캡슐화.md",
+                                                     "Knowledge/Permanent Notes/Python 컴프리헨션.md",
+                                                     "Knowledge/Permanent Notes/Python 클래스와 객체.md",
+                                                     "Knowledge/Permanent Notes/Python 타입 힌트.md",
+                                                     "Knowledge/Permanent Notes/Python 튜플.md",
+                                                     "Knowledge/Permanent Notes/Python 파일 입출력.md",
+                                                     "Knowledge/Permanent Notes/Python 함수.md",
+                                                     "Knowledge/Permanent Notes/Python 형변환.md",
+                                                     "Knowledge/Permanent Notes/PyTorch Tensor.md",
+                                                     "Knowledge/Permanent Notes/PyTorch 학습 루프.md",
+                                                     "Knowledge/Permanent Notes/Query Expansion.md",
+                                                     "Knowledge/Permanent Notes/Random Forest.md",
+                                                     "Knowledge/Permanent Notes/React Component.md",
+                                                     "Knowledge/Permanent Notes/React Event Handling.md",
+                                                     "Knowledge/Permanent Notes/React Lifecycle.md",
+                                                     "Knowledge/Permanent Notes/React List Key.md",
+                                                     "Knowledge/Permanent Notes/React Props.md",
+                                                     "Knowledge/Permanent Notes/React Router.md",
+                                                     "Knowledge/Permanent Notes/React State.md",
+                                                     "Knowledge/Permanent Notes/React.md",
+                                                     "Knowledge/Permanent Notes/Reranking.md",
+                                                     "Knowledge/Permanent Notes/RNN.md",
+                                                     "Knowledge/Permanent Notes/Runnable.md",
+                                                     "Knowledge/Permanent Notes/Scikit-learn Estimator.md",
+                                                     "Knowledge/Permanent Notes/Seaborn.md",
+                                                     "Knowledge/Permanent Notes/Seq2Seq.md",
+                                                     "Knowledge/Permanent Notes/Singleton Pattern.md",
+                                                     "Knowledge/Permanent Notes/SLLM.md",
+                                                     "Knowledge/Permanent Notes/SQL DDL.md",
+                                                     "Knowledge/Permanent Notes/SQL DML.md",
+                                                     "Knowledge/Permanent Notes/SQL GROUP BY.md",
+                                                     "Knowledge/Permanent Notes/SQL JOIN.md",
+                                                     "Knowledge/Permanent Notes/SQL 서브쿼리.md",
+                                                     "Knowledge/Permanent Notes/SQL 제약조건.md",
+                                                     "Knowledge/Permanent Notes/SQL 트랜잭션.md",
+                                                     "Knowledge/Permanent Notes/State Pattern.md",
+                                                     "Knowledge/Permanent Notes/Strategy Pattern.md",
+                                                     "Knowledge/Permanent Notes/Subword Tokenizer.md",
+                                                     "Knowledge/Permanent Notes/SVM.md",
+                                                     "Knowledge/Permanent Notes/Template Method Pattern.md",
+                                                     "Knowledge/Permanent Notes/Text Classification.md",
+                                                     "Knowledge/Permanent Notes/Text Splitter.md",
+                                                     "Knowledge/Permanent Notes/Timer.md",
+                                                     "Knowledge/Permanent Notes/Transfer Learning.md",
+                                                     "Knowledge/Permanent Notes/Transformer.md",
+                                                     "Knowledge/Permanent Notes/useCallback.md",
+                                                     "Knowledge/Permanent Notes/useContext.md",
+                                                     "Knowledge/Permanent Notes/useMemo.md",
+                                                     "Knowledge/Permanent Notes/useReducer.md",
+                                                     "Knowledge/Permanent Notes/useRef.md",
+                                                     "Knowledge/Permanent Notes/useState.md",
+                                                     "Knowledge/Permanent Notes/Video RAG.md",
+                                                     "Knowledge/Permanent Notes/Vision Transformer.md",
+                                                     "Knowledge/Permanent Notes/Visitor Pattern.md",
+                                                     "Knowledge/Permanent Notes/Voicebot.md",
+                                                     "Knowledge/Permanent Notes/Word Embedding.md",
+                                                     "Knowledge/Permanent Notes/WSGI.md",
+                                                     "Knowledge/Permanent Notes/결정트리.md",
+                                                     "Knowledge/Permanent Notes/경사하강법.md",
+                                                     "Knowledge/Permanent Notes/과적합.md",
+                                                     "Knowledge/Permanent Notes/관계형 데이터베이스.md",
+                                                     "Knowledge/Permanent Notes/교차검증.md",
+                                                     "Knowledge/Permanent Notes/데이터 전처리.md",
+                                                     "Knowledge/Permanent Notes/동적 웹 스크래핑.md",
+                                                     "Knowledge/Permanent Notes/디자인 패턴.md",
+                                                     "Knowledge/Permanent Notes/로지스틱 회귀.md",
+                                                     "Knowledge/Permanent Notes/미분과 그래디언트.md",
+                                                     "Knowledge/Permanent Notes/선형회귀.md",
+                                                     "Knowledge/Permanent Notes/손실함수.md",
+                                                     "Knowledge/Permanent Notes/신경망 출력층.md",
+                                                     "Knowledge/Permanent Notes/앙상블 학습.md",
+                                                     "Knowledge/Permanent Notes/역전파.md",
+                                                     "Knowledge/Permanent Notes/옵티마이저.md",
+                                                     "Knowledge/Permanent Notes/정규화와 드롭아웃.md",
+                                                     "Knowledge/Permanent Notes/정적 웹 스크래핑.md",
+                                                     "Knowledge/Permanent Notes/추천시스템.md",
+                                                     "Knowledge/Permanent Notes/클러스터링.md",
+                                                     "Knowledge/Permanent Notes/토큰화.md",
+                                                     "Knowledge/Permanent Notes/퍼셉트론.md",
+                                                     "Knowledge/Permanent Notes/하이퍼파라미터 튜닝.md",
+                                                     "Knowledge/Permanent Notes/활성화 함수.md",
+                                                     "Knowledge/Permanent Notes/회귀 평가 지표.md",
+                                                     "Knowledge/Templates/LLM Wiki Note Template.md"
+                                                 ]
+                                   }
+                },
+    "items":  [
+                  {
+                      "path":  "Knowledge/Assets/source_outline.md",
+                      "title":  "Source Outline",
+                      "type":  "asset",
+                      "status":  "source-outline",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  0,
+                      "reason":  "draft_template_or_audit_document"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] DevOps와 배포.md",
+                      "title":  "[Lecture] DevOps와 배포",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] Django 웹 서버.md",
+                      "title":  "[Lecture] Django 웹 서버",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] Git 기초.md",
+                      "title":  "[Lecture] Git 기초",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] LLM과 RAG.md",
+                      "title":  "[Lecture] LLM과 RAG",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] MySQL과 관계형 데이터베이스.md",
+                      "title":  "[Lecture] MySQL과 관계형 데이터베이스",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] NLP 딥러닝.md",
+                      "title":  "[Lecture] NLP 딥러닝",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] Python 기초와 Streamlit.md",
+                      "title":  "[Lecture] Python 기초와 Streamlit",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] React와 CI CD.md",
+                      "title":  "[Lecture] React와 CI CD",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] 데이터 분석.md",
+                      "title":  "[Lecture] 데이터 분석",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] 데이터 수집.md",
+                      "title":  "[Lecture] 데이터 수집",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] 딥러닝 기초.md",
+                      "title":  "[Lecture] 딥러닝 기초",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] 머신러닝.md",
+                      "title":  "[Lecture] 머신러닝",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] 멀티모달 딥러닝.md",
+                      "title":  "[Lecture] 멀티모달 딥러닝",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Literature Notes/[Lecture] 웹 클라이언트.md",
+                      "title":  "[Lecture] 웹 클라이언트",
+                      "type":  "literature",
+                      "status":  "source-expanded",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/CI CD MOC.md",
+                      "title":  "CI CD MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/Data Analysis MOC.md",
+                      "title":  "Data Analysis MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/Database MOC.md",
+                      "title":  "Database MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/Deep Learning MOC.md",
+                      "title":  "Deep Learning MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/Design Pattern MOC.md",
+                      "title":  "Design Pattern MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/DevOps MOC.md",
+                      "title":  "DevOps MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/Knowledge Index.md",
+                      "title":  "Knowledge Index",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/LLM RAG MOC.md",
+                      "title":  "LLM RAG MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/LLM Wiki 검색 스코프.md",
+                      "title":  "LLM Wiki 검색 스코프",
+                      "type":  "moc",
+                      "status":  "operating-guide",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/LLM Wiki 검색 품질 게이트.md",
+                      "title":  "LLM Wiki 검색 품질 게이트",
+                      "type":  "moc",
+                      "status":  "operating-guide",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/LLM Wiki 보강 백로그.md",
+                      "title":  "LLM Wiki 보강 백로그",
+                      "type":  "moc",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/LLM Wiki 운영 원칙.md",
+                      "title":  "LLM Wiki 운영 원칙",
+                      "type":  "moc",
+                      "status":  "operating-guide",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/LLM Wiki 전환 리포트.md",
+                      "title":  "LLM Wiki 전환 리포트",
+                      "type":  "moc",
+                      "status":  "migration-report",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  0,
+                      "reason":  "draft_template_or_audit_document"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/Machine Learning MOC.md",
+                      "title":  "Machine Learning MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/Multimodal MOC.md",
+                      "title":  "Multimodal MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/NLP MOC.md",
+                      "title":  "NLP MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/Python MOC.md",
+                      "title":  "Python MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/React MOC.md",
+                      "title":  "React MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/Web MOC.md",
+                      "title":  "Web MOC",
+                      "type":  "moc",
+                      "status":  "wiki-map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/노트 링크 관계.md",
+                      "title":  "노트 링크 관계",
+                      "type":  "moc",
+                      "status":  "map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/생성 노트 목록.md",
+                      "title":  "생성 노트 목록",
+                      "type":  "moc",
+                      "status":  "map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/전체 구조 분석.md",
+                      "title":  "전체 구조 분석",
+                      "type":  "moc",
+                      "status":  "map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/전체 노트 트리 구조.md",
+                      "title":  "전체 노트 트리 구조",
+                      "type":  "moc",
+                      "status":  "map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/중복 제거 보고서.md",
+                      "title":  "중복 제거 보고서",
+                      "type":  "moc",
+                      "status":  "map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Maps of Content/태그 체계.md",
+                      "title":  "태그 체계",
+                      "type":  "moc",
+                      "status":  "map",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Abstract Factory Pattern.md",
+                      "title":  "Abstract Factory Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Adapter Pattern.md",
+                      "title":  "Adapter Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/ASGI.md",
+                      "title":  "ASGI",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Attention.md",
+                      "title":  "Attention",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/AWS EC2.md",
+                      "title":  "AWS EC2",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/AWS Elastic Beanstalk.md",
+                      "title":  "AWS Elastic Beanstalk",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/AWS IAM Role.md",
+                      "title":  "AWS IAM Role",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/BLIP.md",
+                      "title":  "BLIP",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/BOM.md",
+                      "title":  "BOM",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/BoW와 TF-IDF.md",
+                      "title":  "BoW와 TF-IDF",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Bridge Pattern.md",
+                      "title":  "Bridge Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Builder Pattern.md",
+                      "title":  "Builder Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/CatBoost.md",
+                      "title":  "CatBoost",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Chain of Responsibility Pattern.md",
+                      "title":  "Chain of Responsibility Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Chat Model.md",
+                      "title":  "Chat Model",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/CI CD.md",
+                      "title":  "CI CD",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/CLIP.md",
+                      "title":  "CLIP",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/CNN.md",
+                      "title":  "CNN",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Command Pattern.md",
+                      "title":  "Command Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Component Composition.md",
+                      "title":  "Component Composition",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Composite Pattern.md",
+                      "title":  "Composite Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/CSS Box Model.md",
+                      "title":  "CSS Box Model",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/CSS Flex와 Grid.md",
+                      "title":  "CSS Flex와 Grid",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Custom Hook.md",
+                      "title":  "Custom Hook",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Decorator Pattern.md",
+                      "title":  "Decorator Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django App.md",
+                      "title":  "Django App",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django Chatbot.md",
+                      "title":  "Django Chatbot",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django CSRF.md",
+                      "title":  "Django CSRF",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django Form.md",
+                      "title":  "Django Form",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django JSON API.md",
+                      "title":  "Django JSON API",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django Migration.md",
+                      "title":  "Django Migration",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django ORM Model.md",
+                      "title":  "Django ORM Model",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django Project.md",
+                      "title":  "Django Project",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django QuerySet.md",
+                      "title":  "Django QuerySet",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django Session과 Auth.md",
+                      "title":  "Django Session과 Auth",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django Settings.md",
+                      "title":  "Django Settings",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django Static과 Media.md",
+                      "title":  "Django Static과 Media",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django Template.md",
+                      "title":  "Django Template",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django URL Routing.md",
+                      "title":  "Django URL Routing",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Django View.md",
+                      "title":  "Django View",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Docker Compose.md",
+                      "title":  "Docker Compose",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Docker Container.md",
+                      "title":  "Docker Container",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Docker Image.md",
+                      "title":  "Docker Image",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Docker Network.md",
+                      "title":  "Docker Network",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Docker Volume.md",
+                      "title":  "Docker Volume",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Dockerfile.md",
+                      "title":  "Dockerfile",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Document Loader.md",
+                      "title":  "Document Loader",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/DOM Event.md",
+                      "title":  "DOM Event",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/DOM.md",
+                      "title":  "DOM",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/EB CLI.md",
+                      "title":  "EB CLI",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/EDA.md",
+                      "title":  "EDA",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Embedding.md",
+                      "title":  "Embedding",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/ES6 Spread와 Destructuring.md",
+                      "title":  "ES6 Spread와 Destructuring",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/ES6 화살표 함수.md",
+                      "title":  "ES6 화살표 함수",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Facade Pattern.md",
+                      "title":  "Facade Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Factory Method Pattern.md",
+                      "title":  "Factory Method Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/FastAPI.md",
+                      "title":  "FastAPI",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Feature Engineering.md",
+                      "title":  "Feature Engineering",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Feature Scaling.md",
+                      "title":  "Feature Scaling",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Fine-tuning.md",
+                      "title":  "Fine-tuning",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Flyweight Pattern.md",
+                      "title":  "Flyweight Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Function Calling.md",
+                      "title":  "Function Calling",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Generation Optimization.md",
+                      "title":  "Generation Optimization",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Git.md",
+                      "title":  "Git",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/GitHub Actions Secrets.md",
+                      "title":  "GitHub Actions Secrets",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/GitHub Actions Workflow.md",
+                      "title":  "GitHub Actions Workflow",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/GitHub Actions.md",
+                      "title":  "GitHub Actions",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/GitHub.md",
+                      "title":  "GitHub",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Gunicorn과 Uvicorn.md",
+                      "title":  "Gunicorn과 Uvicorn",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/HTML.md",
+                      "title":  "HTML",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Image Generation.md",
+                      "title":  "Image Generation",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Interpreter Pattern.md",
+                      "title":  "Interpreter Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Iterator Pattern.md",
+                      "title":  "Iterator Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/JavaScript 객체 리터럴.md",
+                      "title":  "JavaScript 객체 리터럴",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/JavaScript 배열.md",
+                      "title":  "JavaScript 배열",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/JavaScript 변수와 타입.md",
+                      "title":  "JavaScript 변수와 타입",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/JavaScript 비동기.md",
+                      "title":  "JavaScript 비동기",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/JavaScript 프로토타입.md",
+                      "title":  "JavaScript 프로토타입",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/JavaScript 함수와 스코프.md",
+                      "title":  "JavaScript 함수와 스코프",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/JSON.md",
+                      "title":  "JSON",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/JSX.md",
+                      "title":  "JSX",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/LangChain.md",
+                      "title":  "LangChain",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/LangGraph Conditional Edge.md",
+                      "title":  "LangGraph Conditional Edge",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/LangGraph Node와 Edge.md",
+                      "title":  "LangGraph Node와 Edge",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/LangGraph State.md",
+                      "title":  "LangGraph State",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/LangGraph.md",
+                      "title":  "LangGraph",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Language Modeling.md",
+                      "title":  "Language Modeling",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/LLM.md",
+                      "title":  "LLM",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/LSTM.md",
+                      "title":  "LSTM",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Matplotlib.md",
+                      "title":  "Matplotlib",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Mediator Pattern.md",
+                      "title":  "Mediator Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Memento Pattern.md",
+                      "title":  "Memento Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Middleware.md",
+                      "title":  "Middleware",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/MLflow.md",
+                      "title":  "MLflow",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Multi-Agent.md",
+                      "title":  "Multi-Agent",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Multimodal RAG.md",
+                      "title":  "Multimodal RAG",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/MySQL Connector Python.md",
+                      "title":  "MySQL Connector Python",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/MySQL 사용자와 권한.md",
+                      "title":  "MySQL 사용자와 권한",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Nginx.md",
+                      "title":  "Nginx",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/NLP 전처리.md",
+                      "title":  "NLP 전처리",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/NumPy ndarray.md",
+                      "title":  "NumPy ndarray",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/NumPy 브로드캐스팅.md",
+                      "title":  "NumPy 브로드캐스팅",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Observer Pattern.md",
+                      "title":  "Observer Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/OpenAI API.md",
+                      "title":  "OpenAI API",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/OpenAPI.md",
+                      "title":  "OpenAPI",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Output Parser.md",
+                      "title":  "Output Parser",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Pandas DataFrame.md",
+                      "title":  "Pandas DataFrame",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Pandas GroupBy.md",
+                      "title":  "Pandas GroupBy",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Pandas Merge.md",
+                      "title":  "Pandas Merge",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Pandas Series.md",
+                      "title":  "Pandas Series",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Pandas 결측치 처리.md",
+                      "title":  "Pandas 결측치 처리",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Pandas 인덱싱.md",
+                      "title":  "Pandas 인덱싱",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Parser.md",
+                      "title":  "Parser",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/PCA.md",
+                      "title":  "PCA",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Procfile.md",
+                      "title":  "Procfile",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Prompt Engineering.md",
+                      "title":  "Prompt Engineering",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Prompt Template.md",
+                      "title":  "Prompt Template",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Prototype Pattern.md",
+                      "title":  "Prototype Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Proxy Pattern.md",
+                      "title":  "Proxy Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python Enum.md",
+                      "title":  "Python Enum",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python map filter reduce.md",
+                      "title":  "Python map filter reduce",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python match case.md",
+                      "title":  "Python match case",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 딕셔너리.md",
+                      "title":  "Python 딕셔너리",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 람다 함수.md",
+                      "title":  "Python 람다 함수",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 리스트.md",
+                      "title":  "Python 리스트",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 모듈과 네임스페이스.md",
+                      "title":  "Python 모듈과 네임스페이스",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 문자열.md",
+                      "title":  "Python 문자열",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 반복문.md",
+                      "title":  "Python 반복문",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 변수.md",
+                      "title":  "Python 변수",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 상속.md",
+                      "title":  "Python 상속",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 세트.md",
+                      "title":  "Python 세트",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 연산자.md",
+                      "title":  "Python 연산자",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 예외 처리.md",
+                      "title":  "Python 예외 처리",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 자료형.md",
+                      "title":  "Python 자료형",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 조건문.md",
+                      "title":  "Python 조건문",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 추상 클래스.md",
+                      "title":  "Python 추상 클래스",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 캡슐화.md",
+                      "title":  "Python 캡슐화",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 컴프리헨션.md",
+                      "title":  "Python 컴프리헨션",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 클래스와 객체.md",
+                      "title":  "Python 클래스와 객체",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 타입 힌트.md",
+                      "title":  "Python 타입 힌트",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 튜플.md",
+                      "title":  "Python 튜플",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 파일 입출력.md",
+                      "title":  "Python 파일 입출력",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 함수.md",
+                      "title":  "Python 함수",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Python 형변환.md",
+                      "title":  "Python 형변환",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/PyTorch Tensor.md",
+                      "title":  "PyTorch Tensor",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/PyTorch 학습 루프.md",
+                      "title":  "PyTorch 학습 루프",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Query Expansion.md",
+                      "title":  "Query Expansion",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/RAG 평가.md",
+                      "title":  "RAG 평가",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/RAG.md",
+                      "title":  "RAG",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Random Forest.md",
+                      "title":  "Random Forest",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/React API Fetch.md",
+                      "title":  "React API Fetch",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/React Component.md",
+                      "title":  "React Component",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/React Event Handling.md",
+                      "title":  "React Event Handling",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/React Lifecycle.md",
+                      "title":  "React Lifecycle",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/React List Key.md",
+                      "title":  "React List Key",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/React Props.md",
+                      "title":  "React Props",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/React Router.md",
+                      "title":  "React Router",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/React SPA.md",
+                      "title":  "React SPA",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/React State.md",
+                      "title":  "React State",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/React.md",
+                      "title":  "React",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Requests.md",
+                      "title":  "Requests",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Reranking.md",
+                      "title":  "Reranking",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Retriever.md",
+                      "title":  "Retriever",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/RNN.md",
+                      "title":  "RNN",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Runnable.md",
+                      "title":  "Runnable",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Scikit-learn Estimator.md",
+                      "title":  "Scikit-learn Estimator",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Seaborn.md",
+                      "title":  "Seaborn",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Seq2Seq.md",
+                      "title":  "Seq2Seq",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Singleton Pattern.md",
+                      "title":  "Singleton Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SLLM.md",
+                      "title":  "SLLM",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SQL DDL.md",
+                      "title":  "SQL DDL",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SQL DML.md",
+                      "title":  "SQL DML",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SQL GROUP BY.md",
+                      "title":  "SQL GROUP BY",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SQL JOIN.md",
+                      "title":  "SQL JOIN",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SQL SELECT와 WHERE.md",
+                      "title":  "SQL SELECT와 WHERE",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SQL 서브쿼리.md",
+                      "title":  "SQL 서브쿼리",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SQL 제약조건.md",
+                      "title":  "SQL 제약조건",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SQL 트랜잭션.md",
+                      "title":  "SQL 트랜잭션",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SQLite.md",
+                      "title":  "SQLite",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/State Pattern.md",
+                      "title":  "State Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Strategy Pattern.md",
+                      "title":  "Strategy Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Streamlit Session State.md",
+                      "title":  "Streamlit Session State",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Streamlit 기본 UI.md",
+                      "title":  "Streamlit 기본 UI",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Subword Tokenizer.md",
+                      "title":  "Subword Tokenizer",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/SVM.md",
+                      "title":  "SVM",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Template Method Pattern.md",
+                      "title":  "Template Method Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Text Classification.md",
+                      "title":  "Text Classification",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Text Splitter.md",
+                      "title":  "Text Splitter",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Timer.md",
+                      "title":  "Timer",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Train Test Split.md",
+                      "title":  "Train Test Split",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Transfer Learning.md",
+                      "title":  "Transfer Learning",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Transformer.md",
+                      "title":  "Transformer",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/useCallback.md",
+                      "title":  "useCallback",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/useContext.md",
+                      "title":  "useContext",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/useEffect.md",
+                      "title":  "useEffect",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/useMemo.md",
+                      "title":  "useMemo",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/useReducer.md",
+                      "title":  "useReducer",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/useRef.md",
+                      "title":  "useRef",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/useState.md",
+                      "title":  "useState",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Vector Store.md",
+                      "title":  "Vector Store",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Video RAG.md",
+                      "title":  "Video RAG",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Vision Transformer.md",
+                      "title":  "Vision Transformer",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Visitor Pattern.md",
+                      "title":  "Visitor Pattern",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Voicebot.md",
+                      "title":  "Voicebot",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/Word Embedding.md",
+                      "title":  "Word Embedding",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/WSGI.md",
+                      "title":  "WSGI",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/XGBoost.md",
+                      "title":  "XGBoost",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/결정트리.md",
+                      "title":  "결정트리",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/경사하강법.md",
+                      "title":  "경사하강법",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/과적합.md",
+                      "title":  "과적합",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/관계형 데이터베이스.md",
+                      "title":  "관계형 데이터베이스",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/교차검증.md",
+                      "title":  "교차검증",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/데이터 전처리.md",
+                      "title":  "데이터 전처리",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/동적 웹 스크래핑.md",
+                      "title":  "동적 웹 스크래핑",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/디자인 패턴.md",
+                      "title":  "디자인 패턴",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/로지스틱 회귀.md",
+                      "title":  "로지스틱 회귀",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/미분과 그래디언트.md",
+                      "title":  "미분과 그래디언트",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/분류 평가 지표.md",
+                      "title":  "분류 평가 지표",
+                      "type":  "permanent",
+                      "status":  "wiki-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/선형회귀.md",
+                      "title":  "선형회귀",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/손실함수.md",
+                      "title":  "손실함수",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/신경망 출력층.md",
+                      "title":  "신경망 출력층",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/앙상블 학습.md",
+                      "title":  "앙상블 학습",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/역전파.md",
+                      "title":  "역전파",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/옵티마이저.md",
+                      "title":  "옵티마이저",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/정규화와 드롭아웃.md",
+                      "title":  "정규화와 드롭아웃",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/정적 웹 스크래핑.md",
+                      "title":  "정적 웹 스크래핑",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/추천시스템.md",
+                      "title":  "추천시스템",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/클러스터링.md",
+                      "title":  "클러스터링",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/토큰화.md",
+                      "title":  "토큰화",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/퍼셉트론.md",
+                      "title":  "퍼셉트론",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/하이퍼파라미터 튜닝.md",
+                      "title":  "하이퍼파라미터 튜닝",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/활성화 함수.md",
+                      "title":  "활성화 함수",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Permanent Notes/회귀 평가 지표.md",
+                      "title":  "회귀 평가 지표",
+                      "type":  "permanent",
+                      "status":  "wiki-standardized",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  2,
+                      "reason":  "wiki_standardized_requires_expansion_before_default_indexing; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Projects/SKN26 1차 프로젝트 - 차량 TCO.md",
+                      "title":  "SKN26 1차 프로젝트 - 차량 TCO",
+                      "type":  "project",
+                      "status":  "project-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Projects/SKN26 2차 프로젝트 - 카드 이탈 예측.md",
+                      "title":  "SKN26 2차 프로젝트 - 카드 이탈 예측",
+                      "type":  "project",
+                      "status":  "project-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Projects/SKN26 3차 프로젝트 - PICKLE RAG 챗봇.md",
+                      "title":  "SKN26 3차 프로젝트 - PICKLE RAG 챗봇",
+                      "type":  "project",
+                      "status":  "project-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Projects/SKN26 4차 프로젝트 - LG Home.md",
+                      "title":  "SKN26 4차 프로젝트 - LG Home",
+                      "type":  "project",
+                      "status":  "project-expanded",
+                      "bucket":  "primary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_project_or_permanent_note"
+                  },
+                  {
+                      "path":  "Knowledge/Projects/개인 Dev Rules.md",
+                      "title":  "개인 Dev Rules",
+                      "type":  "project-reflection",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/Projects/프로젝트 경험 MOC.md",
+                      "title":  "프로젝트 경험 MOC",
+                      "type":  "moc",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/Projects/프로젝트 기반 개발자 정체성.md",
+                      "title":  "프로젝트 기반 개발자 정체성",
+                      "type":  "project-reflection",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/Projects/프로젝트 실패와 디버깅 로그.md",
+                      "title":  "프로젝트 실패와 디버깅 로그",
+                      "type":  "project-log",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/Projects/프로젝트 의사결정 로그.md",
+                      "title":  "프로젝트 의사결정 로그",
+                      "type":  "project-log",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/Projects/프로젝트 적용 로그.md",
+                      "title":  "프로젝트 적용 로그",
+                      "type":  "project-log",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/Questions/RAG 검색 실패 사례.md",
+                      "title":  "RAG 검색 실패 사례",
+                      "type":  "question-set",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/Questions/RAG 평가 질문 세트.md",
+                      "title":  "RAG 평가 질문 세트",
+                      "type":  "question-set",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/Questions/질문 인박스.md",
+                      "title":  "질문 인박스",
+                      "type":  "question-index",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/Questions/프로젝트 회고 질문 세트.md",
+                      "title":  "프로젝트 회고 질문 세트",
+                      "type":  "question-set",
+                      "status":  "active",
+                      "bucket":  "on_demand_context",
+                      "placeholder_count":  0,
+                      "reason":  "active_working_document"
+                  },
+                  {
+                      "path":  "Knowledge/README.md",
+                      "title":  "Knowledge Vault",
+                      "type":  "index",
+                      "status":  "entrypoint",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/Conda 환경 설정.md",
+                      "title":  "Conda 환경 설정",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/Django 명령어 모음.md",
+                      "title":  "Django 명령어 모음",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/Docker CLI.md",
+                      "title":  "Docker CLI",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/Docker Compose.md",
+                      "title":  "Docker Compose",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/Git 명령어 모음.md",
+                      "title":  "Git 명령어 모음",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/GitHub Actions EB 배포 치트시트.md",
+                      "title":  "GitHub Actions EB 배포 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/JavaScript DOM 치트시트.md",
+                      "title":  "JavaScript DOM 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/LangChain RAG 치트시트.md",
+                      "title":  "LangChain RAG 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/LangGraph 그래프 작성 치트시트.md",
+                      "title":  "LangGraph 그래프 작성 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/MySQL SQL 치트시트.md",
+                      "title":  "MySQL SQL 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/NLP 전처리 치트시트.md",
+                      "title":  "NLP 전처리 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/OpenAI API 기본 호출.md",
+                      "title":  "OpenAI API 기본 호출",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/Pandas 치트시트.md",
+                      "title":  "Pandas 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/Python 치트시트.md",
+                      "title":  "Python 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/PyTorch 학습 루프 치트시트.md",
+                      "title":  "PyTorch 학습 루프 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/React Hooks 치트시트.md",
+                      "title":  "React Hooks 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/React Router 치트시트.md",
+                      "title":  "React Router 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/Scikit-learn 워크플로우.md",
+                      "title":  "Scikit-learn 워크플로우",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/Streamlit 치트시트.md",
+                      "title":  "Streamlit 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/WSGI ASGI 배포 명령어.md",
+                      "title":  "WSGI ASGI 배포 명령어",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Reference Notes/시각화 치트시트.md",
+                      "title":  "시각화 치트시트",
+                      "type":  "reference",
+                      "status":  "reference",
+                      "bucket":  "secondary_answer_index",
+                      "placeholder_count":  0,
+                      "reason":  "expanded_source_or_reference"
+                  },
+                  {
+                      "path":  "Knowledge/Sources/외부 참조 정책.md",
+                      "title":  "외부 참조 정책",
+                      "type":  "source-policy",
+                      "status":  "policy",
+                      "bucket":  "routing_index",
+                      "placeholder_count":  0,
+                      "reason":  "navigation_or_policy_context"
+                  },
+                  {
+                      "path":  "Knowledge/Templates/LLM Wiki Note Template.md",
+                      "title":  "LLM Wiki Note Template",
+                      "type":  "template",
+                      "status":  "template",
+                      "bucket":  "quarantine",
+                      "placeholder_count":  1,
+                      "reason":  "draft_template_or_audit_document; contains_boilerplate_or_placeholder"
+                  }
+              ]
+}
