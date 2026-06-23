@@ -5,7 +5,7 @@ created: "2026-05-30"
 updated: "2026-05-30"
 reviewed: "2026-05-30"
 tags:
-  - 'llm_wiki'
+  - 'project_context'
   - 'project'
   - 'skn26'
   - 'django'
@@ -18,7 +18,7 @@ related_source:
 
 # SKN26 4차 프로젝트 - LG Home
 
-태그: #llm_wiki #project #skn26 #django #langgraph
+태그: #project_context #project #skn26 #django #langgraph
 
 ## 한 줄 요약
 

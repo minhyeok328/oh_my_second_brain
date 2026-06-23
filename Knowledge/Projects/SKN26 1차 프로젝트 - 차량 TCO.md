@@ -5,7 +5,7 @@ created: "2026-05-30"
 updated: "2026-05-30"
 reviewed: "2026-05-30"
 tags:
-  - 'llm_wiki'
+  - 'project_context'
   - 'project'
   - 'skn26'
   - 'streamlit'
@@ -16,7 +16,7 @@ source:
 
 # SKN26 1차 프로젝트 - 차량 TCO
 
-태그: #llm_wiki #project #skn26 #streamlit #mysql
+태그: #project_context #project #skn26 #streamlit #mysql
 
 ## 한 줄 요약
 

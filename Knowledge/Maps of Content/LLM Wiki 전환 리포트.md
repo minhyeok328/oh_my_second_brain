@@ -2,8 +2,8 @@
 type: "moc"
 status: "migration-report"
 created: "2026-05-30"
-updated: "2026-05-30"
-reviewed: "2026-05-30"
+updated: "2026-06-23"
+reviewed: "2026-06-23"
 tags:
   - 'llm_wiki'
   - 'migration'
@@ -50,7 +50,7 @@ tags:
 - [[LLM Wiki 검색 품질 게이트]], [[LLM Wiki 검색 스코프]], [[LLM Wiki 보강 백로그]]를 추가해 덜 익은 노트가 검색 결과를 오염시키지 않도록 운영 기준을 만들었다.
 - 1차 차량 TCO 프로젝트에 직접 연결된 [[Streamlit Session State]], [[MySQL Connector Python]], [[SQL SELECT와 WHERE]], [[Requests]]를 `wiki-expanded`로 승격했다.
 - 2차 카드 이탈 예측 프로젝트의 모델 평가 축인 [[분류 평가 지표]], [[Train Test Split]], [[Feature Engineering]]을 `wiki-expanded`로 승격했다.
-- second brain 용도로 프로젝트 경험을 관리하기 위해 [[프로젝트 경험 MOC]], [[프로젝트 의사결정 로그]], [[프로젝트 실패와 디버깅 로그]]를 추가했다.
+- 프로젝트 경험을 적용 사례로 관리하기 위해 [[프로젝트 경험 MOC]], [[프로젝트 의사결정 로그]], [[프로젝트 실패와 디버깅 로그]]를 추가했다.
 - 프로젝트 개인 회고 입력을 준비하기 위해 [[프로젝트 회고 질문 세트]]를 추가했다.
 
 ## 우선 확장한 허브 노트
@@ -79,3 +79,11 @@ tags:
 - 이 리포트의 숫자는 2026-05-30 프로젝트 상세 보강 및 검색 품질 게이트 추가 이후 다시 집계했다.
 - 검색/RAG 스코프는 `Tools/Update-RetrievalScope.ps1`로 `Knowledge/Assets/retrieval_scope.json`을 재생성해 관리한다.
 - 최종 완료 전 별도 검증 명령으로 빈 파일, frontmatter, wikilink, placeholder 문구를 다시 확인한다.
+
+## 2026-06-23 공식 지식 중심 재정렬
+
+- Vault 정체성을 "LLM wiki형 second brain"에서 "공식 지식 중심 LLM Wiki + 프로젝트 적용 사례 + 개인 사고 레이어"로 재정의했다.
+- `project-expanded`를 기본 답변 인덱스에서 분리해 `applied_context_index`로 이동했다.
+- 개인 회고, 개발자 정체성, 개인 Dev Rules, 회고 질문 세트를 `personal-context`로 분리하고 [[생각과 회고 MOC]]를 추가했다.
+- 현재 Markdown 파일은 312개이며, status 분포는 `active` 8개, `personal-context` 4개, `project-expanded` 4개, `wiki-expanded` 34개, `wiki-standardized` 199개다.
+- 기본 답변 인덱스는 69개이고, 프로젝트 적용 컨텍스트는 4개, 개인 사고/회고 컨텍스트는 4개다.

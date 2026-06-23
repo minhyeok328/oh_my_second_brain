@@ -1,11 +1,11 @@
 ---
 type: "project-reflection"
-status: "active"
+status: "personal-context"
 created: "2026-05-30"
-updated: "2026-05-30"
-reviewed: "2026-05-30"
+updated: "2026-06-23"
+reviewed: "2026-06-23"
 tags:
-  - 'llm_wiki'
+  - 'personal_context'
   - 'project'
   - 'experience'
   - 'collaboration'
@@ -17,7 +17,7 @@ source:
 
 # 개인 Dev Rules
 
-태그: #llm_wiki #project #experience #collaboration #dev_rules
+태그: #personal_context #project #experience #collaboration #dev_rules
 
 ## 한 줄 요약
 

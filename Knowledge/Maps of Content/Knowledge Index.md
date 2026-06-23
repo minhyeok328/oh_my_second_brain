@@ -2,8 +2,8 @@
 type: "moc"
 status: "wiki-map"
 created: "2026-05-30"
-updated: "2026-05-30"
-reviewed: "2026-05-30"
+updated: "2026-06-23"
+reviewed: "2026-06-23"
 tags:
   - 'llm_wiki'
   - 'moc'
@@ -16,7 +16,7 @@ source:
 
 태그: #moc #index #llm_wiki
 
-## 지도
+## 공식 지식 지도
 
 - [[Python MOC]]
 - [[Database MOC]]
@@ -37,20 +37,24 @@ source:
 - [[생성 노트 목록]]
 - [[전체 구조 분석]]
 
-## 프로젝트 적용 노트
+## 프로젝트 적용 사례
 
 - [[프로젝트 적용 로그]]
 - [[프로젝트 경험 MOC]]
 - [[프로젝트 의사결정 로그]]
 - [[프로젝트 실패와 디버깅 로그]]
-- [[프로젝트 기반 개발자 정체성]]
-- [[개인 Dev Rules]]
 - [[SKN26 1차 프로젝트 - 차량 TCO]]
 - [[SKN26 2차 프로젝트 - 카드 이탈 예측]]
 - [[SKN26 3차 프로젝트 - PICKLE RAG 챗봇]]
 - [[SKN26 4차 프로젝트 - LG Home]]
 - [[RAG 평가 질문 세트]]
 - [[RAG 검색 실패 사례]]
+
+## 개인 사고와 회고
+
+- [[생각과 회고 MOC]]
+- [[프로젝트 기반 개발자 정체성]]
+- [[개인 Dev Rules]]
 - [[프로젝트 회고 질문 세트]]
 
 ## 전체 Permanent Notes

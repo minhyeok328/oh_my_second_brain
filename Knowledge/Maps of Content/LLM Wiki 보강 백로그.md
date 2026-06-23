@@ -2,8 +2,8 @@
 type: "moc"
 status: "active"
 created: "2026-05-30"
-updated: "2026-05-30"
-reviewed: "2026-05-30"
+updated: "2026-06-23"
+reviewed: "2026-06-23"
 tags:
   - 'llm_wiki'
   - 'moc'
@@ -21,17 +21,19 @@ source:
 
 - `wiki-standardized` 노트가 199개 남아 있다.
 - placeholder 문구는 전체 `Knowledge` 기준 399건 남아 있다.
-- 이번 프로젝트 보강 대상 노트는 정리됐지만, 전체 vault 검색에서는 덜 익은 노트가 아직 노이즈가 될 수 있다.
-- 따라서 [[LLM Wiki 검색 품질 게이트]]를 먼저 적용하고, 이후 프로젝트 연결도가 높은 노트부터 승격한다.
+- 기존 프로젝트 보강 대상 노트는 정리됐지만, 전체 vault 검색에서는 덜 익은 노트가 아직 노이즈가 될 수 있다.
+- 따라서 [[LLM Wiki 검색 품질 게이트]]를 먼저 적용하고, 이후 공식 문서 확인 비용이 크고 학습 빈도가 높은 노트부터 승격한다.
 
 ## 승격 완료 기준
 
 `wiki-standardized` 노트를 `wiki-expanded`로 승격하려면 아래 항목을 채운다.
 
 - boilerplate 문구 제거
+- 공식/강의 근거와 프로젝트 사례 분리
 - 한 문장 정의와 실제 사용하는 이유 분리
 - 사용 조건과 쓰지 말아야 할 조건 작성
-- 프로젝트 예시 또는 강의 실습 예시 연결
+- 공식 문서, 강의 실습, 검증된 레퍼런스 중 최소 하나 연결
+- 프로젝트 예시는 적용 사례 섹션에만 연결
 - 실패 조건 작성
 - 먼저 확인할 질문 작성
 - 관련 MOC와 프로젝트 노트에서 역링크 확인
@@ -41,7 +43,15 @@ source:
 - 2026-05-30 1차 차량 TCO: [[Streamlit Session State]], [[MySQL Connector Python]], [[SQL SELECT와 WHERE]], [[Requests]]
 - 2026-05-30 2차 카드 이탈 예측: [[분류 평가 지표]], [[Train Test Split]], [[Feature Engineering]]
 
-## 1순위: 프로젝트에 직접 연결된 노트
+## 1순위: 공식 공부 효율이 큰 노트
+
+- [[RAG]], [[Embedding]], [[Vector Store]], [[Retriever]]
+- [[LangGraph]], [[Function Calling]], [[OpenAI API]]
+- [[Django QuerySet]], [[Django ORM Model]], [[Django View]], [[Django Session과 Auth]]
+- [[React API Fetch]], [[useEffect]], [[React State]]
+- [[Docker Compose]], [[Dockerfile]], [[GitHub Actions Workflow]]
+
+## 2순위: 프로젝트 적용 사례가 있는 노트
 
 ### 1차 차량 TCO
 
@@ -69,14 +79,14 @@ source:
 - [[Django View]]: HTML view와 JSON API view 분리 기준 보강
 - [[Middleware]]: 인증, 세션, 요청 흐름에서 확인할 기준 보강
 
-## 2순위: 면접/회고 효율이 큰 노트
+## 3순위: 면접/회고 효율이 큰 노트
 
 - [[과적합]], [[교차검증]], [[하이퍼파라미터 튜닝]]
 - [[SQL JOIN]], [[SQL 트랜잭션]], [[SQL 제약조건]]
 - [[React]], [[React State]], [[useEffect]], [[useState]], [[useMemo]], [[useCallback]]
 - [[Dockerfile]], [[Docker Container]], [[Docker Image]], [[Docker Network]]
 
-## 3순위: 새로 만들 후보
+## 4순위: 새로 만들 후보
 
 아래는 프로젝트에서 쓰였거나 언급됐지만 아직 독립 Permanent Note가 약한 후보들이다. 생성 여부는 다음 작업에서 결정한다.
 
@@ -97,7 +107,7 @@ source:
 ## 다음 결정 필요
 
 - 다음 승격 배치를 ML/DB/Web/RAG 중 어느 축으로 잡을지 결정해야 한다.
-- 새 후보 노트를 실제 프로젝트 근거 기반으로 만들지, 일반 개념 노트로 먼저 만들지 결정해야 한다.
+- 새 후보 노트는 먼저 공식/강의 기반 개념 노트로 만들고, 프로젝트 근거는 적용 사례로만 붙일지 결정해야 한다.
 
 ## 연결
 

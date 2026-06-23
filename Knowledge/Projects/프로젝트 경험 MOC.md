@@ -2,13 +2,13 @@
 type: "moc"
 status: "active"
 created: "2026-05-30"
-updated: "2026-05-30"
-reviewed: "2026-05-30"
+updated: "2026-06-23"
+reviewed: "2026-06-23"
 tags:
-  - 'llm_wiki'
+  - 'project_context'
   - 'project'
   - 'experience'
-  - 'second_brain'
+  - 'application_layer'
 source:
   - 'C:\MinHyeok\skn26_1st_2nd\joy-riders'
   - 'C:\MinHyeok\skn26_2nd_1st\2nd_project'
@@ -18,11 +18,11 @@ source:
 
 # 프로젝트 경험 MOC
 
-태그: #llm_wiki #project #experience #second_brain
+태그: #project_context #project #experience #application_layer
 
 ## 목적
 
-이 문서는 프로젝트를 단순 결과물이 아니라 second brain의 경험 지식으로 관리하기 위한 입구다. 개념 노트는 "무엇인가"를 설명하고, 프로젝트 경험 노트는 "내가 어떤 상황에서 왜 그것을 썼는가"를 설명한다.
+이 문서는 공식 LLM Wiki의 1차 근거가 아니라, 프로젝트에서 지식이 어떻게 적용됐는지 확인하는 보조 입구다. 개념 노트는 "무엇인가"를 설명하고, 프로젝트 경험 노트는 "내가 어떤 상황에서 왜 그것을 썼는가"를 설명한다.
 
 ## 경험 지식 구조
 
@@ -30,10 +30,9 @@ source:
 - [[프로젝트 의사결정 로그]]: 코드와 README에서 확인되는 설계 선택
 - [[프로젝트 실패와 디버깅 로그]]: 실패 조건, 디버깅 기준, 다음에 먼저 확인할 지점
 - [[프로젝트 회고 질문 세트]]: 사용자 개인 회고 입력이 필요한 질문 모음
-- [[프로젝트 기반 개발자 정체성]]: 프로젝트 경험을 통해 정리한 협업형 개발자 서사
-- [[개인 Dev Rules]]: commit, branch, issue, docs 중심의 개인 협업 운영 원칙
+- [[생각과 회고 MOC]]: 개인 회고, 개발자 정체성, 개인 Dev Rules를 모아 둔 Thinking 레이어
 - 프로젝트별 상세 노트: 문제 정의, 사용 기술, 판단 기준, 다음 보강 노트
-- Permanent Note: 프로젝트 경험에서 반복 가능한 개념으로 끌어올린 원자 지식
+- Permanent Note: 프로젝트 사례와 분리된 공식/강의 기반 원자 지식
 
 ## 프로젝트를 관통하는 정체성
 
@@ -84,7 +83,8 @@ source:
 
 - 코드와 README로 확인되는 사실은 local source 기준으로 쓴다.
 - 개인의 감정, 동기, 협업 맥락은 사용자가 확인한 뒤 적는다.
-- 일반 개념 설명으로 끝내지 말고 "그 프로젝트에서 왜 필요했는가"를 남긴다.
+- 일반 개념 정의를 대신하지 말고 "그 프로젝트에서 왜 필요했는가"를 남긴다.
+- 공식 지식과 프로젝트 사례를 한 문장 안에서 섞지 않는다.
 - 실패를 기록할 때는 원인 위치를 입력, 전처리, 모델, 검색, API, UI, 배포로 나눈다.
 
 ## 연결
@@ -92,7 +92,6 @@ source:
 - [[프로젝트 의사결정 로그]]
 - [[프로젝트 실패와 디버깅 로그]]
 - [[프로젝트 회고 질문 세트]]
-- [[프로젝트 기반 개발자 정체성]]
-- [[개인 Dev Rules]]
+- [[생각과 회고 MOC]]
 - [[LLM Wiki 보강 백로그]]
 - [[LLM Wiki 검색 스코프]]
