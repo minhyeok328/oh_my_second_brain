@@ -1,16 +1,16 @@
 {
-    "generated_at":  "2026-05-30",
+    "generated_at":  "2026-06-23",
     "source_root":  "C:\\Obsidian\\KnowledgeVault\\Knowledge",
-    "total_markdown_files":  311,
+    "total_markdown_files":  312,
     "policy":  {
                    "primary_answer_index_statuses":  [
-                                                         "project-expanded",
-                                                         "wiki-expanded"
+                                                         "wiki-expanded",
+                                                         "source-expanded",
+                                                         "reference"
                                                      ],
-                   "secondary_answer_index_statuses":  [
-                                                           "source-expanded",
-                                                           "reference"
-                                                       ],
+                   "applied_context_index_statuses":  [
+                                                          "project-expanded"
+                                                      ],
                    "routing_index_statuses":  [
                                                   "entrypoint",
                                                   "map",
@@ -21,6 +21,9 @@
                    "on_demand_context_statuses":  [
                                                       "active"
                                                   ],
+                   "personal_context_statuses":  [
+                                                     "personal-context"
+                                                 ],
                    "quarantine_statuses":  [
                                                "wiki-standardized",
                                                "template",
@@ -30,11 +33,12 @@
                    "default_answer_index_excludes_wiki_standardized":  true
                },
     "counts_by_status":  {
-                             "active":  11,
+                             "active":  8,
                              "entrypoint":  1,
                              "map":  6,
                              "migration-report":  1,
                              "operating-guide":  3,
+                             "personal-context":  4,
                              "policy":  1,
                              "project-expanded":  4,
                              "reference":  21,
@@ -47,8 +51,22 @@
                          },
     "buckets":  {
                     "primary_answer_index":  {
-                                                 "count":  38,
+                                                 "count":  69,
                                                  "paths":  [
+                                                               "Knowledge/Literature Notes/[Lecture] DevOps와 배포.md",
+                                                               "Knowledge/Literature Notes/[Lecture] Django 웹 서버.md",
+                                                               "Knowledge/Literature Notes/[Lecture] Git 기초.md",
+                                                               "Knowledge/Literature Notes/[Lecture] LLM과 RAG.md",
+                                                               "Knowledge/Literature Notes/[Lecture] MySQL과 관계형 데이터베이스.md",
+                                                               "Knowledge/Literature Notes/[Lecture] NLP 딥러닝.md",
+                                                               "Knowledge/Literature Notes/[Lecture] Python 기초와 Streamlit.md",
+                                                               "Knowledge/Literature Notes/[Lecture] React와 CI CD.md",
+                                                               "Knowledge/Literature Notes/[Lecture] 데이터 분석.md",
+                                                               "Knowledge/Literature Notes/[Lecture] 데이터 수집.md",
+                                                               "Knowledge/Literature Notes/[Lecture] 딥러닝 기초.md",
+                                                               "Knowledge/Literature Notes/[Lecture] 머신러닝.md",
+                                                               "Knowledge/Literature Notes/[Lecture] 멀티모달 딥러닝.md",
+                                                               "Knowledge/Literature Notes/[Lecture] 웹 클라이언트.md",
                                                                "Knowledge/Permanent Notes/Django Chatbot.md",
                                                                "Knowledge/Permanent Notes/Django CSRF.md",
                                                                "Knowledge/Permanent Notes/Django JSON API.md",
@@ -83,52 +101,38 @@
                                                                "Knowledge/Permanent Notes/Vector Store.md",
                                                                "Knowledge/Permanent Notes/XGBoost.md",
                                                                "Knowledge/Permanent Notes/분류 평가 지표.md",
-                                                               "Knowledge/Projects/SKN26 1차 프로젝트 - 차량 TCO.md",
-                                                               "Knowledge/Projects/SKN26 2차 프로젝트 - 카드 이탈 예측.md",
-                                                               "Knowledge/Projects/SKN26 3차 프로젝트 - PICKLE RAG 챗봇.md",
-                                                               "Knowledge/Projects/SKN26 4차 프로젝트 - LG Home.md"
+                                                               "Knowledge/Reference Notes/Conda 환경 설정.md",
+                                                               "Knowledge/Reference Notes/Django 명령어 모음.md",
+                                                               "Knowledge/Reference Notes/Docker CLI.md",
+                                                               "Knowledge/Reference Notes/Docker Compose.md",
+                                                               "Knowledge/Reference Notes/Git 명령어 모음.md",
+                                                               "Knowledge/Reference Notes/GitHub Actions EB 배포 치트시트.md",
+                                                               "Knowledge/Reference Notes/JavaScript DOM 치트시트.md",
+                                                               "Knowledge/Reference Notes/LangChain RAG 치트시트.md",
+                                                               "Knowledge/Reference Notes/LangGraph 그래프 작성 치트시트.md",
+                                                               "Knowledge/Reference Notes/MySQL SQL 치트시트.md",
+                                                               "Knowledge/Reference Notes/NLP 전처리 치트시트.md",
+                                                               "Knowledge/Reference Notes/OpenAI API 기본 호출.md",
+                                                               "Knowledge/Reference Notes/Pandas 치트시트.md",
+                                                               "Knowledge/Reference Notes/Python 치트시트.md",
+                                                               "Knowledge/Reference Notes/PyTorch 학습 루프 치트시트.md",
+                                                               "Knowledge/Reference Notes/React Hooks 치트시트.md",
+                                                               "Knowledge/Reference Notes/React Router 치트시트.md",
+                                                               "Knowledge/Reference Notes/Scikit-learn 워크플로우.md",
+                                                               "Knowledge/Reference Notes/Streamlit 치트시트.md",
+                                                               "Knowledge/Reference Notes/WSGI ASGI 배포 명령어.md",
+                                                               "Knowledge/Reference Notes/시각화 치트시트.md"
                                                            ]
                                              },
-                    "secondary_answer_index":  {
-                                                   "count":  35,
-                                                   "paths":  [
-                                                                 "Knowledge/Literature Notes/[Lecture] DevOps와 배포.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] Django 웹 서버.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] Git 기초.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] LLM과 RAG.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] MySQL과 관계형 데이터베이스.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] NLP 딥러닝.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] Python 기초와 Streamlit.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] React와 CI CD.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] 데이터 분석.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] 데이터 수집.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] 딥러닝 기초.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] 머신러닝.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] 멀티모달 딥러닝.md",
-                                                                 "Knowledge/Literature Notes/[Lecture] 웹 클라이언트.md",
-                                                                 "Knowledge/Reference Notes/Conda 환경 설정.md",
-                                                                 "Knowledge/Reference Notes/Django 명령어 모음.md",
-                                                                 "Knowledge/Reference Notes/Docker CLI.md",
-                                                                 "Knowledge/Reference Notes/Docker Compose.md",
-                                                                 "Knowledge/Reference Notes/Git 명령어 모음.md",
-                                                                 "Knowledge/Reference Notes/GitHub Actions EB 배포 치트시트.md",
-                                                                 "Knowledge/Reference Notes/JavaScript DOM 치트시트.md",
-                                                                 "Knowledge/Reference Notes/LangChain RAG 치트시트.md",
-                                                                 "Knowledge/Reference Notes/LangGraph 그래프 작성 치트시트.md",
-                                                                 "Knowledge/Reference Notes/MySQL SQL 치트시트.md",
-                                                                 "Knowledge/Reference Notes/NLP 전처리 치트시트.md",
-                                                                 "Knowledge/Reference Notes/OpenAI API 기본 호출.md",
-                                                                 "Knowledge/Reference Notes/Pandas 치트시트.md",
-                                                                 "Knowledge/Reference Notes/Python 치트시트.md",
-                                                                 "Knowledge/Reference Notes/PyTorch 학습 루프 치트시트.md",
-                                                                 "Knowledge/Reference Notes/React Hooks 치트시트.md",
-                                                                 "Knowledge/Reference Notes/React Router 치트시트.md",
-                                                                 "Knowledge/Reference Notes/Scikit-learn 워크플로우.md",
-                                                                 "Knowledge/Reference Notes/Streamlit 치트시트.md",
-                                                                 "Knowledge/Reference Notes/WSGI ASGI 배포 명령어.md",
-                                                                 "Knowledge/Reference Notes/시각화 치트시트.md"
-                                                             ]
-                                               },
+                    "applied_context_index":  {
+                                                  "count":  4,
+                                                  "paths":  [
+                                                                "Knowledge/Projects/SKN26 1차 프로젝트 - 차량 TCO.md",
+                                                                "Knowledge/Projects/SKN26 2차 프로젝트 - 카드 이탈 예측.md",
+                                                                "Knowledge/Projects/SKN26 3차 프로젝트 - PICKLE RAG 챗봇.md",
+                                                                "Knowledge/Projects/SKN26 4차 프로젝트 - LG Home.md"
+                                                            ]
+                                              },
                     "routing_index":  {
                                           "count":  25,
                                           "paths":  [
@@ -160,21 +164,27 @@
                                                     ]
                                       },
                     "on_demand_context":  {
-                                              "count":  11,
+                                              "count":  8,
                                               "paths":  [
                                                             "Knowledge/Maps of Content/LLM Wiki 보강 백로그.md",
-                                                            "Knowledge/Projects/개인 Dev Rules.md",
                                                             "Knowledge/Projects/프로젝트 경험 MOC.md",
-                                                            "Knowledge/Projects/프로젝트 기반 개발자 정체성.md",
                                                             "Knowledge/Projects/프로젝트 실패와 디버깅 로그.md",
                                                             "Knowledge/Projects/프로젝트 의사결정 로그.md",
                                                             "Knowledge/Projects/프로젝트 적용 로그.md",
                                                             "Knowledge/Questions/RAG 검색 실패 사례.md",
                                                             "Knowledge/Questions/RAG 평가 질문 세트.md",
-                                                            "Knowledge/Questions/질문 인박스.md",
-                                                            "Knowledge/Questions/프로젝트 회고 질문 세트.md"
+                                                            "Knowledge/Questions/질문 인박스.md"
                                                         ]
                                           },
+                    "personal_context":  {
+                                             "count":  4,
+                                             "paths":  [
+                                                           "Knowledge/Thinking/개인 Dev Rules.md",
+                                                           "Knowledge/Thinking/생각과 회고 MOC.md",
+                                                           "Knowledge/Thinking/프로젝트 기반 개발자 정체성.md",
+                                                           "Knowledge/Thinking/프로젝트 회고 질문 세트.md"
+                                                       ]
+                                         },
                     "quarantine":  {
                                        "count":  202,
                                        "paths":  [
@@ -398,126 +408,126 @@
                       "title":  "[Lecture] DevOps와 배포",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] Django 웹 서버.md",
                       "title":  "[Lecture] Django 웹 서버",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] Git 기초.md",
                       "title":  "[Lecture] Git 기초",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] LLM과 RAG.md",
                       "title":  "[Lecture] LLM과 RAG",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] MySQL과 관계형 데이터베이스.md",
                       "title":  "[Lecture] MySQL과 관계형 데이터베이스",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] NLP 딥러닝.md",
                       "title":  "[Lecture] NLP 딥러닝",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] Python 기초와 Streamlit.md",
                       "title":  "[Lecture] Python 기초와 Streamlit",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] React와 CI CD.md",
                       "title":  "[Lecture] React와 CI CD",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] 데이터 분석.md",
                       "title":  "[Lecture] 데이터 분석",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] 데이터 수집.md",
                       "title":  "[Lecture] 데이터 수집",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] 딥러닝 기초.md",
                       "title":  "[Lecture] 딥러닝 기초",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] 머신러닝.md",
                       "title":  "[Lecture] 머신러닝",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] 멀티모달 딥러닝.md",
                       "title":  "[Lecture] 멀티모달 딥러닝",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Literature Notes/[Lecture] 웹 클라이언트.md",
                       "title":  "[Lecture] 웹 클라이언트",
                       "type":  "literature",
                       "status":  "source-expanded",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Maps of Content/CI CD MOC.md",
@@ -985,7 +995,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Django CSRF.md",
@@ -994,7 +1004,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Django Form.md",
@@ -1012,7 +1022,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Django Migration.md",
@@ -1030,7 +1040,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Django Project.md",
@@ -1048,7 +1058,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Django Session과 Auth.md",
@@ -1111,7 +1121,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Docker Container.md",
@@ -1210,7 +1220,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/ES6 Spread와 Destructuring.md",
@@ -1255,7 +1265,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Feature Engineering.md",
@@ -1264,7 +1274,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Feature Scaling.md",
@@ -1300,7 +1310,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Generation Optimization.md",
@@ -1489,7 +1499,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/LangGraph Node와 Edge.md",
@@ -1507,7 +1517,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/LangGraph.md",
@@ -1516,7 +1526,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Language Modeling.md",
@@ -1534,7 +1544,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/LSTM.md",
@@ -1588,7 +1598,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Multi-Agent.md",
@@ -1615,7 +1625,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/MySQL 사용자와 권한.md",
@@ -1678,7 +1688,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/OpenAPI.md",
@@ -1705,7 +1715,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Pandas GroupBy.md",
@@ -1786,7 +1796,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Prompt Template.md",
@@ -2074,7 +2084,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/RAG.md",
@@ -2083,7 +2093,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Random Forest.md",
@@ -2101,7 +2111,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/React Component.md",
@@ -2164,7 +2174,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/React State.md",
@@ -2191,7 +2201,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Reranking.md",
@@ -2209,7 +2219,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/RNN.md",
@@ -2317,7 +2327,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/SQL 서브쿼리.md",
@@ -2353,7 +2363,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/State Pattern.md",
@@ -2380,7 +2390,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Streamlit 기본 UI.md",
@@ -2389,7 +2399,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Subword Tokenizer.md",
@@ -2452,7 +2462,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Transfer Learning.md",
@@ -2497,7 +2507,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/useMemo.md",
@@ -2542,7 +2552,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/Video RAG.md",
@@ -2605,7 +2615,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/결정트리.md",
@@ -2704,7 +2714,7 @@
                       "status":  "wiki-expanded",
                       "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Permanent Notes/선형회귀.md",
@@ -2846,59 +2856,41 @@
                       "title":  "SKN26 1차 프로젝트 - 차량 TCO",
                       "type":  "project",
                       "status":  "project-expanded",
-                      "bucket":  "primary_answer_index",
+                      "bucket":  "applied_context_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "project_application_context_not_official_ground_truth"
                   },
                   {
                       "path":  "Knowledge/Projects/SKN26 2차 프로젝트 - 카드 이탈 예측.md",
                       "title":  "SKN26 2차 프로젝트 - 카드 이탈 예측",
                       "type":  "project",
                       "status":  "project-expanded",
-                      "bucket":  "primary_answer_index",
+                      "bucket":  "applied_context_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "project_application_context_not_official_ground_truth"
                   },
                   {
                       "path":  "Knowledge/Projects/SKN26 3차 프로젝트 - PICKLE RAG 챗봇.md",
                       "title":  "SKN26 3차 프로젝트 - PICKLE RAG 챗봇",
                       "type":  "project",
                       "status":  "project-expanded",
-                      "bucket":  "primary_answer_index",
+                      "bucket":  "applied_context_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
+                      "reason":  "project_application_context_not_official_ground_truth"
                   },
                   {
                       "path":  "Knowledge/Projects/SKN26 4차 프로젝트 - LG Home.md",
                       "title":  "SKN26 4차 프로젝트 - LG Home",
                       "type":  "project",
                       "status":  "project-expanded",
-                      "bucket":  "primary_answer_index",
+                      "bucket":  "applied_context_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_project_or_permanent_note"
-                  },
-                  {
-                      "path":  "Knowledge/Projects/개인 Dev Rules.md",
-                      "title":  "개인 Dev Rules",
-                      "type":  "project-reflection",
-                      "status":  "active",
-                      "bucket":  "on_demand_context",
-                      "placeholder_count":  0,
-                      "reason":  "active_working_document"
+                      "reason":  "project_application_context_not_official_ground_truth"
                   },
                   {
                       "path":  "Knowledge/Projects/프로젝트 경험 MOC.md",
                       "title":  "프로젝트 경험 MOC",
                       "type":  "moc",
-                      "status":  "active",
-                      "bucket":  "on_demand_context",
-                      "placeholder_count":  0,
-                      "reason":  "active_working_document"
-                  },
-                  {
-                      "path":  "Knowledge/Projects/프로젝트 기반 개발자 정체성.md",
-                      "title":  "프로젝트 기반 개발자 정체성",
-                      "type":  "project-reflection",
                       "status":  "active",
                       "bucket":  "on_demand_context",
                       "placeholder_count":  0,
@@ -2959,15 +2951,6 @@
                       "reason":  "active_working_document"
                   },
                   {
-                      "path":  "Knowledge/Questions/프로젝트 회고 질문 세트.md",
-                      "title":  "프로젝트 회고 질문 세트",
-                      "type":  "question-set",
-                      "status":  "active",
-                      "bucket":  "on_demand_context",
-                      "placeholder_count":  0,
-                      "reason":  "active_working_document"
-                  },
-                  {
                       "path":  "Knowledge/README.md",
                       "title":  "Knowledge Vault",
                       "type":  "index",
@@ -2981,189 +2964,189 @@
                       "title":  "Conda 환경 설정",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/Django 명령어 모음.md",
                       "title":  "Django 명령어 모음",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/Docker CLI.md",
                       "title":  "Docker CLI",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/Docker Compose.md",
                       "title":  "Docker Compose",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/Git 명령어 모음.md",
                       "title":  "Git 명령어 모음",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/GitHub Actions EB 배포 치트시트.md",
                       "title":  "GitHub Actions EB 배포 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/JavaScript DOM 치트시트.md",
                       "title":  "JavaScript DOM 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/LangChain RAG 치트시트.md",
                       "title":  "LangChain RAG 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/LangGraph 그래프 작성 치트시트.md",
                       "title":  "LangGraph 그래프 작성 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/MySQL SQL 치트시트.md",
                       "title":  "MySQL SQL 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/NLP 전처리 치트시트.md",
                       "title":  "NLP 전처리 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/OpenAI API 기본 호출.md",
                       "title":  "OpenAI API 기본 호출",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/Pandas 치트시트.md",
                       "title":  "Pandas 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/Python 치트시트.md",
                       "title":  "Python 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/PyTorch 학습 루프 치트시트.md",
                       "title":  "PyTorch 학습 루프 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/React Hooks 치트시트.md",
                       "title":  "React Hooks 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/React Router 치트시트.md",
                       "title":  "React Router 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/Scikit-learn 워크플로우.md",
                       "title":  "Scikit-learn 워크플로우",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/Streamlit 치트시트.md",
                       "title":  "Streamlit 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/WSGI ASGI 배포 명령어.md",
                       "title":  "WSGI ASGI 배포 명령어",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Reference Notes/시각화 치트시트.md",
                       "title":  "시각화 치트시트",
                       "type":  "reference",
                       "status":  "reference",
-                      "bucket":  "secondary_answer_index",
+                      "bucket":  "primary_answer_index",
                       "placeholder_count":  0,
-                      "reason":  "expanded_source_or_reference"
+                      "reason":  "official_source_or_reference_note"
                   },
                   {
                       "path":  "Knowledge/Sources/외부 참조 정책.md",
@@ -3182,6 +3165,42 @@
                       "bucket":  "quarantine",
                       "placeholder_count":  1,
                       "reason":  "draft_template_or_audit_document; contains_boilerplate_or_placeholder"
+                  },
+                  {
+                      "path":  "Knowledge/Thinking/개인 Dev Rules.md",
+                      "title":  "개인 Dev Rules",
+                      "type":  "project-reflection",
+                      "status":  "personal-context",
+                      "bucket":  "personal_context",
+                      "placeholder_count":  0,
+                      "reason":  "personal_reflection_excluded_from_default_answer_index"
+                  },
+                  {
+                      "path":  "Knowledge/Thinking/생각과 회고 MOC.md",
+                      "title":  "생각과 회고 MOC",
+                      "type":  "moc",
+                      "status":  "personal-context",
+                      "bucket":  "personal_context",
+                      "placeholder_count":  0,
+                      "reason":  "personal_reflection_excluded_from_default_answer_index"
+                  },
+                  {
+                      "path":  "Knowledge/Thinking/프로젝트 기반 개발자 정체성.md",
+                      "title":  "프로젝트 기반 개발자 정체성",
+                      "type":  "project-reflection",
+                      "status":  "personal-context",
+                      "bucket":  "personal_context",
+                      "placeholder_count":  0,
+                      "reason":  "personal_reflection_excluded_from_default_answer_index"
+                  },
+                  {
+                      "path":  "Knowledge/Thinking/프로젝트 회고 질문 세트.md",
+                      "title":  "프로젝트 회고 질문 세트",
+                      "type":  "question-set",
+                      "status":  "personal-context",
+                      "bucket":  "personal_context",
+                      "placeholder_count":  0,
+                      "reason":  "personal_reflection_excluded_from_default_answer_index"
                   }
               ]
 }

@@ -14,10 +14,11 @@ if ([string]::IsNullOrWhiteSpace($OutputPath)) {
   $OutputPath = Join-Path $KnowledgeRoot "Assets/retrieval_scope.json"
 }
 
-$primaryStatuses = @("project-expanded", "wiki-expanded")
-$secondaryStatuses = @("source-expanded", "reference")
+$primaryStatuses = @("wiki-expanded", "source-expanded", "reference")
+$appliedContextStatuses = @("project-expanded")
 $routingStatuses = @("entrypoint", "map", "wiki-map", "operating-guide", "policy")
 $activeStatuses = @("active")
+$personalStatuses = @("personal-context")
 $excludedStatuses = @("wiki-standardized", "template", "migration-report", "source-outline")
 $penaltyPatterns = @(
   [regex]::Unescape("\uac15\uc758\uc5d0\uc11c\u0020\ub098\uc628\u0020\uac1c\ub150"),
@@ -79,11 +80,11 @@ foreach ($file in $markdownFiles) {
 
   if ($primaryStatuses -contains $status) {
     $bucket = "primary_answer_index"
-    $reason = "expanded_project_or_permanent_note"
+    $reason = "official_source_or_reference_note"
   }
-  elseif ($secondaryStatuses -contains $status) {
-    $bucket = "secondary_answer_index"
-    $reason = "expanded_source_or_reference"
+  elseif ($appliedContextStatuses -contains $status) {
+    $bucket = "applied_context_index"
+    $reason = "project_application_context_not_official_ground_truth"
   }
   elseif ($routingStatuses -contains $status) {
     $bucket = "routing_index"
@@ -92,6 +93,10 @@ foreach ($file in $markdownFiles) {
   elseif ($activeStatuses -contains $status) {
     $bucket = "on_demand_context"
     $reason = "active_working_document"
+  }
+  elseif ($personalStatuses -contains $status) {
+    $bucket = "personal_context"
+    $reason = "personal_reflection_excluded_from_default_answer_index"
   }
   elseif ($excludedStatuses -contains $status) {
     $bucket = "quarantine"
@@ -118,7 +123,7 @@ foreach ($file in $markdownFiles) {
 }
 
 $buckets = [ordered]@{}
-foreach ($bucketName in @("primary_answer_index", "secondary_answer_index", "routing_index", "on_demand_context", "quarantine")) {
+foreach ($bucketName in @("primary_answer_index", "applied_context_index", "routing_index", "on_demand_context", "personal_context", "quarantine")) {
   $bucketItems = @($items | Where-Object { $_["bucket"] -eq $bucketName })
   $buckets[$bucketName] = [ordered]@{
     count = $bucketItems.Count
@@ -137,9 +142,10 @@ $scope = [ordered]@{
   total_markdown_files = $items.Count
   policy = [ordered]@{
     primary_answer_index_statuses = $primaryStatuses
-    secondary_answer_index_statuses = $secondaryStatuses
+    applied_context_index_statuses = $appliedContextStatuses
     routing_index_statuses = $routingStatuses
     on_demand_context_statuses = $activeStatuses
+    personal_context_statuses = $personalStatuses
     quarantine_statuses = $excludedStatuses
     default_answer_index_excludes_wiki_standardized = $true
   }

@@ -2,8 +2,8 @@
 type: "moc"
 status: "operating-guide"
 created: "2026-05-30"
-updated: "2026-05-30"
-reviewed: "2026-05-30"
+updated: "2026-06-23"
+reviewed: "2026-06-23"
 tags:
   - 'llm_wiki'
   - 'moc'
@@ -20,16 +20,19 @@ source:
 
 ## 목적
 
-LLM 검색이나 RAG에서 아직 덜 익은 `wiki-standardized` 노트가 보강된 프로젝트 노트보다 먼저 잡히지 않게 한다. 이 문서는 답변 품질을 위해 어떤 노트를 기본 검색 대상에 넣고, 어떤 노트를 기본 인덱스에서 격리할지 정한다.
+LLM 검색이나 RAG에서 공식 지식, 프로젝트 적용 사례, 개인 회고가 섞이지 않게 한다. 이 문서는 공부용 개념 답변에는 공식/강의 기반 노트를 먼저 쓰고, 프로젝트와 개인 문맥은 필요할 때만 붙이는 기준을 정한다.
 
 현재 파일별 스코프는 [[LLM Wiki 검색 스코프]]와 `Knowledge/Assets/retrieval_scope.json`에서 관리한다.
 
 ## 기본 답변 인덱스
 
-- `project-expanded`: 프로젝트에서 실제로 사용한 지식이다. 가장 먼저 검색한다.
-- `wiki-expanded`: 정의, 사용 조건, 실패 조건, 프로젝트 예시가 보강된 Permanent Note다.
-- `source-expanded`: 강의 흐름을 확인해야 할 때 보조 근거로 사용한다.
+- `wiki-expanded`: 정의, 공식/강의 근거, 사용 조건, 금지 조건이 보강된 Permanent Note다.
+- `source-expanded`: 강의 흐름과 실습 맥락을 확인할 때 사용한다.
 - `reference`: 명령어, 치트시트, 빠른 실행 절차를 확인할 때 사용한다.
+
+## 적용 사례 인덱스
+
+- `project-expanded`: 프로젝트에서 실제로 사용한 지식이다. 공식 개념 설명의 1차 근거가 아니라, "프로젝트에서 어떻게 적용했는가"를 설명할 때 사용한다.
 
 ## 라우팅 인덱스
 
@@ -40,6 +43,7 @@ LLM 검색이나 RAG에서 아직 덜 익은 `wiki-standardized` 노트가 보�
 ## 조건부 포함
 
 - `active`: 질문 인박스, 프로젝트 적용 로그, RAG 평가 자료처럼 현재 관리 중인 문서다. 사용자의 질문이 프로젝트 회고, 평가, 다음 작업, 디버깅에 관한 경우 포함한다.
+- `personal-context`: 개인 회고, 개발자 정체성, 개인 규칙처럼 주관이 들어간 문서다. 공식 지식 답변에는 포함하지 않는다.
 - `wiki-standardized`: 기본 답변 인덱스에는 넣지 않는다. 정확한 제목 매칭이 있고, 같은 주제의 `wiki-expanded` 노트가 없을 때만 초안 근거로 사용한다. 이 상태의 노트만 근거로 답할 때는 "초안 수준"임을 표시한다.
 - `migration-report`, `source-outline`: 구조 점검에는 사용하지만 개념 설명 근거로 쓰지 않는다.
 
@@ -55,16 +59,18 @@ LLM 검색이나 RAG에서 아직 덜 익은 `wiki-standardized` 노트가 보�
 
 ## 검색 순서
 
-1. 프로젝트 관련 질문이면 [[프로젝트 적용 로그]]와 `project-expanded` 노트를 먼저 본다.
-2. 개념 설명 질문이면 같은 이름의 `wiki-expanded` Permanent Note를 먼저 본다.
+1. 개념 설명 질문이면 같은 이름의 `wiki-expanded` Permanent Note를 먼저 본다.
+2. 강의 흐름이나 실습 맥락이 필요하면 `source-expanded` Literature Note를 붙인다.
 3. 구현 절차 질문이면 `reference` 노트를 같이 본다.
-4. 강의 맥락이 필요할 때만 `source-expanded` Literature Note를 붙인다.
-5. 위 근거가 부족하고 사용자가 초안 수준 답변을 허용할 때만 `wiki-standardized` 노트를 fallback으로 본다.
+4. 프로젝트 적용 질문이면 [[프로젝트 적용 로그]]와 `project-expanded` 노트를 보조 근거로 본다.
+5. 개인 회고나 포트폴리오 서사 질문이면 `personal-context` 노트를 온디맨드로 본다.
+6. 위 근거가 부족하고 사용자가 초안 수준 답변을 허용할 때만 `wiki-standardized` 노트를 fallback으로 본다.
 
 ## 재순위화 기준
 
-- 프로젝트 노트에서 직접 링크한 Permanent Note는 우선순위를 올린다.
-- `source`에 실제 로컬 프로젝트 경로가 있는 노트는 우선순위를 올린다.
+- 공식 문서, 강의 원천, 검증된 레퍼런스가 분리되어 있는 노트는 우선순위를 올린다.
+- 정의, 사용 조건, 금지 조건, 혼동 지점이 모두 있는 노트는 우선순위를 올린다.
+- 프로젝트 노트에서 직접 링크한 Permanent Note는 프로젝트 적용 질문에서만 우선순위를 올린다.
 - `실패 조건`, `먼저 확인할 질문`, `프로젝트 예시`가 모두 있는 노트는 우선순위를 올린다.
 - placeholder 문구가 남은 노트는 우선순위를 크게 낮춘다.
 - MOC는 답변 본문 근거보다 탐색용 routing 근거로 사용한다.
@@ -74,8 +80,9 @@ LLM 검색이나 RAG에서 아직 덜 익은 `wiki-standardized` 노트가 보�
 
 - 근거가 `wiki-standardized`뿐이면 단정하지 않는다.
 - 프로젝트 코드에서 확인한 내용과 일반 개념 설명을 분리한다.
+- 개인 회고와 개발자 정체성 문장은 공식 지식 근거로 쓰지 않는다.
 - 외부 문서 확인 없이 최신 API 세부값을 단정하지 않는다.
-- 프로젝트 노트와 Permanent Note가 충돌하면 프로젝트 노트를 현재 vault의 1차 근거로 삼고, Permanent Note를 보강 대상으로 표시한다.
+- 프로젝트 노트와 Permanent Note가 충돌하면 공식 문서/강의 원천을 다시 확인하고, 프로젝트 노트는 특정 환경의 사례로 표시한다.
 
 ## 점검 명령
 

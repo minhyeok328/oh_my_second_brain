@@ -1,14 +1,14 @@
 {
-  "version": "2026-05-30",
-  "purpose": "Prevent draft-level wiki notes from dominating LLM/RAG retrieval.",
+  "version": "2026-06-23",
+  "purpose": "Keep official or source-backed study notes as default LLM Wiki evidence, while keeping project and personal notes as contextual layers.",
   "scope_asset": "Knowledge/Assets/retrieval_scope.json",
   "primary_answer_index_statuses": [
-    "project-expanded",
-    "wiki-expanded"
-  ],
-  "secondary_answer_index_statuses": [
+    "wiki-expanded",
     "source-expanded",
     "reference"
+  ],
+  "applied_context_index_statuses": [
+    "project-expanded"
   ],
   "routing_index_statuses": [
     "entrypoint",
@@ -17,8 +17,11 @@
     "operating-guide",
     "policy"
   ],
+  "personal_context_statuses": [
+    "personal-context"
+  ],
   "conditional_context_statuses": {
-    "active": "Use for project logs, current questions, RAG evaluation, debugging, and next-task planning.",
+    "active": "Use for project logs, current questions, RAG evaluation, debugging, and next-task planning. Do not treat as default official evidence.",
     "migration-report": "Use only for vault structure audits.",
     "source-outline": "Use only for source inventory checks."
   },
@@ -35,28 +38,33 @@
     "one_sentence_placeholder"
   ],
   "retrieval_order": [
-    "project-expanded",
     "wiki-expanded",
-    "reference",
     "source-expanded",
+    "reference",
+    "project-expanded",
     "wiki-map",
-    "active"
+    "active",
+    "personal-context"
   ],
   "boost_signals": [
-    "has_project_source",
-    "has_project_example",
+    "has_official_source",
+    "has_lecture_or_reference_source",
+    "has_clear_definition",
+    "has_usage_conditions",
     "has_failure_conditions",
-    "has_first_questions",
-    "linked_from_project_note"
+    "has_first_questions"
   ],
   "demotion_signals": [
     "contains_penalty_phrase",
     "status_wiki_standardized",
+    "status_project_expanded_for_concept_question",
+    "status_personal_context",
     "template_or_generated_inventory"
   ],
   "hard_exclusion_signals": [
     "status_template",
     "default_answer_index_excludes_wiki_standardized",
-    "migration_report_used_as_concept_source"
+    "migration_report_used_as_concept_source",
+    "personal_reflection_used_as_official_source"
   ]
 }
