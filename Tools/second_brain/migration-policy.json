@@ -1,28 +1,28 @@
 {
-  "archive_root": "90 蹂닿????댁쟾 LLM Wiki",
-  "staging_root": "00 ?몃컯???밴꺽 ?湲?",
+  "archive_root": "90 보관함/이전 LLM Wiki",
+  "staging_root": "00 인박스/승격 대기",
   "status_routes": {
-    "source-expanded": {"target": "20 ?뚯뒪 ?명듃/媛뺤쓽", "type": "source", "status": "growing", "source_quality": "primary", "verified": true, "strip_prefix": "[Lecture] ", "append_suffix": " 媛뺤쓽"},
-    "reference": {"target": "50 ?곸뿭/媛쒕컻 ?덊띁?곗뒪", "type": "source", "status": "growing", "source_quality": "mixed", "verified": false},
-    "wiki-expanded": {"target": "00 ?몃컯???밴꺽 ?湲??곴뎄 ?명듃", "type": "inbox", "status": "seed", "source_quality": "mixed", "verified": false},
-    "project-expanded": {"target": "40 ?꾨줈?앺듃", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true}
+    "source-expanded": {"target": "20 소스 노트/강의", "type": "source", "status": "growing", "source_quality": "primary", "verified": true, "strip_prefix": "[Lecture] ", "append_suffix": " 강의"},
+    "reference": {"target": "50 영역/개발 레퍼런스", "type": "source", "status": "growing", "source_quality": "mixed", "verified": false},
+    "wiki-expanded": {"target": "00 인박스/승격 대기/영구 노트", "type": "inbox", "status": "seed", "source_quality": "mixed", "verified": false},
+    "project-expanded": {"target": "40 프로젝트", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true}
   },
   "path_routes": {
-    "Knowledge/Thinking/媛쒖씤 Dev Rules.md": {"target": "50 ?곸뿭/媛쒕컻 ?먯튃/媛쒖씤 Dev Rules.md", "type": "area", "status": "growing", "source_quality": "personal", "verified": false},
-    "Knowledge/Thinking/?앷컖怨??뚭퀬 MOC.md": {"target": "60 援ъ“ ?명듃/?앷컖怨??뚭퀬 吏??md", "type": "structure", "status": "growing", "source_quality": "personal", "verified": false},
-    "Knowledge/Thinking/?꾨줈?앺듃 湲곕컲 媛쒕컻???뺤껜??md": {"target": "50 ?곸뿭/而ㅻ━???꾨줈?앺듃 湲곕컲 媛쒕컻???뺤껜??md", "type": "reflection", "status": "growing", "source_quality": "personal", "verified": false},
-    "Knowledge/Thinking/?꾨줈?앺듃 ?뚭퀬 吏덈Ц ?명듃.md": {"target": "50 ?곸뿭/?뚭퀬/?꾨줈?앺듃 ?뚭퀬 吏덈Ц ?명듃.md", "type": "area", "status": "growing", "source_quality": "personal", "verified": false},
-    "Knowledge/Projects/?꾨줈?앺듃 寃쏀뿕 MOC.md": {"target": "40 ?꾨줈?앺듃/?꾨줈?앺듃 寃쏀뿕 吏??md", "type": "structure", "status": "growing", "source_quality": "personal", "verified": false},
-    "Knowledge/Projects/?꾨줈?앺듃 ?곸슜 濡쒓렇.md": {"target": "40 ?꾨줈?앺듃/怨듯넻/?꾨줈?앺듃 ?곸슜 濡쒓렇.md", "type": "project", "status": "growing", "source_quality": "personal", "verified": false},
-    "Knowledge/Projects/?꾨줈?앺듃 ?섏궗寃곗젙 濡쒓렇.md": {"target": "40 ?꾨줈?앺듃/怨듯넻/?꾨줈?앺듃 ?섏궗寃곗젙 濡쒓렇.md", "type": "project", "status": "growing", "source_quality": "personal", "verified": false},
-    "Knowledge/Projects/?꾨줈?앺듃 ?ㅽ뙣? ?붾쾭源?濡쒓렇.md": {"target": "40 ?꾨줈?앺듃/怨듯넻/?꾨줈?앺듃 ?ㅽ뙣? ?붾쾭源?濡쒓렇.md", "type": "project", "status": "growing", "source_quality": "personal", "verified": false},
-    "Knowledge/Questions/吏덈Ц ?몃컯??md": {"target": "00 ?몃컯??吏덈Ц ?몃컯??md", "type": "inbox", "status": "seed", "source_quality": "personal", "verified": false},
-    "Knowledge/Questions/RAG 寃???ㅽ뙣 ?щ?.md": {"target": "00 ?몃컯??RAG 寃???ㅽ뙣 ?щ?.md", "type": "inbox", "status": "seed", "source_quality": "mixed", "verified": false},
-    "Knowledge/Questions/RAG ?됯? 吏덈Ц ?명듃.md": {"target": "00 ?몃컯??RAG ?됯? 吏덈Ц ?명듃.md", "type": "inbox", "status": "seed", "source_quality": "mixed", "verified": false},
-    "Knowledge/Projects/SKN26 1李??꾨줈?앺듃 - 李⑤웾 TCO.md": {"target": "40 ?꾨줈?앺듃/SKN26 1李?李⑤웾 ?댁쁺鍮??꾨줈?앺듃.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true},
-    "Knowledge/Projects/SKN26 2李??꾨줈?앺듃 - 移대뱶 ?댄깉 ?덉륫.md": {"target": "40 ?꾨줈?앺듃/SKN26 2李??좎슜移대뱶 怨좉컼 ?댄깉 遺꾩꽍.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true},
-    "Knowledge/Projects/SKN26 3李??꾨줈?앺듃 - PICKLE RAG 梨쀫큸.md": {"target": "40 ?꾨줈?앺듃/SKN26 3李?PICKLE 留쏆쭛 異붿쿇 梨쀫큸.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true},
-    "Knowledge/Projects/SKN26 4李??꾨줈?앺듃 - LG Home.md": {"target": "40 ?꾨줈?앺듃/SKN26 4李?LG Home AI 媛???곷떞.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true}
+    "Knowledge/Thinking/개인 Dev Rules.md": {"target": "50 영역/개발 원칙/개인 Dev Rules.md", "type": "area", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Thinking/생각과 회고 MOC.md": {"target": "60 구조 노트/생각과 회고 지도.md", "type": "structure", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Thinking/프로젝트 기반 개발자 정체성.md": {"target": "50 영역/커리어/프로젝트 기반 개발자 정체성.md", "type": "reflection", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Thinking/프로젝트 회고 질문 세트.md": {"target": "50 영역/회고/프로젝트 회고 질문 세트.md", "type": "area", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Projects/프로젝트 경험 MOC.md": {"target": "40 프로젝트/프로젝트 경험 지도.md", "type": "structure", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Projects/프로젝트 적용 로그.md": {"target": "40 프로젝트/공통/프로젝트 적용 로그.md", "type": "project", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Projects/프로젝트 의사결정 로그.md": {"target": "40 프로젝트/공통/프로젝트 의사결정 로그.md", "type": "project", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Projects/프로젝트 실패와 디버깅 로그.md": {"target": "40 프로젝트/공통/프로젝트 실패와 디버깅 로그.md", "type": "project", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Questions/질문 인박스.md": {"target": "00 인박스/질문 인박스.md", "type": "inbox", "status": "seed", "source_quality": "personal", "verified": false},
+    "Knowledge/Questions/RAG 검색 실패 사례.md": {"target": "00 인박스/RAG 검색 실패 사례.md", "type": "inbox", "status": "seed", "source_quality": "mixed", "verified": false},
+    "Knowledge/Questions/RAG 평가 질문 세트.md": {"target": "00 인박스/RAG 평가 질문 세트.md", "type": "inbox", "status": "seed", "source_quality": "mixed", "verified": false},
+    "Knowledge/Projects/SKN26 1차 프로젝트 - 차량 TCO.md": {"target": "40 프로젝트/SKN26 1차 차량 운영비 프로젝트.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true},
+    "Knowledge/Projects/SKN26 2차 프로젝트 - 카드 이탈 예측.md": {"target": "40 프로젝트/SKN26 2차 신용카드 고객 이탈 분석.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true},
+    "Knowledge/Projects/SKN26 3차 프로젝트 - PICKLE RAG 챗봇.md": {"target": "40 프로젝트/SKN26 3차 PICKLE 맛집 추천 챗봇.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true},
+    "Knowledge/Projects/SKN26 4차 프로젝트 - LG Home.md": {"target": "40 프로젝트/SKN26 4차 LG Home AI 가전 상담.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true}
   },
   "archive_fallback": true
 }

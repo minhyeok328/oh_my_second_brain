@@ -914,7 +914,7 @@ class MigrationTests(unittest.TestCase):
         actions = build_actions([NoteRecord("Knowledge/Old.md", "Old", {}, [])], policy)
 
         self.assertEqual(actions[0].action, "archive")
-        self.assertEqual(actions[0].target, "90 蹂닿????댁쟾 LLM Wiki/Knowledge/Old.md")
+        self.assertEqual(actions[0].target, "90 보관함/이전 LLM Wiki/Knowledge/Old.md")
 
     def test_apply_refuses_target_outside_vault_without_moving_source(self):
         """Skipping containment validation could overwrite files outside the user's vault."""
