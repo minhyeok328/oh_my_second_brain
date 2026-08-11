@@ -2,100 +2,71 @@
 type: 'project'
 status: 'growing'
 created: '2026-05-30'
-updated: '2026-05-30'
-reviewed: '2026-05-30'
+updated: '2026-08-11'
+reviewed: '2026-08-11'
 tags:
   - 'project_context'
   - 'project'
   - 'skn26'
   - 'django'
-  - 'langgraph'
-source:
-  - 'C:\MinHyeok\skn26_4th_1st\4th_project'
-related_source:
-  - 'C:\MinHyeok\skn26_4th_1st\4th_project_change_react'
+aliases:
+  - 'SKN26 4차 프로젝트 - LG Home'
+sources:
+  - 'C:\MinHyeok\skn26_projects\4th_project\README.md'
+  - 'C:\MinHyeok\skn26_projects\4th_project\products\views.py'
+  - 'C:\MinHyeok\skn26_projects\4th_project\static\js\api-response.js'
+  - 'C:\MinHyeok\skn26_projects\4th_project\static\js\chatpage.js'
+  - 'C:\MinHyeok\skn26_projects\4th_project\static\js\search\filter.js'
+  - 'https://minhyeok328.github.io/'
 source_quality: 'mixed'
 verified: true
 id: '20260530000000-69b5'
 ---
 
-# SKN26 4차 프로젝트 - LG Home
+# SKN26 4차 LG Home AI 가전 상담
 
-태그: #project_context #project #skn26 #django #langgraph
+## 프로젝트 사실
 
-## 한 줄 요약
+- LG 가전 다섯 범주의 검색·상품 상세·찜·계정·상담을 Django 웹 애플리케이션으로 연결한 팀 프로젝트다. 상품 조건 검색은 Django ORM을, 제품 상담은 LangGraph를, 사용설명서 질의는 Pinecone RAG를 사용한다. (근거: `README.md` Overview, Features, Tech Stack)
+- README가 기록한 제한에는 비밀번호 찾기·결제의 서버 미연동, 일부 목업 데이터, 챗봇 세션 만료 시 로그인 유도 미정이 포함된다. (근거: `README.md` Limitations)
+- 개인 포트폴리오는 진행 기간을 `2026-05-20 ~ 2026-05-21`로 적지만 README에는 기간이 없다. 따라서 기간은 개인 서술로만 기록한다. (근거: 포트폴리오 상세 모달, 2026-08-11 확인)
 
-LG 가전 상품 DB, Django SSR UI, 찜/계정 기능, LangGraph 기반 LGneer 챗봇, Pinecone 사용설명서 RAG를 결합한 가전 검색·추천 서비스다.
+## 팀 산출물
 
-## 공식 프로젝트 기준
+- 팀은 Django SSR 화면과 상품 DB, 인증·찜, 대화 이력, LangGraph 상담 흐름과 사용설명서 검색을 하나의 서비스로 구성했다. 저장소의 기능 존재는 팀 결과를 설명하며 특정인의 소유권을 뜻하지 않는다. (근거: `README.md` Features, Directory Structure)
+- 검색 뷰는 GET 조건을 ORM 검색에 넘기고 12건 단위로 페이지를 나눈다. 공통 JavaScript는 JSON 응답·CSRF·오류 처리를 묶고, 채팅 코드는 요청 중 재전송 방지와 제한된 HTML 정제를 구현한다. (근거: `products\views.py`, `static\js\api-response.js`, `static\js\chatpage.js`)
 
-공식 4차 프로젝트 기준은 `C:\MinHyeok\skn26_4th_1st\4th_project`다. `4th_project_change_react`는 프로젝트 종료 후 개인적으로 진행한 React SPA 전환 실험이므로, 이 노트에서는 별도 "개인 확장"으로만 분리해 기록한다.
+## 직접 기여
 
-## 문제 정의
+- README 역할 표는 서민혁에게 Frontend를 배정한다. 서민혁 개인 회고는 Figma 화면 구조, Tailwind CSS·Django 템플릿·JavaScript 구현, Git 브랜치와 static/template 구조 정리를 직접 수행했다고 기록한다. (근거: `README.md` Team, 서민혁 개인 회고)
+- 개인 포트폴리오는 GET·SSR 검색 상태와 페이지네이션, 찜·채팅 JSON 통신의 CSRF·오류·로딩·중복 요청 처리, AI 응답 정제와 DOM 표시를 직접 기여로 적는다. 저장소에는 해당 구현이 확인된다. (근거: 포트폴리오 직접 기여, `products\views.py`, `static\js\api-response.js`, `static\js\chatpage.js`, `static\js\search\filter.js`)
+- LangGraph·Pinecone·상품 DB는 팀 시스템 연동 범위다. README 역할 표가 각각 다른 팀원에게 Backend, RAG, Database, LangGraph를 배정하므로 서민혁의 모델링 단독 기여로 쓰지 않는다. (근거: `README.md` Team)
 
-가전 제품은 카테고리마다 스펙 기준이 다르고, 사용설명서와 고객지원 정보가 흩어져 있다. 사용자는 필터 UI로 조건을 직접 선택하거나, 자연어로 "전기세 적게 쓰는 냉장고", "세탁기 UE 에러"처럼 질문할 수 있어야 한다.
+## 의사결정과 근거
 
-## 사용한 지식
+- 검색 조건과 페이지 상태를 URL 쿼리스트링에 보존하는 GET·SSR 흐름을 사용했다. 새로고침 뒤에도 서버 검색 결과와 화면 조건을 같은 기준으로 복원하려는 선택이다. (근거: 포트폴리오 기술 설계와 판단, `products\views.py`, `static\js\search\filter.js`)
+- 찜·채팅 요청은 공통 JSON 응답 처리, CSRF, 오류 표시와 기능별 실행 중 상태를 사용했다. 정상 응답뿐 아니라 실패와 반복 입력도 화면 상태로 다루려는 선택이며 [[CSRF 방어는 브라우저 세션 요청의 출처를 검증한다]]와 연결된다. (근거: 포트폴리오 기술 설계와 판단, `static\js\api-response.js`, `static\js\chatpage.js`)
 
-- [[Django Project]], [[Django App]], [[Django ORM 모델은 데이터 구조와 제약을 코드로 표현한다]]: 상품, 계정, 찜, 채팅 도메인을 앱으로 분리한다.
-- [[Django Template]], [[Django View]], [[Django URL Routing]]: SSR 화면과 AJAX API를 함께 제공한다.
-- [[Django 챗봇은 대화 상태와 요청 경계를 함께 관리해야 한다]]: chat endpoint에서 LangGraph 챗봇을 호출하고 대화방 state를 유지한다.
-- [[LangGraph는 상태 전이를 명시해 LLM 흐름을 제어한다]]: fall case, 후속 질문, 제품군 분류, intent/slot 추출, DB 검색, 답변 생성을 노드로 분리한다.
-- [[벡터 저장소는 임베딩과 메타데이터를 함께 관리해야 한다]], [[임베딩은 의미 기반 비교를 위한 좌표 표현이다]], [[RAG의 성능은 검색 단계의 품질에서 시작된다]]: Pinecone `user_manual` namespace에서 제품군별 매뉴얼 chunk를 검색한다.
-- [[React SPA는 화면 상태와 서버 상태의 경계를 분명히 해야 한다]], [[Django JSON API는 화면과 서버 책임을 분리한다]]: 프로젝트 후 개인 확장에서 SSR 구조를 React SPA와 JSON API 구조로 분리하는 실험에 사용했다.
+## 실패·디버깅
 
-## 프로젝트 예시
+- Tailwind CSS와 Django를 연결하는 동안 패키지 충돌, Node 실행 오류와 경로 설정 문제가 반복되었다. 개인 회고는 실행 구조와 설정을 분석하며 원인을 찾았다고 기록하지만, 개별 오류의 재현 절차와 수정 커밋은 근거에 없어 더 구체화하지 않는다. (근거: `README.md` 서민혁 개인 회고, 포트폴리오 성장과 회고)
+- 챗봇 401·세션 만료의 로그인 유도, 비밀번호 찾기·결제 서버 연동과 일부 목업 데이터는 완료되지 않은 범위로 남았다. (근거: `README.md` Limitations)
 
-- `common\llm.py`는 `GraphState`를 정의하고, 검색 조건 병합, 제품군별 검색 가능 조건, LangGraph 노드 흐름을 관리한다.
-- `common\llm_agent.py`는 structured output 기반 fall case, 후속 질문, 제품군 분류, 슬롯 추출 프롬프트를 담당한다.
-- `common\vector_search.py`는 OpenAI embedding으로 query vector를 만들고 Pinecone에서 제품군별 매뉴얼 청크를 검색한다.
-- `api\views.py`의 `send_chat`은 JSON POST를 받아 로그인 여부, 입력값, chatroom 소유 여부를 확인한 뒤 `llm.add_chat`을 호출한다.
-- `static\js\api-response.js`는 fetch JSON 응답, CSRF, 네트워크/파싱 실패 UX를 공통화한다.
+## 회고
 
-## 판단 기준
+> 개인 회고: 화면을 예쁘게 만드는 일보다 사용자가 어떤 순서로 정보를 보고 각 동작이 서버와 어떻게 연결되는지를 함께 설계해야 한다는 점을 배웠다. UI·서버 통신·환경 설정과 협업 구조까지 경험했지만 인증·권한·테스트·배포를 하나의 운영 관점으로 체계화하는 단계는 다음 과제로 남았다. (근거: `README.md` 서민혁 개인 회고, 개인 포트폴리오 성장과 회고)
 
-- 자연어 검색 조건은 Django ORM lookup으로 변환되기 전에 빈 값, 범위 조건, `in`, `icontains` 병합 규칙을 정해야 한다.
-- 대화형 검색은 이전 대화 state를 유지해야 후속 질문을 처리할 수 있다.
-- 제품 추천과 매뉴얼 Q&A는 검색 대상이 다르므로 DB 검색과 vector search를 분리해야 한다.
-- SSR과 AJAX를 섞을 때는 CSRF, 로그인 redirect, JSON parse 실패 처리를 공통화해야 한다.
+## 연결
 
-## 개인 확장 메모
+- 개념: [[Django ORM 모델은 데이터 구조와 제약을 코드로 표현한다]], [[QuerySet은 평가 시점을 늦춰 쿼리 조합을 가능하게 한다]], [[Django 챗봇은 대화 상태와 요청 경계를 함께 관리해야 한다]], [[벡터 저장소는 임베딩과 메타데이터를 함께 관리해야 한다]]
+- 학습 출처: [[Django 웹 서버 강의]], [[웹 클라이언트 강의]], [[LLM과 RAG 강의]]
+- 경험 기록: [[프로젝트 의사결정 로그#프로젝트 경험 — 4차 SSR과 검색 책임 분리]], [[프로젝트 실패와 디버깅 로그#미확인 디버깅 후보 — 4차 LG Home]], [[프로젝트 경험 지도#4차 LG Home]]
+- 이전 경험: [[SKN26 3차 PICKLE 맛집 추천 챗봇]]
 
-`4th_project_change_react`는 공식 팀 산출물 이후의 개인 확장이다. 여기서 Django 템플릿 SSR을 React + TypeScript + Tailwind SPA로 분리하고, Django를 JSON API 서버로 재구성했다. 이 경험은 [[React SPA는 화면 상태와 서버 상태의 경계를 분명히 해야 한다]], [[Django JSON API는 화면과 서버 책임을 분리한다]], [[React API 요청은 로딩 실패 취소 상태를 함께 다뤄야 한다]] 노트의 프로젝트 예시로만 사용한다.
+## 확인한 근거
 
-개인 회고 기준으로는 공식 4차 프로젝트에서 Django template SSR 방식으로 구성했던 부분을 React로 분리된 구조로 다시 만들어 보고 싶은 욕구가 있었다. 프로젝트 종료 후 혼자 `4th_project_change_react`로 재공학하면서, 프론트 렌더링과 Django 백엔드 API 책임을 나누는 구조를 실험했다.
-
-## 개인 회고
-
-- 직접 맡은 부분: 공식 프로젝트에서는 프론트엔드 파트, 문서 작업, GitHub 조직 관리를 맡았다.
-- SSR 구조 판단: Django SSR에서 특별히 편하다고 느낀 점은 크지 않았다. React 없이 SSR 구조를 맞추려다 보니 작성하고 관리해야 할 template, partial, static JS 파일이 많아진 점이 가장 불편했다.
-- 챗봇 난점: LangGraph 제품 상담 챗봇에서는 후속 질문 처리가 가장 어렵게 느껴졌다.
-- 모델링/RAG 분리: 상품 DB 검색과 매뉴얼 RAG 분리 기준은 모델링 쪽 담당 범위가 아니어서 개인 판단을 확정하기 어렵다.
-- QA 기준: 프론트 QA 평가서에서는 챗봇 세션 만료 401의 로그인 유도, `filter.js` 모듈 분리, 회원가입·비밀번호 찾기 검증, 인라인 스크립트 정리, 모바일 실기기 QA가 잔여 개선점으로 남았다.
-- React 재공학 후 판단: React SPA로 분리해보니 Django는 화면을 직접 조립하기보다 DB, 인증, LLM 호출 결과를 JSON API로 제공하는 구조가 더 명확해 보였다.
-
-## 경험 로그
-
-- 의사결정: [[프로젝트 의사결정 로그#4차 LG Home]]
-- 실패/디버깅: [[프로젝트 실패와 디버깅 로그#4차 LG Home]]
-- 경험 MOC: [[프로젝트 경험 지도#4차 LG Home]]
-
-## 실패 조건
-
-- 챗봇이 제품 상담 범위 밖 질문을 처리하려 하면 서비스 목적이 흐려진다.
-- 후속 질문 판별이 틀리면 이전 조건을 잘못 이어받거나 새 질문을 놓친다.
-- Pinecone/OpenAI API key가 모듈 import 시점에 강하게 필요하면 Django check나 배포가 실패할 수 있다.
-- CSRF와 credentials 처리를 페이지마다 따로 만들면 AJAX 실패가 화면별로 다르게 나타난다.
-
-## 다음 보강 노트
-
-- [[Django 챗봇은 대화 상태와 요청 경계를 함께 관리해야 한다]]
-- [[LangGraph는 상태 전이를 명시해 LLM 흐름을 제어한다]]
-- [[벡터 저장소는 임베딩과 메타데이터를 함께 관리해야 한다]]
-- [[Django JSON API는 화면과 서버 책임을 분리한다]]
-- [[React SPA는 화면 상태와 서버 상태의 경계를 분명히 해야 한다]]
-
-## 먼저 확인할 질문
-
-- 현재 질문은 상품 DB 검색인가, 매뉴얼 RAG인가, 대화 맥락 이어가기인가?
-- 공식 프로젝트 근거와 개인 확장 근거가 한 문장 안에서 섞이지 않았는가?
+- `C:\MinHyeok\skn26_projects\4th_project\README.md` — 팀 역할, 서비스 범위, 기술 구성, 제한과 개인 회고 (2026-08-11 확인)
+- `C:\MinHyeok\skn26_projects\4th_project\products\views.py` — GET 조건·ORM 검색·Paginator 흐름 (2026-08-11 확인)
+- `C:\MinHyeok\skn26_projects\4th_project\static\js\api-response.js` — 공통 JSON·CSRF·오류 처리 (2026-08-11 확인)
+- `C:\MinHyeok\skn26_projects\4th_project\static\js\chatpage.js` 및 `static\js\search\filter.js` — 채팅 정제·중복 요청 방지와 필터 상태 처리 (2026-08-11 확인)
+- `https://minhyeok328.github.io/` — LG Home AI 가전 상담 상세 모달의 개인 역할·판단·회고; 별도 심층 URL은 제공되지 않음 (2026-08-11 확인)
