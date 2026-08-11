@@ -615,6 +615,117 @@ class MigrationTests(unittest.TestCase):
                 self.assertEqual(source_path.read_text(encoding="utf-8"), "source")
                 self.assertFalse((vault / target).exists())
 
+    def test_apply_rejects_each_lexical_symlink_component_before_any_move(self):
+        """Missing any source or target component check could execute an aliased reviewed path."""
+        cases = (
+            ("source leaf", "B.md", "Second.md", "source", "B.md"),
+            ("source parent", "Source/B.md", "Second.md", "source", "Source"),
+            ("target leaf", "B.md", "Target.md", "target", "Target.md"),
+            ("target parent", "B.md", "Target/B.md", "target", "Target"),
+        )
+        for name, source, target, role, reported_component in cases:
+            with self.subTest(component=name), TemporaryDirectory() as directory:
+                vault = Path(directory)
+                (vault / "A.md").write_text("A", encoding="utf-8")
+                source_path = vault / source
+                source_path.parent.mkdir(parents=True, exist_ok=True)
+                source_path.write_text("B", encoding="utf-8")
+                target_path = vault / target
+                if name == "target parent":
+                    target_path.parent.mkdir(parents=True)
+                symlink_component = vault / reported_component
+
+                with patch.object(
+                    Path,
+                    "is_symlink",
+                    new=lambda candidate: candidate == symlink_component,
+                ):
+                    with self.assertRaisesRegex(
+                        ValueError,
+                        f"{role} path contains a symbolic link",
+                    ):
+                        apply_actions(
+                            vault,
+                            [
+                                MigrationAction("A.md", "First.md", "move", {}),
+                                MigrationAction(source, target, "move", {}),
+                            ],
+                            {},
+                        )
+
+                self.assertEqual((vault / "A.md").read_text(encoding="utf-8"), "A")
+                self.assertEqual(source_path.read_text(encoding="utf-8"), "B")
+                self.assertFalse((vault / "First.md").exists())
+                self.assertFalse(target_path.exists())
+
+    def test_apply_rejects_a_non_markdown_resolved_source_before_any_move(self):
+        """Checking only the reviewed suffix could move a non-Markdown canonical source."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            policy = vault / "policy.json"
+            policy_bytes = b'{"protected": true}\n'
+            policy.write_bytes(policy_bytes)
+            real_resolve = Path.resolve
+
+            def resolve_alias(candidate: Path, *args, **kwargs) -> Path:
+                if candidate == vault / "Alias.md":
+                    return policy
+                return real_resolve(candidate, *args, **kwargs)
+
+            with patch.object(Path, "resolve", new=resolve_alias):
+                with self.assertRaisesRegex(
+                    ValueError,
+                    "resolved source must be a Markdown file",
+                ):
+                    apply_actions(
+                        vault,
+                        [MigrationAction("Alias.md", "Moved.md", "move", {})],
+                        {},
+                    )
+
+            self.assertEqual(policy.read_bytes(), policy_bytes)
+            self.assertFalse((vault / "Moved.md").exists())
+
+    def test_apply_cli_rejects_a_real_source_symlink_without_touching_link_or_target(self):
+        """Resolving a reviewed .md symlink could move its non-Markdown target and earlier actions."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "A.md").write_text("A", encoding="utf-8")
+            policy = vault / "policy.json"
+            policy_bytes = b'{"protected": true}\n'
+            policy.write_bytes(policy_bytes)
+            alias = vault / "Alias.md"
+            try:
+                alias.symlink_to(Path("policy.json"))
+            except (NotImplementedError, OSError) as error:
+                self.skipTest(f"symbolic-link creation is unavailable on this host: {error}")
+            plan = _write_plan(
+                vault,
+                [
+                    {"source": "A.md", "target": "First.md", "action": "move", "metadata": {}},
+                    {"source": "Alias.md", "target": "Moved.md", "action": "move", "metadata": {}},
+                ],
+            )
+
+            completed = _run_migration(
+                vault,
+                "apply",
+                "--vault",
+                ".",
+                "--plan",
+                plan.relative_to(vault).as_posix(),
+                "--apply",
+            )
+
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertIn("source path contains a symbolic link", completed.stderr)
+            self.assertEqual((vault / "A.md").read_text(encoding="utf-8"), "A")
+            self.assertFalse((vault / "First.md").exists())
+            self.assertTrue(alias.is_symlink())
+            self.assertEqual(alias.readlink(), Path("policy.json"))
+            self.assertEqual(policy.read_bytes(), policy_bytes)
+            self.assertFalse((vault / "Moved.md").exists())
+
     def test_apply_preflights_all_loaded_actions_before_any_move(self):
         """A late duplicate, missing file, collision, or unsafe path must not allow a partial migration."""
         cases = (

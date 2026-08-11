@@ -51,6 +51,20 @@ def _inside(root: Path, candidate: Path) -> bool:
         return False
 
 
+def _has_symlink_component(root: Path, relative_path: Path) -> bool:
+    candidate = root
+    for part in relative_path.parts:
+        if part in ("", "."):
+            continue
+        if part == "..":
+            candidate = candidate.parent
+            continue
+        candidate = candidate / part
+        if candidate != root and _inside(root, candidate) and candidate.is_symlink():
+            return True
+    return False
+
+
 def _resolve_source(vault: Path, source: Path) -> tuple[Path, Path]:
     root = vault.resolve()
     if source.is_absolute():
@@ -115,6 +129,10 @@ def _validate_actions(vault: Path, actions: list[MigrationAction]) -> list[tuple
         source_path, target_path = Path(action.source), Path(action.target)
         if source_path.is_absolute() or target_path.is_absolute():
             raise ValueError("source or target must be vault-relative")
+        if _has_symlink_component(root, source_path):
+            raise ValueError("source path contains a symbolic link")
+        if _has_symlink_component(root, target_path):
+            raise ValueError("target path contains a symbolic link")
         source, target = (root / source_path).resolve(), (root / target_path).resolve()
         if not _inside(root, source) or not _inside(root, target):
             raise ValueError("source or target is outside vault")
@@ -125,6 +143,8 @@ def _validate_actions(vault: Path, actions: list[MigrationAction]) -> list[tuple
             raise ValueError("source must be a Markdown path")
         if target_path.suffix.lower() != ".md":
             raise ValueError("target must be a Markdown path")
+        if source.suffix.lower() != ".md":
+            raise ValueError("resolved source must be a Markdown file")
         if action.action == "archive":
             _archive_root_for_action(root, source, target)
         if target in targets:
