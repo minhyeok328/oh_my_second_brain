@@ -19,6 +19,8 @@ from Tools.second_brain.verify import (
     TEMPLATE_ROOT,
     VerificationIssue,
     _json_output_path,
+    _open_json_temp,
+    _write_json_temp,
     main as verify_main,
     verify_vault,
 )
@@ -776,6 +778,50 @@ class VerifyTests(unittest.TestCase):
 
             self.assertEqual(2, raised.exception.code)
             self.assertEqual("sentinel", report.read_text(encoding="utf-8"))
+
+    def test_cli_json_revalidates_transaction_before_writing_temp(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            reports = vault / "docs" / "superpowers" / "migrations"
+            reports.mkdir(parents=True)
+            report = reports / "report.json"
+            report.write_bytes(b"existing final sentinel\n")
+            captured = {}
+
+            def capture_transaction(vault_path, value):
+                transaction = _open_json_temp(vault_path, value)
+                captured["transaction"] = transaction
+                return transaction
+
+            def simulate_external_move(*args, **kwargs):
+                transaction = captured["transaction"]
+                transaction.handle.write(b"moved external temp sentinel\n")
+                transaction.handle.flush()
+                transaction.parent_identity = (-1, -1)
+                return []
+
+            argv = [
+                "verify",
+                "--vault",
+                str(vault),
+                "--only",
+                "Notes",
+                "--json",
+                "docs/superpowers/migrations/report.json",
+            ]
+            with patch.object(sys, "argv", argv):
+                with patch("Tools.second_brain.verify._open_json_temp", side_effect=capture_transaction):
+                    with patch("Tools.second_brain.verify.verify_vault", side_effect=simulate_external_move):
+                        with patch("Tools.second_brain.verify._write_json_temp", wraps=_write_json_temp) as write_temp:
+                            with redirect_stderr(StringIO()):
+                                with self.assertRaises(SystemExit) as raised:
+                                    verify_main()
+
+            transaction = captured["transaction"]
+            self.assertEqual(2, raised.exception.code)
+            write_temp.assert_not_called()
+            self.assertEqual(b"existing final sentinel\n", report.read_bytes())
+            self.assertEqual(b"moved external temp sentinel\n", transaction.temporary.read_bytes())
 
     def test_cli_json_verify_exception_preserves_existing_and_absent_reports(self):
         for existing in (False, True):

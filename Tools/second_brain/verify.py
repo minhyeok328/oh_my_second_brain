@@ -323,6 +323,7 @@ def _write_json_temp(handle: BinaryIO, payload: str) -> None:
 
 
 def _commit_json_output(transaction: _JsonReportTransaction, payload: str) -> None:
+    _validate_json_transaction(transaction, require_open_handle=True)
     _write_json_temp(transaction.handle, payload)
     _validate_json_transaction(transaction, require_open_handle=True)
     transaction.handle.close()
