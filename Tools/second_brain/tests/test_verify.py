@@ -106,6 +106,18 @@ class VerifyTests(unittest.TestCase):
         self.assertNotIn("invalid-source-quality", self.issues_for(personal, "개인 해석 [[Target]]"))
         self.assertIn("missing-required-field", self.issues_for(personal, "[[Target]]"))
 
+    def test_unverified_permanent_note_accepts_secondary_source_quality(self):
+        secondary = VALID.replace("source_quality: primary", "source_quality: secondary").replace(
+            "verified: true", "verified: false"
+        )
+
+        self.assertNotIn("invalid-source-quality", self.issues_for(secondary))
+
+    def test_verified_permanent_note_still_rejects_secondary_only_sources(self):
+        secondary = VALID.replace("source_quality: primary", "source_quality: secondary")
+
+        self.assertIn("invalid-source-quality", self.issues_for(secondary))
+
     def test_reports_links_markers_and_stale_sources(self):
         self.assertIn("unresolved-link", self.issues_for(VALID, "[[Missing]]"))
         self.assertIn("legacy-llm-marker", self.issues_for(VALID, "llm_wiki"))
