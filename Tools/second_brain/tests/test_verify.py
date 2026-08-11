@@ -2,6 +2,7 @@ import errno
 from contextlib import redirect_stderr
 from io import StringIO
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -671,6 +672,12 @@ class VerifyTests(unittest.TestCase):
                 "base:stream.json",
                 "CON.json",
                 "aux.notes.json",
+                "COM¹.json",
+                "LPT².json",
+                "CONIN$.json",
+                "CONOUT$.json",
+                "CON .json",
+                "COM1 .json",
                 "report<copy>.json",
                 "control\x01.json",
                 "report.json ",
@@ -679,6 +686,10 @@ class VerifyTests(unittest.TestCase):
                 with self.subTest(filename=filename):
                     with self.assertRaises(ValueError):
                         _json_output_path(vault, f"docs/superpowers/migrations/{filename}")
+            self.assertEqual(
+                reports / "유효한 보고서.json",
+                _json_output_path(vault, "docs/superpowers/migrations/유효한 보고서.json"),
+            )
 
     def test_json_output_path_rejects_a_simulated_junction_component(self):
         with TemporaryDirectory() as temporary_directory:
@@ -765,6 +776,173 @@ class VerifyTests(unittest.TestCase):
 
             self.assertEqual(2, raised.exception.code)
             self.assertEqual("sentinel", report.read_text(encoding="utf-8"))
+
+    def test_cli_json_verify_exception_preserves_existing_and_absent_reports(self):
+        for existing in (False, True):
+            with self.subTest(existing=existing):
+                with TemporaryDirectory() as temporary_directory:
+                    vault = Path(temporary_directory)
+                    reports = vault / "docs" / "superpowers" / "migrations"
+                    reports.mkdir(parents=True)
+                    report = reports / "report.json"
+                    if existing:
+                        report.write_bytes(b"existing sentinel\r\n")
+                    argv = [
+                        "verify",
+                        "--vault",
+                        str(vault),
+                        "--only",
+                        "Notes",
+                        "--json",
+                        "docs/superpowers/migrations/report.json",
+                    ]
+
+                    with patch.object(sys, "argv", argv):
+                        with patch("Tools.second_brain.verify.verify_vault", side_effect=RuntimeError("verification failed")):
+                            with self.assertRaisesRegex(RuntimeError, "verification failed"):
+                                verify_main()
+
+                    if existing:
+                        self.assertEqual(b"existing sentinel\r\n", report.read_bytes())
+                    else:
+                        self.assertFalse(report.exists())
+                    self.assertEqual([], list(reports.glob("*.tmp")))
+
+    def test_cli_json_partial_write_failure_preserves_existing_report(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            reports = vault / "docs" / "superpowers" / "migrations"
+            reports.mkdir(parents=True)
+            report = reports / "report.json"
+            report.write_bytes(b"existing sentinel\n")
+            argv = [
+                "verify",
+                "--vault",
+                str(vault),
+                "--only",
+                "Notes",
+                "--json",
+                "docs/superpowers/migrations/report.json",
+            ]
+
+            def partial_then_fail(handle, payload):
+                handle.write(b"{\"partial\":")
+                raise OSError("simulated short write")
+
+            with patch.object(sys, "argv", argv):
+                with patch("Tools.second_brain.verify.verify_vault", return_value=[]):
+                    with patch(
+                        "Tools.second_brain.verify._write_json_temp",
+                        side_effect=partial_then_fail,
+                        create=True,
+                    ):
+                        with redirect_stderr(StringIO()):
+                            with self.assertRaises(SystemExit) as raised:
+                                verify_main()
+
+            self.assertEqual(2, raised.exception.code)
+            self.assertEqual(b"existing sentinel\n", report.read_bytes())
+            self.assertEqual([], list(reports.glob("*.tmp")))
+
+    def test_cli_json_serialization_and_fsync_failures_preserve_existing_report(self):
+        for failure in ("serialization", "fsync"):
+            with self.subTest(failure=failure):
+                with TemporaryDirectory() as temporary_directory:
+                    vault = Path(temporary_directory)
+                    reports = vault / "docs" / "superpowers" / "migrations"
+                    reports.mkdir(parents=True)
+                    report = reports / "report.json"
+                    report.write_bytes(b"existing sentinel\n")
+                    argv = [
+                        "verify",
+                        "--vault",
+                        str(vault),
+                        "--only",
+                        "Notes",
+                        "--json",
+                        "docs/superpowers/migrations/report.json",
+                    ]
+                    failure_patch = (
+                        patch("Tools.second_brain.verify.json.dumps", side_effect=TypeError("serialization failed"))
+                        if failure == "serialization"
+                        else patch("Tools.second_brain.verify.os.fsync", side_effect=OSError("fsync failed"))
+                    )
+
+                    with patch.object(sys, "argv", argv):
+                        with patch("Tools.second_brain.verify.verify_vault", return_value=[]):
+                            with failure_patch:
+                                with redirect_stderr(StringIO()):
+                                    if failure == "serialization":
+                                        with self.assertRaisesRegex(TypeError, "serialization failed"):
+                                            verify_main()
+                                    else:
+                                        with self.assertRaises(SystemExit) as raised:
+                                            verify_main()
+                                        self.assertEqual(2, raised.exception.code)
+
+                    self.assertEqual(b"existing sentinel\n", report.read_bytes())
+                    self.assertEqual([], list(reports.glob("*.tmp")))
+
+    def test_cli_json_replace_failure_preserves_existing_and_absent_reports(self):
+        for existing in (False, True):
+            with self.subTest(existing=existing):
+                with TemporaryDirectory() as temporary_directory:
+                    vault = Path(temporary_directory)
+                    reports = vault / "docs" / "superpowers" / "migrations"
+                    reports.mkdir(parents=True)
+                    report = reports / "report.json"
+                    if existing:
+                        report.write_bytes(b"existing sentinel\n")
+                    argv = [
+                        "verify",
+                        "--vault",
+                        str(vault),
+                        "--only",
+                        "Notes",
+                        "--json",
+                        "docs/superpowers/migrations/report.json",
+                    ]
+
+                    with patch.object(sys, "argv", argv):
+                        with patch("Tools.second_brain.verify.verify_vault", return_value=[]):
+                            with patch("Tools.second_brain.verify.os.replace", side_effect=OSError("replace failed")):
+                                with redirect_stderr(StringIO()):
+                                    with self.assertRaises(SystemExit) as raised:
+                                        verify_main()
+
+                    self.assertEqual(2, raised.exception.code)
+                    if existing:
+                        self.assertEqual(b"existing sentinel\n", report.read_bytes())
+                    else:
+                        self.assertFalse(report.exists())
+                    self.assertEqual([], list(reports.glob("*.tmp")))
+
+    def test_cli_json_atomically_replaces_an_existing_report(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            reports = vault / "docs" / "superpowers" / "migrations"
+            reports.mkdir(parents=True)
+            report = reports / "report.json"
+            report.write_text("existing sentinel", encoding="utf-8")
+            argv = [
+                "verify",
+                "--vault",
+                str(vault),
+                "--only",
+                "Notes",
+                "--json",
+                "docs/superpowers/migrations/report.json",
+            ]
+
+            with patch.object(sys, "argv", argv):
+                with patch("Tools.second_brain.verify.verify_vault", return_value=[]):
+                    with patch("Tools.second_brain.verify.os.replace", wraps=os.replace) as replace:
+                        return_code = verify_main()
+
+            self.assertEqual(0, return_code)
+            replace.assert_called_once()
+            self.assertEqual("[]\n", report.read_text(encoding="utf-8"))
+            self.assertEqual([], list(reports.glob("*.tmp")))
 
     def test_cli_json_rejects_symlinked_report_file_without_mutating_target(self):
         with TemporaryDirectory() as temporary_directory:

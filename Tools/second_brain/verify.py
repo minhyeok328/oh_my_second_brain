@@ -4,9 +4,10 @@ import argparse
 from dataclasses import asdict, dataclass
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import re
 import stat
+import tempfile
 from typing import BinaryIO
 
 from Tools.second_brain.note_io import extract_wikilinks, parse_markdown
@@ -38,11 +39,6 @@ REQUIRED_LECTURE_MAPS = {
 }
 JSON_REPORT_ROOT = Path("docs/superpowers/migrations")
 WINDOWS_ILLEGAL_PATH_CHARACTERS = frozenset('<>:"|?*')
-WINDOWS_RESERVED_BASENAMES = {
-    "CON", "PRN", "AUX", "NUL",
-    *(f"COM{number}" for number in range(1, 10)),
-    *(f"LPT{number}" for number in range(1, 10)),
-}
 ID_RE = re.compile(r"^\d{14}-[a-z0-9]{4}$")
 EMBED_RE = re.compile(r"!\[\[([^\]|#^]+)(?:[#^][^\]|]*)?(?:\|[^\]]+)?\]\]")
 
@@ -52,6 +48,19 @@ class VerificationIssue:
     code: str
     path: str
     message: str
+
+
+@dataclass
+class _JsonReportTransaction:
+    vault: Path
+    value: str
+    destination: Path
+    temporary: Path
+    handle: BinaryIO
+    parent_identity: tuple[int, int]
+    destination_identity: tuple[int, int] | None
+    temporary_identity: tuple[int, int]
+    committed: bool = False
 
 
 def _issue(issues: list[VerificationIssue], code: str, path: str, message: str) -> None:
@@ -125,7 +134,7 @@ def _unsafe_windows_path_component(component: str) -> bool:
         return True
     if any(ord(character) < 32 or character in WINDOWS_ILLEGAL_PATH_CHARACTERS for character in component):
         return True
-    return component.split(".", 1)[0].upper() in WINDOWS_RESERVED_BASENAMES
+    return PureWindowsPath(component).is_reserved()
 
 
 def _is_link_or_reparse_point(path: Path) -> bool:
@@ -176,28 +185,150 @@ def _same_open_file(handle: BinaryIO, path: Path) -> bool:
         return False
 
 
-def _open_json_output(vault: Path, value: str) -> tuple[Path, BinaryIO]:
-    candidate = _json_output_path(vault, value)
-    mode = "r+b" if candidate.exists() else "x+b"
-    handle = candidate.open(mode)
+def _path_identity(path: Path) -> tuple[int, int]:
+    status = path.stat()
+    return status.st_dev, status.st_ino
+
+
+def _optional_path_identity(path: Path) -> tuple[int, int] | None:
+    try:
+        return _path_identity(path)
+    except FileNotFoundError:
+        return None
+
+
+def _handle_identity(handle: BinaryIO) -> tuple[int, int]:
+    status = os.fstat(handle.fileno())
+    return status.st_dev, status.st_ino
+
+
+def _validate_json_transaction(transaction: _JsonReportTransaction, *, require_open_handle: bool) -> None:
+    destination = _json_output_path(transaction.vault, transaction.value)
+    if destination != transaction.destination:
+        raise ValueError("JSON report destination changed during verification")
+    if _path_identity(destination.parent) != transaction.parent_identity:
+        raise ValueError("JSON report directory changed during verification")
+    if _optional_path_identity(destination) != transaction.destination_identity:
+        raise ValueError("JSON report destination changed during verification")
+    if transaction.temporary.parent != destination.parent:
+        raise ValueError("JSON report temporary path left the approved directory")
+    if _is_link_or_reparse_point(transaction.temporary):
+        raise ValueError("JSON report temporary path became a link or reparse point")
+    try:
+        transaction.temporary.resolve(strict=True).relative_to(destination.parent.resolve(strict=True))
+    except (FileNotFoundError, OSError, RuntimeError, ValueError) as error:
+        raise ValueError("JSON report temporary path cannot be resolved safely") from error
+    if not transaction.temporary.is_file():
+        raise ValueError("JSON report temporary path is not a regular file")
+    if _path_identity(transaction.temporary) != transaction.temporary_identity:
+        raise ValueError("JSON report temporary file changed during verification")
+    if require_open_handle and not _same_open_file(transaction.handle, transaction.temporary):
+        raise ValueError("JSON report temporary handle no longer matches its path")
+
+
+def _safe_cleanup_json_temp(transaction: _JsonReportTransaction) -> None:
+    if not transaction.handle.closed:
+        transaction.handle.close()
+    if transaction.committed:
+        return
+    _safe_unlink_json_temp(
+        transaction.vault,
+        transaction.value,
+        transaction.destination,
+        transaction.temporary,
+        transaction.parent_identity,
+        transaction.temporary_identity,
+    )
+
+
+def _safe_unlink_json_temp(
+    vault: Path,
+    value: str,
+    destination: Path,
+    temporary: Path,
+    parent_identity: tuple[int, int],
+    temporary_identity: tuple[int, int],
+) -> None:
     try:
         revalidated = _json_output_path(vault, value)
-        if revalidated != candidate or not _same_open_file(handle, revalidated):
-            raise ValueError("JSON report path changed while it was being opened")
+        if revalidated != destination:
+            return
+        if _path_identity(destination.parent) != parent_identity:
+            return
+        if _is_link_or_reparse_point(temporary):
+            return
+        if _path_identity(temporary) != temporary_identity:
+            return
+        temporary.resolve(strict=True).relative_to(destination.parent.resolve(strict=True))
+        temporary.unlink()
+    except (FileNotFoundError, OSError, RuntimeError, ValueError):
+        return
+
+
+def _open_json_temp(vault: Path, value: str) -> _JsonReportTransaction:
+    destination = _json_output_path(vault, value)
+    parent_identity = _path_identity(destination.parent)
+    destination_identity = _optional_path_identity(destination)
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=".second-brain-report-",
+        suffix=".tmp",
+        dir=destination.parent,
+    )
+    temporary = Path(temporary_name)
+    status = os.fstat(descriptor)
+    temporary_identity = (status.st_dev, status.st_ino)
+    try:
+        handle = os.fdopen(descriptor, "r+b")
     except BaseException:
-        handle.close()
+        try:
+            os.close(descriptor)
+        except OSError:
+            pass
+        _safe_unlink_json_temp(
+            vault,
+            value,
+            destination,
+            temporary,
+            parent_identity,
+            temporary_identity,
+        )
         raise
-    return candidate, handle
+    transaction = _JsonReportTransaction(
+        vault=vault,
+        value=value,
+        destination=destination,
+        temporary=temporary,
+        handle=handle,
+        parent_identity=parent_identity,
+        destination_identity=destination_identity,
+        temporary_identity=temporary_identity,
+    )
+    try:
+        _validate_json_transaction(transaction, require_open_handle=True)
+    except BaseException:
+        _safe_cleanup_json_temp(transaction)
+        raise
+    return transaction
 
 
-def _write_json_output(vault: Path, value: str, candidate: Path, handle: BinaryIO, payload: str) -> None:
-    revalidated = _json_output_path(vault, value)
-    if revalidated != candidate or not _same_open_file(handle, revalidated):
-        raise ValueError("JSON report path changed during verification")
-    handle.seek(0)
-    handle.truncate(0)
-    handle.write((payload + "\n").encode("utf-8"))
+def _write_json_temp(handle: BinaryIO, payload: str) -> None:
+    remaining = memoryview((payload + "\n").encode("utf-8"))
+    while remaining:
+        written = handle.write(remaining)
+        if written is None or written <= 0:
+            raise OSError("short write while creating JSON report")
+        remaining = remaining[written:]
     handle.flush()
+    os.fsync(handle.fileno())
+
+
+def _commit_json_output(transaction: _JsonReportTransaction, payload: str) -> None:
+    _write_json_temp(transaction.handle, payload)
+    _validate_json_transaction(transaction, require_open_handle=True)
+    transaction.handle.close()
+    _validate_json_transaction(transaction, require_open_handle=False)
+    os.replace(transaction.temporary, transaction.destination)
+    transaction.committed = True
 
 
 def _verify_snapshots(vault: Path, obsidian_snapshot: Path | None, source_snapshot: Path | None, issues: list[VerificationIssue]) -> None:
@@ -395,29 +526,28 @@ def main() -> int:
     parser.add_argument("--source-snapshot", type=Path)
     parser.add_argument("--json", nargs="?", const="-", metavar="VAULT_RELATIVE_PATH")
     args = parser.parse_args()
-    json_output = None
-    json_handle = None
+    json_transaction = None
     if args.json not in {None, "-"}:
         try:
-            json_output, json_handle = _open_json_output(args.vault, args.json)
+            json_transaction = _open_json_temp(args.vault, args.json)
         except (OSError, ValueError) as error:
             parser.error(str(error))
     try:
         issues = verify_vault(args.vault, final=args.final, allow_staged_drafts=args.allow_staged_drafts, only=args.only, obsidian_snapshot=args.obsidian_snapshot, source_snapshot=args.source_snapshot)
         if args.json:
             payload = json.dumps([asdict(issue) for issue in issues], ensure_ascii=False, sort_keys=True)
-            if json_output is None:
+            if json_transaction is None:
                 print(payload)
             else:
                 try:
-                    _write_json_output(args.vault, args.json, json_output, json_handle, payload)
+                    _commit_json_output(json_transaction, payload)
                 except (OSError, ValueError) as error:
                     parser.error(f"cannot write JSON report: {error}")
         else:
             for issue in issues: print(f"{issue.code}: {issue.path}: {issue.message}")
     finally:
-        if json_handle is not None:
-            json_handle.close()
+        if json_transaction is not None:
+            _safe_cleanup_json_temp(json_transaction)
     return 1 if issues else 0
 
 
