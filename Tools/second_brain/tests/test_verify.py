@@ -139,6 +139,20 @@ class VerifyTests(unittest.TestCase):
             self.assertIn("missing-project-hub", strict); self.assertNotIn("missing-project-hub", staged)
             self.assertIn("missing-required-field", strict); self.assertNotIn("missing-required-field", staged)
 
+    def test_staged_drafts_keep_invalid_ids_legacy_markers_and_broken_links(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            write_note(vault / "00 인박스" / "승격 대기" / "draft.md", "id: bad\ntype: permanent\nstatus: seed", "llm_wiki [[Missing]]")
+            codes = {x.code for x in verify_vault(vault, final=True, allow_staged_drafts=True)}
+            self.assertTrue({"invalid-id", "legacy-llm-marker", "unresolved-link"}.issubset(codes))
+
+    def test_only_does_not_emit_unselected_note_parse_errors(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            (vault / "Other" / "bad.md").parent.mkdir(parents=True)
+            (vault / "Other" / "bad.md").write_text("---\nbroken", encoding="utf-8")
+            self.assertNotIn("missing-frontmatter", {x.code for x in verify_vault(vault, final=False, only="Selected")})
+
     def test_invalid_snapshot_is_reported_and_cli_json_has_exit_status(self):
         with TemporaryDirectory() as temporary_directory:
             vault = Path(temporary_directory)

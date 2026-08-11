@@ -134,12 +134,12 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
         relative = _relative(root, path)
         if _is_archive(relative):
             continue
+        selected = _selected(relative, only)
         try:
             note = parse_markdown(path.read_text(encoding="utf-8"))
         except (OSError, UnicodeDecodeError, ValueError) as error:
-            _issue(issues, "missing-frontmatter", relative, str(error))
+            if selected: _issue(issues, "missing-frontmatter", relative, str(error))
             continue
-        selected = _selected(relative, only)
         if not note.metadata:
             if selected: _issue(issues, "missing-frontmatter", relative, "note has no frontmatter")
             continue
@@ -158,14 +158,19 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
             ids.setdefault(identifier, []).append(relative)
         if not selected:
             continue
+        if identifier and not ID_RE.fullmatch(identifier):
+            _issue(issues, "invalid-id", relative, "id must be YYYYMMDDHHMMSS-xxxx")
+        source_path = note.metadata.get("source_path")
+        if source_path and not Path(str(source_path)).exists():
+            _issue(issues, "stale-source-path", relative, f"source_path does not exist: {source_path}")
+        if any(marker in note.body for marker in LEGACY_MARKERS):
+            _issue(issues, "legacy-llm-marker", relative, "legacy LLM marker is allowed only in archive")
         staged_draft = allow_staged_drafts and relative.startswith("00 인박스/승격 대기/")
         if staged_draft:
             continue
         for field in REQUIRED_FIELDS:
             if not str(note.metadata.get(field, "")).strip():
                 _issue(issues, "missing-required-field", relative, f"missing required field: {field}")
-        if identifier and not ID_RE.fullmatch(identifier):
-            _issue(issues, "invalid-id", relative, "id must be YYYYMMDDHHMMSS-xxxx")
         note_type, status = str(note.metadata.get("type", "")), str(note.metadata.get("status", ""))
         quality = str(note.metadata.get("source_quality", ""))
         if note_type and note_type not in VALID_TYPES: _issue(issues, "invalid-type", relative, f"unsupported type: {note_type}")
@@ -184,11 +189,6 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
                 _issue(issues, "invalid-source-quality", relative, "verified factual permanent note needs primary or mixed quality")
             if quality == "personal" and not any(marker in note.body for marker in ("개인 해석", "프로젝트 경험")):
                 _issue(issues, "missing-required-field", relative, "personal permanent note needs personal interpretation or project experience")
-        source_path = note.metadata.get("source_path")
-        if source_path and not Path(str(source_path)).exists():
-            _issue(issues, "stale-source-path", relative, f"source_path does not exist: {source_path}")
-        if any(marker in note.body for marker in LEGACY_MARKERS):
-            _issue(issues, "legacy-llm-marker", relative, "legacy LLM marker is allowed only in archive")
     for identifier, paths in sorted(ids.items()):
         if len(paths) > 1:
             for relative in paths: _issue(issues, "duplicate-id", relative, f"duplicate id: {identifier}")
