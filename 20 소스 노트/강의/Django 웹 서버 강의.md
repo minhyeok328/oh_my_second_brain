@@ -2,53 +2,44 @@
 type: 'source'
 status: 'growing'
 created: '2026-05-30'
-updated: '2026-05-30'
-reviewed: '2026-05-30'
+updated: '2026-08-11'
+reviewed: '2026-08-11'
 tags:
-  - 'llm_wiki'
   - 'lecture'
   - 'django'
-source:
-  - 'C:\lecture'
+aliases: []
+sources:
+  - 'C:\MinHyeok\lecture\11_web_server_workspace'
+source_path: 'C:\MinHyeok\lecture\11_web_server_workspace'
 source_quality: 'primary'
 verified: true
 id: '20260530000000-42d0'
 ---
 
-# [Lecture] Django 웹 서버
+# Django 웹 서버 강의
 
-태그: #lecture #django #llm_wiki
+## 출처
 
-## 원천 범위
+- 원본 경로: `C:\MinHyeok\lecture\11_web_server_workspace`
+- 확인일: 2026-08-11
 
-- `C:\lecture\11_web_server_workspace\SeoMinHyeok`
+## 핵심 내용
 
-## 강의 내용 요약
+- 관찰: `_01_django_project`와 `_02_django_template`은 프로젝트·앱 생성, URL과 View 연결, 템플릿 변수·필터·태그·레이아웃·정적 파일을 실습한다.
+- 관찰: `_03_django_orm`은 모델과 마이그레이션, Django shell 조회 코드를 게시글·상품 예제로 구성한다.
+- 관찰: `_04_qna`는 질문·답변 모델, QuerySet 조회, ModelForm 기반 생성·수정, 로그인·권한 검사와 회원가입 트랜잭션을 하나의 Q&A 앱으로 연결한다.
+- 관찰: `_05_django_session\app\views.py`는 세션 값의 생성·수정·삭제와 쿠키 속성을 요청·응답 처리로 보여 준다.
+- 관찰: `_06_chatbot`은 JSON 응답 엔드포인트, 세션 ID, 데이터베이스 기반 대화 기록과 LangChain 메시지 기록 래퍼를 결합한다.
 
-Django 프로젝트, 템플릿, ORM, QnA, 세션/Auth, 챗봇 앱까지 이어지는 서버 자료다.
+## 내 해석과 의문
 
-## 흐름
+- 해석: URL, View, Template, Model을 별개 정의로 외우기보다 하나의 요청이 각 경계를 지나는 과정으로 복습하기 좋다.
+- 질문: 일부 챗봇 엔드포인트가 CSRF 검사를 비활성화한 실습 선택은 운영 환경에서 어떤 인증·출처 검증으로 대체해야 하는가?
+- 질문: QuerySet 평가 시점과 쿼리 수를 실제 로그로 확인하면 Q&A 목록·상세 화면의 병목이 어떻게 달라지는가?
 
-- 프로젝트와 앱 구조 설정
-- URL-View-Template 흐름
-- ORM과 migration
-- 세션/인증과 LLM 챗봇 통합
+## 분리한 영구 노트
 
-## 추출된 개념 노트
-
-- [[Django Project]]
-- [[Django View]]
-- [[Django ORM Model]]
-- [[Django Session과 Auth]]
+- [[Django ORM Model]] · [[Django QuerySet]]
+- [[Django CSRF]] · [[Django JSON API]]
 - [[Django Chatbot]]
-
-## LLM Wiki 확인 질문
-
-- 이 강의 묶음에서 프로젝트에 바로 적용할 수 있는 개념은 무엇인가?
-- 개념 노트 중 실제 코드 예제와 다시 연결해야 할 노트는 무엇인가?
-- 다음 복습 때 [Lecture] Django 웹 서버에서 확인할 실패 사례는 무엇인가?
-
-## 보강 후보
-
-- 원본 강의 파일의 핵심 코드 예제를 각 Permanent Note의 예제 섹션으로 더 연결한다.
-- 외부 공식 문서와 강의 실습 버전 차이를 비교한다.
+- Django 세션과 인증 경계 — 후속 영구 노트 후보

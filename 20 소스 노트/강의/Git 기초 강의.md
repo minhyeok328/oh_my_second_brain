@@ -2,50 +2,39 @@
 type: 'source'
 status: 'growing'
 created: '2026-05-30'
-updated: '2026-05-30'
-reviewed: '2026-05-30'
+updated: '2026-08-11'
+reviewed: '2026-08-11'
 tags:
-  - 'llm_wiki'
   - 'lecture'
   - 'git'
-source:
-  - 'C:\lecture'
+aliases: []
+sources:
+  - 'C:\MinHyeok\lecture\12_devops_workspace'
+source_path: 'C:\MinHyeok\lecture\12_devops_workspace'
 source_quality: 'primary'
 verified: true
 id: '20260530000000-93e7'
 ---
 
-# [Lecture] Git 기초
+# Git 기초 강의
 
-태그: #lecture #git #llm_wiki
+## 출처
 
-## 원천 범위
+- 원본 경로: `C:\MinHyeok\lecture\12_devops_workspace`
+- 확인일: 2026-08-11
 
-- `C:\lecture\git_workspace\SeoMinHyeok`
+## 핵심 내용
 
-## 강의 내용 요약
+- 관찰: 승인된 원본 경로의 최상위 구성은 `01_aws`, `02_docker`, `03_wsgi_asgi`이며, 독립된 Git 강의 모듈이나 Git 명령 실습 파일은 확인되지 않았다.
+- 관찰: Docker 자료의 `.dockerignore` 예시와 배포 실습에는 Git 관련 제외 항목이 등장하지만, 저장소 생성·스테이징·커밋·브랜치·원격 협업을 설명하는 연속 강의 근거는 아니다.
+- 관찰: 따라서 기존 노트에 있던 commit, push, pull, GitHub 협업 흐름 요약은 이 승인 경로에서 직접 확인할 수 없다.
 
-Git 저장소와 원격 협업의 기초를 다루는 자료다.
+## 내 해석과 의문
 
-## 흐름
+- 해석: 이 노트는 현재 Git 지식의 출처라기보다 마이그레이션된 제목과 승인 경로 사이의 근거 공백을 기록한다.
+- 질문: Git 강의 원본이 다른 로컬 경로에 존재하는가, 아니면 공식 Git 문서로 새 소스 노트를 만들어야 하는가?
+- 질문: 추가 근거를 찾기 전에는 Git 명령이나 협업 규칙을 이 강의에서 파생한 영구 지식으로 승격하지 않는다.
 
-- 변경 이력을 commit으로 기록한다.
-- 원격 저장소로 push/pull한다.
-- GitHub 협업 흐름으로 확장한다.
+## 분리한 영구 노트
 
-## 추출된 개념 노트
-
-- [[Git]]
-- [[GitHub]]
-- [[CI CD]]
-
-## LLM Wiki 확인 질문
-
-- 이 강의 묶음에서 프로젝트에 바로 적용할 수 있는 개념은 무엇인가?
-- 개념 노트 중 실제 코드 예제와 다시 연결해야 할 노트는 무엇인가?
-- 다음 복습 때 [Lecture] Git 기초에서 확인할 실패 사례는 무엇인가?
-
-## 보강 후보
-
-- 원본 강의 파일의 핵심 코드 예제를 각 Permanent Note의 예제 섹션으로 더 연결한다.
-- 외부 공식 문서와 강의 실습 버전 차이를 비교한다.
+- 없음 — 승인 경로에서 직접적인 Git 강의 자료를 확인한 뒤 후보를 정한다.

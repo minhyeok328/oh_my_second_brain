@@ -2,53 +2,44 @@
 type: 'source'
 status: 'growing'
 created: '2026-05-30'
-updated: '2026-05-30'
-reviewed: '2026-05-30'
+updated: '2026-08-11'
+reviewed: '2026-08-11'
 tags:
-  - 'llm_wiki'
   - 'lecture'
   - 'python'
-source:
-  - 'C:\lecture'
+aliases: []
+sources:
+  - 'C:\MinHyeok\lecture\01_python_workspace'
+source_path: 'C:\MinHyeok\lecture\01_python_workspace'
 source_quality: 'primary'
 verified: true
 id: '20260530000000-1ce7'
 ---
 
-# [Lecture] Python 기초와 Streamlit
+# Python 기초와 Streamlit 강의
 
-태그: #lecture #python #llm_wiki
+## 출처
 
-## 원천 범위
+- 원본 경로: `C:\MinHyeok\lecture\01_python_workspace`
+- 확인일: 2026-08-11
 
-- `C:\lecture\01_python_workspace\SeoMinHyeok`
+## 핵심 내용
 
-## 강의 내용 요약
+- 관찰: `chap01\01_python_workspace`는 변수와 자료형, 제어 흐름, 함수, 객체 지향, 모듈, 입출력, 예외 처리 순서로 구성되어 있다.
+- 관찰: `_04_function\_01_function.py`는 함수 선언과 호출, 매개변수와 반환값, 일급 객체, `*args`와 `**kwargs`를 실행 예제로 다룬다.
+- 관찰: `_07_module\_01_scope.py`는 전역·지역 범위와 LEGB 이름 탐색 순서를 예제로 확인한다.
+- 관찰: `_10_streamlit\_01_basics`의 스크립트들은 텍스트·데이터·입력 위젯·미디어·세션 상태를 나누어 실습한다.
+- 관찰: `_10_streamlit\_01_basics\_05_session_state.py`는 일반 변수 카운터와 `st.session_state` 카운터를 비교하고, 버튼 입력 뒤 재실행과 상태 보존을 보여 준다.
 
-Python 기본 문법에서 OOP, 파일 입출력, 예외 처리, Streamlit 앱 구성까지 이어지는 실습 자료다.
+## 내 해석과 의문
 
-## 흐름
+- 해석: Python 문법 예제가 작은 실행 단위로 나뉘어 있어, 문법 자체보다 입력·상태·함수 경계를 복습하는 출발점으로 쓰기 좋다.
+- 질문: Streamlit 예제의 재실행 시점과 세션별 상태 격리는 공식 문서와 함께 다시 검증해야 한다.
+- 질문: OOP, 파일 입출력, 예외 처리 예제를 실제 프로젝트의 실패 사례와 어떻게 연결할 것인가?
 
-- 변수와 자료형으로 상태 표현을 익힌다.
-- 조건/반복/함수로 로직을 구조화한다.
-- OOP와 모듈로 코드 경계를 만든다.
-- Streamlit으로 빠른 데이터 앱을 만든다.
+## 분리한 영구 노트
 
-## 추출된 개념 노트
-
-- [[Python 변수]]
-- [[Python 자료형]]
-- [[Python 함수]]
-- [[Python 클래스와 객체]]
 - [[Streamlit 기본 UI]]
-
-## LLM Wiki 확인 질문
-
-- 이 강의 묶음에서 프로젝트에 바로 적용할 수 있는 개념은 무엇인가?
-- 개념 노트 중 실제 코드 예제와 다시 연결해야 할 노트는 무엇인가?
-- 다음 복습 때 [Lecture] Python 기초와 Streamlit에서 확인할 실패 사례는 무엇인가?
-
-## 보강 후보
-
-- 원본 강의 파일의 핵심 코드 예제를 각 Permanent Note의 예제 섹션으로 더 연결한다.
-- 외부 공식 문서와 강의 실습 버전 차이를 비교한다.
+- [[Streamlit Session State]]
+- Python 함수와 인자 전달 — 후속 영구 노트 후보
+- Python 이름 범위와 LEGB — 후속 영구 노트 후보

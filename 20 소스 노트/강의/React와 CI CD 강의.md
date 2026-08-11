@@ -2,53 +2,45 @@
 type: 'source'
 status: 'growing'
 created: '2026-05-30'
-updated: '2026-05-30'
-reviewed: '2026-05-30'
+updated: '2026-08-11'
+reviewed: '2026-08-11'
 tags:
-  - 'llm_wiki'
   - 'lecture'
   - 'react'
   - 'cicd'
-source:
-  - 'C:\lecture'
+aliases: []
+sources:
+  - 'C:\MinHyeok\lecture\10_web_client_workspace'
+  - 'C:\MinHyeok\lecture\12_devops_workspace'
+source_path: 'C:\MinHyeok\lecture\10_web_client_workspace'
 source_quality: 'primary'
 verified: true
 id: '20260530000000-4004'
 ---
 
-# [Lecture] React와 CI CD
+# React와 CI CD 강의
 
-태그: #lecture #react #cicd #llm_wiki
+## 출처
 
-## 원천 범위
+- 원본 경로: `C:\MinHyeok\lecture\10_web_client_workspace`
+- 함께 확인한 경로: `C:\MinHyeok\lecture\12_devops_workspace`
+- 확인일: 2026-08-11
 
-- `C:\lecture\13_react-cicd_workspace`
+## 핵심 내용
 
-## 강의 내용 요약
+- 관찰: 웹 클라이언트 경로는 HTML, CSS, JavaScript core·ES6·browser API 예제로 구성되어 있으며 React 컴포넌트, Router, Hook 소스는 확인되지 않았다.
+- 관찰: DevOps 경로는 AWS EC2, Docker·Compose, WSGI·ASGI와 Nginx 실습으로 구성되어 있으며 GitHub Actions 등 CI 워크플로 파일은 확인되지 않았다.
+- 관찰: 두 승인 경로 모두에서 Elastic Beanstalk 강의 파일도 확인되지 않았다.
+- 관찰: 따라서 기존 노트의 React 컴포넌트·Hook, 디자인 패턴, GitHub Actions·Elastic Beanstalk 자동 배포 요약은 현재 승인된 로컬 근거로 뒷받침되지 않는다.
 
-React 컴포넌트와 Hook, 객체지향 디자인 패턴, GitHub Actions에서 Elastic Beanstalk로 이어지는 자동 배포 자료다.
+## 내 해석과 의문
 
-## 흐름
+- 해석: 이 노트는 React와 CI/CD를 설명하는 완성된 출처가 아니라, 브라우저 기초·컨테이너 배포 자료와 누락된 후속 강의 사이의 경계를 기록한다.
+- 질문: React와 CI/CD 원본이 다른 강의 디렉터리나 프로젝트 저장소에 있는지 확인해야 한다.
+- 질문: 후속 영구 노트는 React 공식 문서와 실제 CI 설정을 별도 1차 자료로 확보한 뒤 검증한다.
 
-- React로 컴포넌트 기반 UI를 만든다.
-- 디자인 패턴으로 객체 협력 구조를 익힌다.
-- GitHub Actions와 AWS EB로 push 기반 자동 배포를 구성한다.
+## 분리한 영구 노트
 
-## 추출된 개념 노트
-
-- [[React]]
-- [[React Router]]
-- [[디자인 패턴]]
-- [[GitHub Actions]]
-- [[AWS Elastic Beanstalk]]
-
-## LLM Wiki 확인 질문
-
-- 이 강의 묶음에서 프로젝트에 바로 적용할 수 있는 개념은 무엇인가?
-- 개념 노트 중 실제 코드 예제와 다시 연결해야 할 노트는 무엇인가?
-- 다음 복습 때 [Lecture] React와 CI CD에서 확인할 실패 사례는 무엇인가?
-
-## 보강 후보
-
-- 원본 강의 파일의 핵심 코드 예제를 각 Permanent Note의 예제 섹션으로 더 연결한다.
-- 외부 공식 문서와 강의 실습 버전 차이를 비교한다.
+- [[React SPA]] · [[React API Fetch]] · [[useEffect]] — 이 강의 경로만으로는 승격 근거가 부족함
+- [[00 인박스/승격 대기/영구 노트/Docker Compose|Docker Compose]] — 승인된 DevOps 경로에서 직접 확인한 인접 개념
+- CI/CD 파이프라인 — 실제 워크플로 파일을 찾은 뒤 후속 영구 노트 후보로 검토
