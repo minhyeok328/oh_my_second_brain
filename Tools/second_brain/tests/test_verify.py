@@ -1,4 +1,6 @@
 import errno
+from contextlib import redirect_stderr
+from io import StringIO
 import json
 from pathlib import Path
 import subprocess
@@ -15,6 +17,8 @@ from Tools.second_brain.verify import (
     TEMPLATE_FILES,
     TEMPLATE_ROOT,
     VerificationIssue,
+    _json_output_path,
+    main as verify_main,
     verify_vault,
 )
 
@@ -657,6 +661,110 @@ class VerifyTests(unittest.TestCase):
                     )
                     self.assertEqual(2, result.returncode)
                     self.assertEqual("sentinel", target.read_text(encoding="utf-8"))
+
+    def test_json_output_path_rejects_ads_reserved_illegal_and_trailing_components(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            reports = vault / "docs" / "superpowers" / "migrations"
+            reports.mkdir(parents=True)
+            for filename in (
+                "base:stream.json",
+                "CON.json",
+                "aux.notes.json",
+                "report<copy>.json",
+                "control\x01.json",
+                "report.json ",
+                "report.json.",
+            ):
+                with self.subTest(filename=filename):
+                    with self.assertRaises(ValueError):
+                        _json_output_path(vault, f"docs/superpowers/migrations/{filename}")
+
+    def test_json_output_path_rejects_a_simulated_junction_component(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            reports = vault / "docs" / "superpowers" / "migrations"
+            reports.mkdir(parents=True)
+            with patch.object(Path, "is_junction", return_value=True, create=True):
+                with self.assertRaises(ValueError):
+                    _json_output_path(vault, "docs/superpowers/migrations/report.json")
+
+    def test_cli_json_does_not_write_a_replaced_report_destination(self):
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            vault = root / "vault"
+            reports = vault / "docs" / "superpowers" / "migrations"
+            reports.mkdir(parents=True)
+            original_report = reports / "report.json"
+            original_report.write_text("original sentinel", encoding="utf-8")
+            replacement = root / "outside-migrations"
+            replacement.mkdir()
+            outside_report = replacement / "report.json"
+            outside_report.write_text("outside sentinel", encoding="utf-8")
+            displaced = root / "approved-migrations"
+            swap_succeeded = False
+
+            def replace_report_parent(*args, **kwargs):
+                nonlocal swap_succeeded
+                try:
+                    reports.rename(displaced)
+                    replacement.rename(reports)
+                except PermissionError:
+                    return []
+                swap_succeeded = True
+                return []
+
+            argv = [
+                "verify",
+                "--vault",
+                str(vault),
+                "--only",
+                "Notes",
+                "--json",
+                "docs/superpowers/migrations/report.json",
+            ]
+            with patch.object(sys, "argv", argv):
+                with patch("Tools.second_brain.verify.verify_vault", side_effect=replace_report_parent):
+                    with redirect_stderr(StringIO()):
+                        try:
+                            return_code = verify_main()
+                        except SystemExit as error:
+                            return_code = error.code
+
+            if swap_succeeded:
+                self.assertEqual(2, return_code)
+                self.assertEqual("original sentinel", (displaced / "report.json").read_text(encoding="utf-8"))
+                self.assertEqual("outside sentinel", (reports / "report.json").read_text(encoding="utf-8"))
+            else:
+                self.assertIn(return_code, {0, 1})
+                self.assertEqual("outside sentinel", outside_report.read_text(encoding="utf-8"))
+
+    def test_cli_json_rechecks_open_file_identity_before_truncating(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            reports = vault / "docs" / "superpowers" / "migrations"
+            reports.mkdir(parents=True)
+            report = reports / "report.json"
+            report.write_text("sentinel", encoding="utf-8")
+            argv = [
+                "verify",
+                "--vault",
+                str(vault),
+                "--only",
+                "Notes",
+                "--json",
+                "docs/superpowers/migrations/report.json",
+            ]
+
+            with patch.object(sys, "argv", argv):
+                with patch("Tools.second_brain.verify.verify_vault", return_value=[]):
+                    with patch("Tools.second_brain.verify._same_open_file", side_effect=[True, False]):
+                        with redirect_stderr(StringIO()):
+                            with self.assertRaises(SystemExit) as raised:
+                                verify_main()
+
+            self.assertEqual(2, raised.exception.code)
+            self.assertEqual("sentinel", report.read_text(encoding="utf-8"))
 
     def test_cli_json_rejects_symlinked_report_file_without_mutating_target(self):
         with TemporaryDirectory() as temporary_directory:

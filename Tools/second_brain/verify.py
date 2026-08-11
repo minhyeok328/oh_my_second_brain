@@ -3,8 +3,11 @@ from __future__ import annotations
 import argparse
 from dataclasses import asdict, dataclass
 import json
+import os
 from pathlib import Path
 import re
+import stat
+from typing import BinaryIO
 
 from Tools.second_brain.note_io import extract_wikilinks, parse_markdown
 from Tools.second_brain.snapshot import hash_files, snapshot_tree
@@ -34,6 +37,12 @@ REQUIRED_LECTURE_MAPS = {
     "멀티모달 딥러닝 학습 지도", "웹 클라이언트 학습 지도", "웹 서버 학습 지도", "DevOps 학습 지도",
 }
 JSON_REPORT_ROOT = Path("docs/superpowers/migrations")
+WINDOWS_ILLEGAL_PATH_CHARACTERS = frozenset('<>:"|?*')
+WINDOWS_RESERVED_BASENAMES = {
+    "CON", "PRN", "AUX", "NUL",
+    *(f"COM{number}" for number in range(1, 10)),
+    *(f"LPT{number}" for number in range(1, 10)),
+}
 ID_RE = re.compile(r"^\d{14}-[a-z0-9]{4}$")
 EMBED_RE = re.compile(r"!\[\[([^\]|#^]+)(?:[#^][^\]|]*)?(?:\|[^\]]+)?\]\]")
 
@@ -111,10 +120,35 @@ def _read_snapshot(path: Path) -> object:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _unsafe_windows_path_component(component: str) -> bool:
+    if not component or component.endswith((" ", ".")):
+        return True
+    if any(ord(character) < 32 or character in WINDOWS_ILLEGAL_PATH_CHARACTERS for character in component):
+        return True
+    return component.split(".", 1)[0].upper() in WINDOWS_RESERVED_BASENAMES
+
+
+def _is_link_or_reparse_point(path: Path) -> bool:
+    try:
+        if path.is_symlink():
+            return True
+        is_junction = getattr(path, "is_junction", None)
+        if is_junction is not None and is_junction():
+            return True
+        attributes = getattr(path.lstat(), "st_file_attributes", 0)
+    except FileNotFoundError:
+        return False
+    except (OSError, RuntimeError) as error:
+        raise ValueError("JSON report path cannot be inspected safely") from error
+    return bool(attributes & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0))
+
+
 def _json_output_path(vault: Path, value: str) -> Path:
     relative = Path(value)
     if relative.is_absolute() or relative.anchor or relative.drive:
         raise ValueError("JSON report path must be vault-relative")
+    if any(_unsafe_windows_path_component(part) for part in relative.parts):
+        raise ValueError("JSON report path contains an unsafe Windows path component")
     if relative.suffix.lower() != ".json":
         raise ValueError("JSON report path must end in .json")
     if relative.parent != JSON_REPORT_ROOT:
@@ -122,8 +156,8 @@ def _json_output_path(vault: Path, value: str) -> Path:
     candidate = vault.resolve()
     for part in relative.parts:
         candidate /= part
-        if candidate.is_symlink():
-            raise ValueError("JSON report path must not contain symbolic links")
+        if _is_link_or_reparse_point(candidate):
+            raise ValueError("JSON report path must not contain symbolic links or reparse points")
     try:
         candidate.resolve(strict=False).relative_to(vault.resolve())
     except (OSError, RuntimeError, ValueError) as error:
@@ -133,6 +167,37 @@ def _json_output_path(vault: Path, value: str) -> Path:
     if candidate.exists() and not candidate.is_file():
         raise ValueError("JSON report path is not a regular file")
     return candidate
+
+
+def _same_open_file(handle: BinaryIO, path: Path) -> bool:
+    try:
+        return os.path.samefile(path, handle.fileno())
+    except (FileNotFoundError, OSError, TypeError, ValueError):
+        return False
+
+
+def _open_json_output(vault: Path, value: str) -> tuple[Path, BinaryIO]:
+    candidate = _json_output_path(vault, value)
+    mode = "r+b" if candidate.exists() else "x+b"
+    handle = candidate.open(mode)
+    try:
+        revalidated = _json_output_path(vault, value)
+        if revalidated != candidate or not _same_open_file(handle, revalidated):
+            raise ValueError("JSON report path changed while it was being opened")
+    except BaseException:
+        handle.close()
+        raise
+    return candidate, handle
+
+
+def _write_json_output(vault: Path, value: str, candidate: Path, handle: BinaryIO, payload: str) -> None:
+    revalidated = _json_output_path(vault, value)
+    if revalidated != candidate or not _same_open_file(handle, revalidated):
+        raise ValueError("JSON report path changed during verification")
+    handle.seek(0)
+    handle.truncate(0)
+    handle.write((payload + "\n").encode("utf-8"))
+    handle.flush()
 
 
 def _verify_snapshots(vault: Path, obsidian_snapshot: Path | None, source_snapshot: Path | None, issues: list[VerificationIssue]) -> None:
@@ -331,23 +396,28 @@ def main() -> int:
     parser.add_argument("--json", nargs="?", const="-", metavar="VAULT_RELATIVE_PATH")
     args = parser.parse_args()
     json_output = None
+    json_handle = None
     if args.json not in {None, "-"}:
         try:
-            json_output = _json_output_path(args.vault, args.json)
-        except ValueError as error:
+            json_output, json_handle = _open_json_output(args.vault, args.json)
+        except (OSError, ValueError) as error:
             parser.error(str(error))
-    issues = verify_vault(args.vault, final=args.final, allow_staged_drafts=args.allow_staged_drafts, only=args.only, obsidian_snapshot=args.obsidian_snapshot, source_snapshot=args.source_snapshot)
-    if args.json:
-        payload = json.dumps([asdict(issue) for issue in issues], ensure_ascii=False, sort_keys=True)
-        if json_output is None:
-            print(payload)
+    try:
+        issues = verify_vault(args.vault, final=args.final, allow_staged_drafts=args.allow_staged_drafts, only=args.only, obsidian_snapshot=args.obsidian_snapshot, source_snapshot=args.source_snapshot)
+        if args.json:
+            payload = json.dumps([asdict(issue) for issue in issues], ensure_ascii=False, sort_keys=True)
+            if json_output is None:
+                print(payload)
+            else:
+                try:
+                    _write_json_output(args.vault, args.json, json_output, json_handle, payload)
+                except (OSError, ValueError) as error:
+                    parser.error(f"cannot write JSON report: {error}")
         else:
-            try:
-                json_output.write_text(payload + "\n", encoding="utf-8")
-            except OSError as error:
-                parser.error(f"cannot write JSON report: {error}")
-    else:
-        for issue in issues: print(f"{issue.code}: {issue.path}: {issue.message}")
+            for issue in issues: print(f"{issue.code}: {issue.path}: {issue.message}")
+    finally:
+        if json_handle is not None:
+            json_handle.close()
     return 1 if issues else 0
 
 
