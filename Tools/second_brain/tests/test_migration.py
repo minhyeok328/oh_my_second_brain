@@ -31,6 +31,37 @@ def _run_migration(vault: Path, *arguments: str, **options):
     )
 
 
+def _write_policy(
+    vault: Path,
+    *,
+    path_routes: dict[str, dict[str, object]] | None = None,
+    archive_root: str = "Archive",
+) -> Path:
+    policy = vault / "policy.json"
+    policy.write_text(
+        json.dumps(
+            {
+                "archive_root": archive_root,
+                "status_routes": {},
+                "path_routes": path_routes or {},
+                "archive_fallback": True,
+            }
+        ),
+        encoding="utf-8",
+    )
+    return policy
+
+
+def _write_plan(vault: Path, actions: object, name: str = "reviewed.json") -> Path:
+    plan = vault / "docs" / "superpowers" / "migrations" / name
+    plan.parent.mkdir(parents=True, exist_ok=True)
+    if isinstance(actions, str):
+        plan.write_text(actions, encoding="utf-8")
+    else:
+        plan.write_text(json.dumps(actions), encoding="utf-8")
+    return plan
+
+
 class MigrationTests(unittest.TestCase):
     def test_migration_cli_helper_isolates_cwd_and_preserves_pythonpath(self):
         """Repository-CWD execution or a replaced environment could corrupt files or break imports."""
@@ -41,12 +72,24 @@ class MigrationTests(unittest.TestCase):
 
             with patch.dict(os.environ, {"PYTHONPATH": "existing-path", "PRESERVED": "yes"}, clear=True):
                 with patch.object(subprocess, "run", return_value=subprocess.CompletedProcess([], 0)) as run:
-                    helper(vault, "plan", "--vault", str(vault))
+                    helper(vault, "plan", "--vault", str(vault), "--source", ".")
 
             command = run.call_args.args[0]
             options = run.call_args.kwargs
             repository_root = str(Path(__file__).resolve().parents[3])
-            self.assertEqual(command, [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault)])
+            self.assertEqual(
+                command,
+                [
+                    sys.executable,
+                    "-m",
+                    "Tools.second_brain.migration",
+                    "plan",
+                    "--vault",
+                    str(vault),
+                    "--source",
+                    ".",
+                ],
+            )
             self.assertEqual(options["cwd"], vault)
             self.assertEqual(options["env"]["PRESERVED"], "yes")
             self.assertEqual(options["env"]["PYTHONPATH"], os.pathsep.join((repository_root, "existing-path")))
@@ -57,26 +100,45 @@ class MigrationTests(unittest.TestCase):
             vault = Path(directory)
             (vault / "Old.md").write_text("# old", encoding="utf-8")
 
-            completed = _run_migration(vault, "plan", "--vault", str(vault), check=True)
+            completed = _run_migration(
+                vault, "plan", "--vault", str(vault), "--source", ".", check=True
+            )
 
             self.assertIn('"source": "Old.md"', completed.stdout)
             self.assertTrue((vault / "Old.md").exists())
             self.assertFalse((vault / "migration-plan.json").exists())
 
-    def test_plan_and_unconfirmed_apply_reject_unsafe_output_before_writing(self):
+    def test_plan_rejects_unsafe_output_before_writing(self):
         """Validating output after writing could overwrite protected files without consent."""
         with TemporaryDirectory() as directory:
             vault = Path(directory)
             (vault / "Old.md").write_text("# old", encoding="utf-8")
             protected = [".obsidian/core-plugins.json", ".obsidian/graph.json", ".obsidian/workspace.json"]
-            for command in ("plan", "apply"):
-                for output in protected:
-                    with self.subTest(command=command, output=output):
-                        completed = _run_migration(vault, command, "--vault", str(vault), "--output", output)
-                        self.assertNotEqual(completed.returncode, 0)
-                        self.assertFalse((vault / output).exists())
+            for output in protected:
+                with self.subTest(output=output):
+                    completed = _run_migration(
+                        vault,
+                        "plan",
+                        "--vault",
+                        str(vault),
+                        "--source",
+                        ".",
+                        "--output",
+                        output,
+                    )
+                    self.assertNotEqual(completed.returncode, 0)
+                    self.assertFalse((vault / output).exists())
             outside = vault.parent / f"{vault.name}-outside-plan.json"
-            completed = _run_migration(vault, "plan", "--vault", str(vault), "--output", str(outside))
+            completed = _run_migration(
+                vault,
+                "plan",
+                "--vault",
+                str(vault),
+                "--source",
+                ".",
+                "--output",
+                str(outside),
+            )
             self.assertNotEqual(completed.returncode, 0)
             self.assertFalse(outside.exists())
 
@@ -92,10 +154,19 @@ class MigrationTests(unittest.TestCase):
             archive = vault / "Archive" / "Knowledge" / "Old.md"
             archive.parent.mkdir(parents=True)
             archive.write_text("legacy", encoding="utf-8")
-            output = vault / "plan.json"
+            output = vault / "docs" / "superpowers" / "migrations" / "plan.json"
 
             completed = _run_migration(
-                vault, "plan", "--vault", str(vault), "--policy", str(policy), "--output", "plan.json"
+                vault,
+                "plan",
+                "--vault",
+                str(vault),
+                "--source",
+                "Knowledge",
+                "--policy",
+                str(policy),
+                "--output",
+                output.relative_to(vault).as_posix(),
             )
 
             self.assertNotEqual(completed.returncode, 0)
@@ -107,7 +178,15 @@ class MigrationTests(unittest.TestCase):
             vault = Path(directory)
             (vault / "Old.md").write_text("old", encoding="utf-8")
             output = vault / "docs" / "superpowers" / "migrations" / "dry-run.json"
-            command = ["plan", "--vault", str(vault), "--output", "docs/superpowers/migrations/dry-run.json"]
+            command = [
+                "plan",
+                "--vault",
+                str(vault),
+                "--source",
+                ".",
+                "--output",
+                "docs/superpowers/migrations/dry-run.json",
+            ]
 
             first = _run_migration(vault, *command)
             first_content = output.read_text(encoding="utf-8") if output.exists() else ""
@@ -127,7 +206,14 @@ class MigrationTests(unittest.TestCase):
             audit_root = vault / "docs" / "superpowers" / "migrations"
 
             completed = _run_migration(
-                vault, "plan", "--vault", str(vault), "--output", "docs/superpowers/migrations"
+                vault,
+                "plan",
+                "--vault",
+                str(vault),
+                "--source",
+                ".",
+                "--output",
+                "docs/superpowers/migrations",
             )
 
             self.assertNotEqual(completed.returncode, 0)
@@ -142,7 +228,7 @@ class MigrationTests(unittest.TestCase):
             audit.mkdir(parents=True)
             existing = audit / "existing.json"
             existing.write_text("evidence", encoding="utf-8")
-            base = ["plan", "--vault", str(vault), "--output"]
+            base = ["plan", "--vault", str(vault), "--source", ".", "--output"]
 
             ordinary = _run_migration(vault, *(base + ["Old.md"]))
             existing_run = _run_migration(vault, *(base + ["docs/superpowers/migrations/existing.json"]))
@@ -158,6 +244,462 @@ class MigrationTests(unittest.TestCase):
             self.assertEqual(existing.read_text(encoding="utf-8"), "evidence")
             self.assertNotEqual(target.returncode, 0)
             self.assertFalse((audit / "target.json").exists())
+
+    def test_plan_exact_interface_scopes_source_preserves_prefix_and_summarizes_deterministically(self):
+        """Scanning the whole vault or stripping the source prefix would produce an unreviewable plan."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            knowledge = vault / "Knowledge"
+            knowledge.mkdir()
+            (knowledge / "Archive.md").write_text("archive", encoding="utf-8")
+            (knowledge / "Move.md").write_text("move", encoding="utf-8")
+            (knowledge / "ignore.txt").write_text("not a note", encoding="utf-8")
+            (vault / "Outside.md").write_text("outside", encoding="utf-8")
+            policy = _write_policy(
+                vault,
+                path_routes={
+                    "Knowledge/Move.md": {
+                        "target": "Active/Moved.md",
+                        "type": "source",
+                    }
+                },
+            )
+            first_output = "docs/superpowers/migrations/first.json"
+            second_output = "docs/superpowers/migrations/second.json"
+            base = [
+                "plan",
+                "--vault",
+                ".",
+                "--source",
+                "Knowledge",
+                "--policy",
+                str(policy),
+                "--output",
+            ]
+
+            first = _run_migration(vault, *(base + [first_output]))
+            second = _run_migration(vault, *(base + [second_output]))
+
+            expected_summary = (
+                "total=2\n"
+                "promote_or_stage=1\n"
+                "archive=1\n"
+                "delete=0\n"
+                "duplicate_targets=0\n"
+                "outside_vault_targets=0\n"
+            )
+            expected_actions = [
+                {
+                    "source": "Knowledge/Archive.md",
+                    "target": "Archive/Knowledge/Archive.md",
+                    "action": "archive",
+                    "metadata": {},
+                },
+                {
+                    "source": "Knowledge/Move.md",
+                    "target": "Active/Moved.md",
+                    "action": "move",
+                    "metadata": {"type": "source"},
+                },
+            ]
+            self.assertEqual(first.returncode, 0, first.stderr)
+            self.assertEqual(second.returncode, 0, second.stderr)
+            self.assertEqual(first.stdout, expected_summary)
+            self.assertEqual(second.stdout, expected_summary)
+            first_plan = (vault / first_output).read_text(encoding="utf-8")
+            second_plan = (vault / second_output).read_text(encoding="utf-8")
+            self.assertEqual(first_plan, second_plan)
+            self.assertEqual(json.loads(first_plan), expected_actions)
+            self.assertTrue((knowledge / "Archive.md").exists())
+            self.assertTrue((knowledge / "Move.md").exists())
+            self.assertTrue((vault / "Outside.md").exists())
+
+    def test_plan_rejects_non_relative_outside_protected_missing_and_non_directory_sources(self):
+        """Accepting an unsafe source could inventory content outside the reviewed vault subtree."""
+        cases = (
+            ("absolute", "source must be vault-relative"),
+            ("../outside", "source is outside vault"),
+            (".obsidian", "source is protected"),
+            ("Missing", "source does not exist"),
+            ("Knowledge/Old.md", "source is not a directory"),
+        )
+        for source_case, expected_error in cases:
+            with self.subTest(source=source_case), TemporaryDirectory() as directory:
+                workspace = Path(directory)
+                vault = workspace / "vault"
+                knowledge = vault / "Knowledge"
+                knowledge.mkdir(parents=True)
+                (knowledge / "Old.md").write_text("old", encoding="utf-8")
+                outside = workspace / "outside"
+                outside.mkdir()
+                (outside / "Outside.md").write_text("outside", encoding="utf-8")
+                obsidian = vault / ".obsidian"
+                obsidian.mkdir()
+                (obsidian / "Private.md").write_text("private", encoding="utf-8")
+                policy = _write_policy(vault)
+                source = str(knowledge.resolve()) if source_case == "absolute" else source_case
+                output = vault / "docs" / "superpowers" / "migrations" / "plan.json"
+
+                completed = _run_migration(
+                    vault,
+                    "plan",
+                    "--vault",
+                    ".",
+                    "--source",
+                    source,
+                    "--policy",
+                    str(policy),
+                    "--output",
+                    output.relative_to(vault).as_posix(),
+                )
+
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertIn(expected_error, completed.stderr)
+                self.assertFalse(output.exists())
+
+    def test_apply_exact_interface_uses_reviewed_plan_without_rescanning_or_mutating_it(self):
+        """Rebuilding at apply time could move unreviewed notes or ignore reviewed targets."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            knowledge = vault / "Knowledge"
+            knowledge.mkdir()
+            (knowledge / "Old.md").write_text("old", encoding="utf-8")
+            legacy = b"Legacy [[Old]]\r\n"
+            (knowledge / "Legacy.md").write_bytes(legacy)
+            (vault / "Active.md").write_text("See [[Old]]", encoding="utf-8")
+            policy = _write_policy(
+                vault,
+                path_routes={"Knowledge/Old.md": {"target": "Active/New.md"}},
+            )
+            plan_argument = "docs/superpowers/migrations/reviewed.json"
+            planned = _run_migration(
+                vault,
+                "plan",
+                "--vault",
+                ".",
+                "--source",
+                "Knowledge",
+                "--policy",
+                str(policy),
+                "--output",
+                plan_argument,
+            )
+            self.assertEqual(planned.returncode, 0, planned.stderr)
+            plan = vault / plan_argument
+            reviewed_bytes = plan.read_bytes()
+            _write_policy(
+                vault,
+                path_routes={"Knowledge/Old.md": {"target": "Hijacked.md"}},
+            )
+            (knowledge / "Later.md").write_text("later", encoding="utf-8")
+
+            applied = _run_migration(
+                vault,
+                "apply",
+                "--vault",
+                ".",
+                "--plan",
+                plan_argument,
+                "--apply",
+            )
+
+            self.assertEqual(applied.returncode, 0, applied.stderr)
+            self.assertFalse((knowledge / "Old.md").exists())
+            self.assertEqual((vault / "Active" / "New.md").read_text(encoding="utf-8"), "old")
+            self.assertFalse((knowledge / "Legacy.md").exists())
+            self.assertEqual(
+                (vault / "Archive" / "Knowledge" / "Legacy.md").read_bytes(),
+                legacy,
+            )
+            self.assertFalse((vault / "Hijacked.md").exists())
+            self.assertEqual((knowledge / "Later.md").read_text(encoding="utf-8"), "later")
+            self.assertFalse((vault / "Archive" / "Knowledge" / "Later.md").exists())
+            self.assertEqual((vault / "Active.md").read_text(encoding="utf-8"), "See [[New]]")
+            self.assertEqual(plan.read_bytes(), reviewed_bytes)
+
+    def test_apply_rejects_archive_targets_that_do_not_preserve_the_source_path(self):
+        """A tampered archive action must not flatten a note or derive a vault-wide exclusion."""
+        for target_case in ("flattened", "normalized_source"):
+            with self.subTest(target=target_case), TemporaryDirectory() as directory:
+                vault = Path(directory)
+                (vault / "A.md").write_text("A", encoding="utf-8")
+                legacy = b"B [[A]]\r\n"
+                (vault / "B.md").write_bytes(legacy)
+                (vault / "Active.md").write_text("[[A]]", encoding="utf-8")
+                target = (
+                    "Active/Flattened.md"
+                    if target_case == "flattened"
+                    else f"../{vault.name}/B.md"
+                )
+                plan = _write_plan(
+                    vault,
+                    [
+                        {"source": "A.md", "target": "New.md", "action": "move", "metadata": {}},
+                        {"source": "B.md", "target": target, "action": "archive", "metadata": {}},
+                    ],
+                )
+
+                completed = _run_migration(
+                    vault,
+                    "apply",
+                    "--vault",
+                    ".",
+                    "--plan",
+                    plan.relative_to(vault).as_posix(),
+                    "--apply",
+                )
+
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertIn("archive target must preserve source relative path", completed.stderr)
+                self.assertEqual((vault / "A.md").read_text(encoding="utf-8"), "A")
+                self.assertFalse((vault / "New.md").exists())
+                self.assertEqual((vault / "B.md").read_bytes(), legacy)
+                self.assertEqual((vault / "Active.md").read_text(encoding="utf-8"), "[[A]]")
+
+    def test_apply_requires_confirmation_before_loading_or_moving_a_reviewed_plan(self):
+        """An apply command without explicit confirmation must never mutate the vault."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("old", encoding="utf-8")
+            plan = _write_plan(
+                vault,
+                [{"source": "Old.md", "target": "New.md", "action": "move", "metadata": {}}],
+            )
+            reviewed_bytes = plan.read_bytes()
+
+            completed = _run_migration(
+                vault,
+                "apply",
+                "--vault",
+                ".",
+                "--plan",
+                plan.relative_to(vault).as_posix(),
+            )
+
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertIn("apply requires --apply", completed.stderr)
+            self.assertEqual((vault / "Old.md").read_text(encoding="utf-8"), "old")
+            self.assertFalse((vault / "New.md").exists())
+            self.assertEqual(plan.read_bytes(), reviewed_bytes)
+
+    def test_apply_restricts_plan_input_to_an_existing_regular_json_audit_file(self):
+        """Loading a plan from an unreviewed location or non-file path would bypass audit safety."""
+        cases = (
+            ("outside", "plan must be under docs/superpowers/migrations"),
+            ("non_json", "plan must be a JSON file"),
+            ("directory", "plan is not a regular file"),
+            ("missing", "plan does not exist"),
+        )
+        for plan_case, expected_error in cases:
+            with self.subTest(plan=plan_case), TemporaryDirectory() as directory:
+                workspace = Path(directory)
+                vault = workspace / "vault"
+                vault.mkdir()
+                (vault / "Old.md").write_text("old", encoding="utf-8")
+                action = [{"source": "Old.md", "target": "New.md", "action": "move", "metadata": {}}]
+                if plan_case == "outside":
+                    plan = workspace / "outside.json"
+                    plan.write_text(json.dumps(action), encoding="utf-8")
+                elif plan_case == "non_json":
+                    plan = _write_plan(vault, action, "reviewed.txt")
+                elif plan_case == "directory":
+                    plan = vault / "docs" / "superpowers" / "migrations" / "directory.json"
+                    plan.mkdir(parents=True)
+                else:
+                    plan = vault / "docs" / "superpowers" / "migrations" / "missing.json"
+
+                completed = _run_migration(
+                    vault,
+                    "apply",
+                    "--vault",
+                    ".",
+                    "--plan",
+                    str(plan),
+                    "--apply",
+                )
+
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertIn(expected_error, completed.stderr)
+                self.assertEqual((vault / "Old.md").read_text(encoding="utf-8"), "old")
+                self.assertFalse((vault / "New.md").exists())
+
+    def test_apply_rejects_malformed_or_non_list_plan_json_without_mutation(self):
+        """Lenient JSON parsing could execute a plan that was not the reviewed action list."""
+        cases = (
+            ("{", "invalid plan JSON"),
+            ("{}", "plan must contain a JSON list"),
+            ("[NaN]", "invalid plan JSON"),
+        )
+        for plan_text, expected_error in cases:
+            with self.subTest(plan=plan_text), TemporaryDirectory() as directory:
+                vault = Path(directory)
+                (vault / "Old.md").write_text("old", encoding="utf-8")
+                plan = _write_plan(vault, plan_text)
+
+                completed = _run_migration(
+                    vault,
+                    "apply",
+                    "--vault",
+                    ".",
+                    "--plan",
+                    plan.relative_to(vault).as_posix(),
+                    "--apply",
+                )
+
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertIn(expected_error, completed.stderr)
+                self.assertEqual((vault / "Old.md").read_text(encoding="utf-8"), "old")
+                self.assertFalse((vault / "New.md").exists())
+
+    def test_apply_rejects_unknown_missing_duplicate_or_invalid_action_fields_without_mutation(self):
+        """A plan action whose schema differs from MigrationAction must never be executed."""
+        valid = {"source": "Old.md", "target": "New.md", "action": "move", "metadata": {}}
+        cases = (
+            (json.dumps([{key: value for key, value in valid.items() if key != "metadata"}]), "missing fields: metadata"),
+            (json.dumps([{**valid, "unexpected": True}]), "unknown fields: unexpected"),
+            ('[{"source":"Old.md","source":"Other.md","target":"New.md","action":"move","metadata":{}}]', "duplicate JSON object field: source"),
+            (json.dumps([{**valid, "source": 1}]), "source must be a non-empty string"),
+            (json.dumps([{**valid, "target": ""}]), "target must be a non-empty string"),
+            (json.dumps([{**valid, "metadata": []}]), "metadata must be an object"),
+            (json.dumps([{**valid, "action": "delete"}]), "unsupported action type: delete"),
+        )
+        for plan_text, expected_error in cases:
+            with self.subTest(error=expected_error), TemporaryDirectory() as directory:
+                vault = Path(directory)
+                (vault / "Old.md").write_text("old", encoding="utf-8")
+                plan = _write_plan(vault, plan_text)
+
+                completed = _run_migration(
+                    vault,
+                    "apply",
+                    "--vault",
+                    ".",
+                    "--plan",
+                    plan.relative_to(vault).as_posix(),
+                    "--apply",
+                )
+
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertIn(expected_error, completed.stderr)
+                self.assertEqual((vault / "Old.md").read_text(encoding="utf-8"), "old")
+                self.assertFalse((vault / "New.md").exists())
+
+    def test_apply_rejects_tampered_non_markdown_action_paths_without_mutation(self):
+        """A reviewed note plan must not be repurposed to move arbitrary vault files."""
+        cases = (
+            ("policy.json", "Moved.json", "source must be a Markdown path"),
+            ("Old.md", "Moved.json", "target must be a Markdown path"),
+        )
+        for source, target, expected_error in cases:
+            with self.subTest(source=source, target=target), TemporaryDirectory() as directory:
+                vault = Path(directory)
+                source_path = vault / source
+                source_path.write_text("source", encoding="utf-8")
+                plan = _write_plan(
+                    vault,
+                    [{"source": source, "target": target, "action": "move", "metadata": {}}],
+                )
+
+                completed = _run_migration(
+                    vault,
+                    "apply",
+                    "--vault",
+                    ".",
+                    "--plan",
+                    plan.relative_to(vault).as_posix(),
+                    "--apply",
+                )
+
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertIn(expected_error, completed.stderr)
+                self.assertEqual(source_path.read_text(encoding="utf-8"), "source")
+                self.assertFalse((vault / target).exists())
+
+    def test_apply_preflights_all_loaded_actions_before_any_move(self):
+        """A late duplicate, missing file, collision, or unsafe path must not allow a partial migration."""
+        cases = (
+            (
+                "duplicate target",
+                [
+                    {"source": "A.md", "target": "First.md", "action": "move", "metadata": {}},
+                    {"source": "B.md", "target": "nested/../First.md", "action": "move", "metadata": {}},
+                ],
+            ),
+            (
+                "duplicate source",
+                [
+                    {"source": "A.md", "target": "First.md", "action": "move", "metadata": {}},
+                    {"source": "nested/../A.md", "target": "Second.md", "action": "move", "metadata": {}},
+                ],
+            ),
+            (
+                "source does not exist",
+                [
+                    {"source": "A.md", "target": "First.md", "action": "move", "metadata": {}},
+                    {"source": "Missing.md", "target": "Second.md", "action": "move", "metadata": {}},
+                ],
+            ),
+            (
+                "target already exists",
+                [
+                    {"source": "A.md", "target": "First.md", "action": "move", "metadata": {}},
+                    {"source": "B.md", "target": "Existing.md", "action": "move", "metadata": {}},
+                ],
+            ),
+            (
+                "target parent is not a directory",
+                [
+                    {"source": "A.md", "target": "First.md", "action": "move", "metadata": {}},
+                    {"source": "B.md", "target": "Blocker/Second.md", "action": "move", "metadata": {}},
+                ],
+            ),
+            (
+                "target conflicts with another target parent",
+                [
+                    {"source": "A.md", "target": "First.md", "action": "move", "metadata": {}},
+                    {"source": "B.md", "target": "First.md/Second.md", "action": "move", "metadata": {}},
+                ],
+            ),
+            (
+                "outside vault",
+                [
+                    {"source": "A.md", "target": "First.md", "action": "move", "metadata": {}},
+                    {"source": "B.md", "target": "../Escape.md", "action": "move", "metadata": {}},
+                ],
+            ),
+            (
+                "protected Obsidian file",
+                [
+                    {"source": "A.md", "target": "First.md", "action": "move", "metadata": {}},
+                    {"source": "B.md", "target": "tmp/../.obsidian/graph.json", "action": "move", "metadata": {}},
+                ],
+            ),
+        )
+        for expected_error, actions in cases:
+            with self.subTest(error=expected_error), TemporaryDirectory() as directory:
+                vault = Path(directory)
+                (vault / "A.md").write_text("A", encoding="utf-8")
+                (vault / "B.md").write_text("B", encoding="utf-8")
+                (vault / "Existing.md").write_text("existing", encoding="utf-8")
+                (vault / "Blocker").write_text("blocker", encoding="utf-8")
+                plan = _write_plan(vault, actions)
+
+                completed = _run_migration(
+                    vault,
+                    "apply",
+                    "--vault",
+                    ".",
+                    "--plan",
+                    plan.relative_to(vault).as_posix(),
+                    "--apply",
+                )
+
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertIn(expected_error, completed.stderr)
+                self.assertEqual((vault / "A.md").read_text(encoding="utf-8"), "A")
+                self.assertEqual((vault / "B.md").read_text(encoding="utf-8"), "B")
+                self.assertFalse((vault / "First.md").exists())
+                self.assertFalse((vault / "Second.md").exists())
 
     def test_rename_preserves_the_canonical_archive_while_updating_active_links(self):
         """Default rename traversal must not rewrite legacy Markdown under the canonical archive."""
