@@ -64,6 +64,33 @@ def _is_repository_root(relative: str) -> bool:
     return relative.split("/", 1)[0] in REPOSITORY_ROOTS
 
 
+def _unsafe_markdown_reason(root: Path, path: Path, *, missing_ok: bool = False) -> str | None:
+    try:
+        relative_path = path.relative_to(root)
+    except ValueError:
+        return "lexical path escapes vault"
+    candidate = root
+    try:
+        for part in relative_path.parts:
+            candidate /= part
+            if candidate.is_symlink():
+                return "path contains a symbolic-link component"
+        resolved = path.resolve(strict=True)
+    except FileNotFoundError:
+        return None if missing_ok else "path cannot be resolved safely"
+    except (OSError, RuntimeError):
+        return "path cannot be resolved safely"
+    try:
+        resolved.relative_to(root)
+    except ValueError:
+        return "resolved path escapes vault"
+    if not resolved.is_file():
+        return "resolved path is not a regular file"
+    if resolved.suffix.lower() != ".md":
+        return "resolved path is not Markdown"
+    return None
+
+
 def _selected(relative: str, only: str | None) -> bool:
     if not only:
         return True
@@ -119,6 +146,12 @@ def _template_issues(vault: Path, issues: list[VerificationIssue]) -> None:
     for filename in TEMPLATE_FILES:
         path = template_root / filename
         relative = _relative(vault, path)
+        unsafe_reason = _unsafe_markdown_reason(vault, path, missing_ok=True)
+        if unsafe_reason:
+            unsafe_issue = VerificationIssue("unsafe-path", relative, unsafe_reason)
+            if unsafe_issue not in issues:
+                issues.append(unsafe_issue)
+            continue
         if not path.is_file():
             _issue(issues, "missing-template", relative, "required template is missing")
             continue
@@ -142,6 +175,11 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
         if _is_archive(relative) or _is_repository_root(relative):
             continue
         selected = _selected(relative, only)
+        unsafe_reason = _unsafe_markdown_reason(root, path)
+        if unsafe_reason:
+            if selected:
+                _issue(issues, "unsafe-path", relative, unsafe_reason)
+            continue
         try:
             note = parse_markdown(path.read_text(encoding="utf-8"))
         except (OSError, UnicodeDecodeError, ValueError) as error:

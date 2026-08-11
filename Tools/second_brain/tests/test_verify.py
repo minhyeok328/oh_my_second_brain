@@ -1,16 +1,27 @@
+import errno
 import json
 from pathlib import Path
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
-from Tools.second_brain.verify import ARCHIVE_GUIDE, ARCHIVE_ROOT, TEMPLATE_FILES, TEMPLATE_ROOT, verify_vault
+from Tools.second_brain.verify import ARCHIVE_GUIDE, ARCHIVE_ROOT, TEMPLATE_FILES, TEMPLATE_ROOT, VerificationIssue, verify_vault
 
 
 def write_note(path: Path, metadata: str, body: str = "[[Target]]") -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(f"---\n{metadata}\n---\n{body}\n", encoding="utf-8")
+
+
+def create_symlink_or_skip(link: Path, target: Path) -> None:
+    try:
+        link.symlink_to(target)
+    except OSError as error:
+        if getattr(error, "winerror", None) == 1314 or error.errno in {errno.EACCES, errno.EPERM}:
+            raise unittest.SkipTest(f"symbolic-link creation is unavailable on this host: {error}") from error
+        raise
 
 
 VALID = """id: '20260811000000-abcd'
@@ -245,6 +256,177 @@ class VerifyTests(unittest.TestCase):
                     "source-tree-changed",
                 }.issubset(codes)
             )
+
+    def test_full_transition_keeps_malformed_approved_note_strict(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            path = vault / "20 소스 노트" / "Broken.md"
+            path.parent.mkdir(parents=True)
+            path.write_text("missing frontmatter", encoding="utf-8")
+            issues = verify_vault(vault, final=False, allow_staged_drafts=True)
+            self.assertIn(
+                VerificationIssue("missing-frontmatter", "20 소스 노트/Broken.md", "note has no frontmatter"),
+                issues,
+            )
+
+    def test_full_transition_keeps_malformed_root_home_strict(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            (vault / "Second Brain 홈.md").write_text("missing frontmatter", encoding="utf-8")
+            issues = verify_vault(vault, final=False, allow_staged_drafts=True)
+            self.assertIn(
+                VerificationIssue("missing-frontmatter", "Second Brain 홈.md", "note has no frontmatter"),
+                issues,
+            )
+
+    def test_full_transition_keeps_duplicate_ids_strict(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            metadata = VALID.replace("type: permanent", "type: source")
+            write_note(vault / "Notes" / "One.md", metadata, "one")
+            write_note(vault / "Notes" / "Two.md", metadata, "two")
+            duplicate_paths = {
+                issue.path
+                for issue in verify_vault(vault, final=False, allow_staged_drafts=True)
+                if issue.code == "duplicate-id"
+            }
+            self.assertEqual({"Notes/One.md", "Notes/Two.md"}, duplicate_paths)
+
+    def test_full_transition_keeps_missing_templates_strict(self):
+        with TemporaryDirectory() as temporary_directory:
+            issues = verify_vault(Path(temporary_directory), final=False, allow_staged_drafts=True)
+            missing_paths = {issue.path for issue in issues if issue.code == "missing-template"}
+            self.assertEqual({f"{TEMPLATE_ROOT}/{filename}" for filename in TEMPLATE_FILES}, missing_paths)
+
+    def test_full_transition_keeps_invalid_templates_strict(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            for filename in TEMPLATE_FILES:
+                variables = "{{date:YYYY-MM-DD}}" if filename == TEMPLATE_FILES[0] else "{{date:YYYY-MM-DD}} {{time:HHmmss}}"
+                write_note(vault / TEMPLATE_ROOT / filename, "template: true", variables)
+            invalid = vault / TEMPLATE_ROOT / TEMPLATE_FILES[0]
+            write_note(invalid, "template: true", "missing approved date variable")
+            invalid_paths = {
+                issue.path
+                for issue in verify_vault(vault, final=False, allow_staged_drafts=True)
+                if issue.code == "missing-template"
+            }
+            self.assertEqual({f"{TEMPLATE_ROOT}/{TEMPLATE_FILES[0]}"}, invalid_paths)
+
+    def test_full_transition_rejects_simulated_symlink_before_reading_it(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            unsafe = vault / "Notes" / "Unsafe.md"
+            write_note(unsafe, VALID, "body")
+            original_read_text = Path.read_text
+            reads: list[Path] = []
+
+            def tracked_read_text(candidate: Path, *args, **kwargs):
+                if candidate == unsafe:
+                    reads.append(candidate)
+                return original_read_text(candidate, *args, **kwargs)
+
+            with patch.object(Path, "is_symlink", new=lambda candidate: candidate == unsafe):
+                with patch.object(Path, "read_text", new=tracked_read_text):
+                    issues = verify_vault(vault, final=False, allow_staged_drafts=True)
+            self.assertIn(
+                VerificationIssue("unsafe-path", "Notes/Unsafe.md", "path contains a symbolic-link component"),
+                issues,
+            )
+            self.assertEqual([], reads)
+
+    def test_full_transition_rejects_non_regular_markdown_path(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            (vault / "Notes" / "Directory.md").mkdir(parents=True)
+            issues = verify_vault(vault, final=False, allow_staged_drafts=True)
+            self.assertIn(
+                VerificationIssue("unsafe-path", "Notes/Directory.md", "resolved path is not a regular file"),
+                issues,
+            )
+
+    def test_full_transition_rejects_simulated_resolved_path_outside_vault(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory) / "vault"
+            outside = Path(temporary_directory) / "outside.txt"
+            unsafe = vault / "Notes" / "Unsafe.md"
+            write_note(unsafe, VALID, "body")
+            outside.write_text("outside", encoding="utf-8")
+            original_resolve = Path.resolve
+
+            def resolve(candidate: Path, strict: bool = False):
+                if candidate == unsafe:
+                    return outside
+                return original_resolve(candidate, strict=strict)
+
+            with patch.object(Path, "resolve", new=resolve):
+                issues = verify_vault(vault, final=False, allow_staged_drafts=True)
+            self.assertIn(
+                VerificationIssue("unsafe-path", "Notes/Unsafe.md", "resolved path escapes vault"),
+                issues,
+            )
+
+    def test_full_transition_rejects_simulated_non_markdown_resolution(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            unsafe = vault / "Notes" / "Unsafe.md"
+            resolved = vault / "Notes" / "Unsafe.txt"
+            write_note(unsafe, VALID, "body")
+            resolved.write_text("not Markdown", encoding="utf-8")
+            original_resolve = Path.resolve
+
+            def resolve(candidate: Path, strict: bool = False):
+                if candidate == unsafe:
+                    return resolved
+                return original_resolve(candidate, strict=strict)
+
+            with patch.object(Path, "resolve", new=resolve):
+                issues = verify_vault(vault, final=False, allow_staged_drafts=True)
+            self.assertIn(
+                VerificationIssue("unsafe-path", "Notes/Unsafe.md", "resolved path is not Markdown"),
+                issues,
+            )
+
+    def test_full_transition_rejects_real_symlink_without_reading_target(self):
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            vault = root / "vault"
+            alias = vault / "Notes" / "Alias.md"
+            target = root / "outside.txt"
+            alias.parent.mkdir(parents=True)
+            target.write_text("outside bytes", encoding="utf-8")
+            create_symlink_or_skip(alias, target)
+            before = target.read_bytes()
+            issues = verify_vault(vault, final=False, allow_staged_drafts=True)
+            self.assertIn(
+                VerificationIssue("unsafe-path", "Notes/Alias.md", "path contains a symbolic-link component"),
+                issues,
+            )
+            self.assertEqual(before, target.read_bytes())
+            self.assertTrue(alias.is_symlink())
+
+    def test_full_transition_reports_unsafe_template_once_without_reading_it(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            unsafe = vault / TEMPLATE_ROOT / TEMPLATE_FILES[0]
+            write_note(unsafe, "template: true", "{{date:YYYY-MM-DD}}")
+            original_read_text = Path.read_text
+            reads: list[Path] = []
+
+            def tracked_read_text(candidate: Path, *args, **kwargs):
+                if candidate == unsafe:
+                    reads.append(candidate)
+                return original_read_text(candidate, *args, **kwargs)
+
+            with patch.object(Path, "is_symlink", new=lambda candidate: candidate == unsafe):
+                with patch.object(Path, "read_text", new=tracked_read_text):
+                    issues = verify_vault(vault, final=False, allow_staged_drafts=True)
+            unsafe_issues = [issue for issue in issues if issue.path == f"{TEMPLATE_ROOT}/{TEMPLATE_FILES[0]}" and issue.code == "unsafe-path"]
+            self.assertEqual(
+                [VerificationIssue("unsafe-path", f"{TEMPLATE_ROOT}/{TEMPLATE_FILES[0]}", "path contains a symbolic-link component")],
+                unsafe_issues,
+            )
+            self.assertEqual([], reads)
 
     def test_cli_full_transition_succeeds_while_scoped_content_debt_fails(self):
         with TemporaryDirectory() as temporary_directory:
