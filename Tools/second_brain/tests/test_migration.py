@@ -1,3 +1,4 @@
+import errno
 import json
 import os
 from pathlib import Path
@@ -29,6 +30,20 @@ def _run_migration(vault: Path, *arguments: str, **options):
         text=True,
         **options,
     )
+
+
+def _create_symlink_or_skip(link: Path, target: Path) -> None:
+    try:
+        link.symlink_to(target)
+    except OSError as error:
+        if getattr(error, "winerror", None) == 1314 or error.errno in {
+            errno.EACCES,
+            errno.EPERM,
+        }:
+            raise unittest.SkipTest(
+                f"symbolic-link creation is unavailable on this host: {error}"
+            ) from error
+        raise
 
 
 def _write_policy(
@@ -93,6 +108,46 @@ class MigrationTests(unittest.TestCase):
             self.assertEqual(options["cwd"], vault)
             self.assertEqual(options["env"]["PRESERVED"], "yes")
             self.assertEqual(options["env"]["PYTHONPATH"], os.pathsep.join((repository_root, "existing-path")))
+
+    def test_symlink_creation_helper_reraises_unrelated_errors(self):
+        """Skipping unrelated creation failures would hide a broken real-symlink regression."""
+        helper = globals().get("_create_symlink_or_skip")
+        self.assertTrue(callable(helper), "symlink creation helper is missing")
+        errors = (
+            OSError(errno.ENOSPC, "disk full"),
+            NotImplementedError("unexpected unsupported operation"),
+        )
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            for error in errors:
+                with self.subTest(error=type(error).__name__):
+                    with patch.object(Path, "symlink_to", side_effect=error):
+                        with self.assertRaises(type(error)) as raised:
+                            helper(vault / "Alias.md", Path("policy.json"))
+
+                    self.assertIs(raised.exception, error)
+
+    def test_symlink_creation_helper_skips_only_recognized_privilege_errors(self):
+        """Known link privilege failures should be the only errors converted to a skip."""
+        helper = globals().get("_create_symlink_or_skip")
+        self.assertTrue(callable(helper), "symlink creation helper is missing")
+        windows_privilege_error = OSError(errno.EIO, "symbolic-link privilege unavailable")
+        windows_privilege_error.winerror = 1314
+        errors = (
+            windows_privilege_error,
+            PermissionError(errno.EACCES, "permission denied"),
+            PermissionError(errno.EPERM, "operation not permitted"),
+        )
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            for error in errors:
+                with self.subTest(error=str(error)):
+                    with patch.object(Path, "symlink_to", side_effect=error):
+                        with self.assertRaisesRegex(
+                            unittest.SkipTest,
+                            "symbolic-link creation is unavailable on this host",
+                        ):
+                            helper(vault / "Alias.md", Path("policy.json"))
 
     def test_plan_command_is_a_dry_run_without_an_output_path(self):
         """A default plan write would violate dry-run safety and alter a vault unexpectedly."""
@@ -695,10 +750,7 @@ class MigrationTests(unittest.TestCase):
             policy_bytes = b'{"protected": true}\n'
             policy.write_bytes(policy_bytes)
             alias = vault / "Alias.md"
-            try:
-                alias.symlink_to(Path("policy.json"))
-            except (NotImplementedError, OSError) as error:
-                self.skipTest(f"symbolic-link creation is unavailable on this host: {error}")
+            _create_symlink_or_skip(alias, Path("policy.json"))
             plan = _write_plan(
                 vault,
                 [
