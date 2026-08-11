@@ -34,6 +34,6 @@ MySQL 조회와 변경 기본 명령을 모은다.
 
 ## 관련 노트
 
-- [[SQL SELECT와 WHERE]]
+- [[SELECT와 WHERE는 조회 범위와 조건을 분리한다]]
 - [[SQL DML]]
 - [[SQL 트랜잭션]]

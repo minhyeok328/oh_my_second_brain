@@ -33,5 +33,5 @@ Streamlit 화면 구성 기본 명령을 모은다.
 
 ## 관련 노트
 
-- [[Streamlit 기본 UI]]
-- [[Streamlit Session State]]
+- [[Streamlit UI는 위에서 아래로 재실행되는 흐름을 따른다]]
+- [[Streamlit 세션 상태는 재실행 사이의 값을 보존한다]]

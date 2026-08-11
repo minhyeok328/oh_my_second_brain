@@ -39,7 +39,7 @@ id: '20260530000000-4c24'
 
 ## 분리한 영구 노트
 
-- [[00 인박스/승격 대기/영구 노트/Docker Compose|Docker Compose]]
+- [[Docker Compose는 여러 컨테이너의 실행 계약을 한곳에 모은다|Docker Compose]]
 - Docker 이미지와 컨테이너의 수명 주기 — 후속 영구 노트 후보
 - Nginx 리버스 프록시 경계 — 후속 영구 노트 후보
 - WSGI와 ASGI의 실행 모델 — 후속 영구 노트 후보

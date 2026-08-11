@@ -37,6 +37,6 @@ id: '20260530000000-54e7'
 
 ## 관련 노트
 
-- [[Docker Compose]]
+- [[Docker Compose는 여러 컨테이너의 실행 계약을 한곳에 모은다]]
 - [[Docker Network]]
 - [[Docker Volume]]

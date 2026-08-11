@@ -33,6 +33,6 @@ DataFrame 분석에서 자주 쓰는 명령이다.
 
 ## 관련 노트
 
-- [[Pandas DataFrame]]
+- [[DataFrame은 열 단위 데이터 변환을 구조화한다]]
 - [[Pandas GroupBy]]
 - [[Pandas Merge]]

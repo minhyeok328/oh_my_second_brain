@@ -39,7 +39,7 @@ id: '20260530000000-1ce7'
 
 ## 분리한 영구 노트
 
-- [[Streamlit 기본 UI]]
-- [[Streamlit Session State]]
+- [[Streamlit UI는 위에서 아래로 재실행되는 흐름을 따른다]]
+- [[Streamlit 세션 상태는 재실행 사이의 값을 보존한다]]
 - Python 함수와 인자 전달 — 후속 영구 노트 후보
 - Python 이름 범위와 LEGB — 후속 영구 노트 후보

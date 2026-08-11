@@ -36,6 +36,6 @@ React Hook의 쓰임을 빠르게 구분한다.
 ## 관련 노트
 
 - [[useState]]
-- [[useEffect]]
+- [[useEffect는 외부 시스템과 React 상태를 동기화한다]]
 - [[useReducer]]
 - [[Custom Hook]]

@@ -89,4 +89,4 @@ id: '20260530000000-6130'
 - [[SKN26 4차 LG Home AI 가전 상담]]
 - [[Git]]
 - [[GitHub]]
-- [[Docker Compose]]
+- [[Docker Compose는 여러 컨테이너의 실행 계약을 한곳에 모은다]]
