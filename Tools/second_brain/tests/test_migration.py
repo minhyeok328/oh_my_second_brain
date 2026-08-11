@@ -951,6 +951,48 @@ class MigrationTests(unittest.TestCase):
             self.assertEqual((vault / "New.md").read_text(encoding="utf-8"), "# old")
             self.assertEqual((vault / "Active.md").read_text(encoding="utf-8"), "See [[New#Heading|Alias]]")
 
+    def test_apply_rewrites_only_active_vault_markdown(self):
+        """A rename must not mutate repository documents or confuse name substrings with roots."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("old", encoding="utf-8")
+
+            active_notes = (
+                vault / "Root active.md",
+                vault / "30 영구 노트" / "Nested active.md",
+                vault / "30 영구 노트" / "docs and Tools field note.md",
+            )
+            for active_note in active_notes:
+                active_note.parent.mkdir(parents=True, exist_ok=True)
+                active_note.write_text("See [[Old]]", encoding="utf-8")
+
+            system_roots = (
+                ".superpowers",
+                "docs",
+                "Tools",
+                ".codex_recovery",
+                ".obsidian",
+                ".worktrees",
+            )
+            system_notes = {}
+            for system_root in system_roots:
+                system_note = vault / system_root / "Repository document.md"
+                system_note.parent.mkdir(parents=True, exist_ok=True)
+                original = f"{system_root} [[Old]]\r\n".encode("utf-8")
+                system_note.write_bytes(original)
+                system_notes[system_note] = original
+
+            apply_actions(
+                vault,
+                [MigrationAction("Old.md", "New.md", "move", {})],
+                {"Old": "New"},
+            )
+
+            for active_note in active_notes:
+                self.assertEqual(active_note.read_text(encoding="utf-8"), "See [[New]]")
+            for system_note, original in system_notes.items():
+                self.assertEqual(system_note.read_bytes(), original)
+
     def test_apply_rejects_duplicate_targets_before_writing(self):
         """Late collision detection could partially move a vault."""
         with TemporaryDirectory() as directory:

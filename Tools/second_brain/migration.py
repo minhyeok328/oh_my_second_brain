@@ -18,6 +18,9 @@ AUDIT_OUTPUT_ROOT = Path("docs/superpowers/migrations")
 CANONICAL_ARCHIVE_ROOT = Path("90 보관함/이전 LLM Wiki")
 SUPPORTED_ACTIONS = frozenset({"archive", "move"})
 ACTION_FIELDS = frozenset({"action", "metadata", "source", "target"})
+REWRITE_EXCLUDED_ROOTS = frozenset(
+    {".superpowers", "docs", "Tools", ".codex_recovery", ".obsidian", ".worktrees"}
+)
 EMBED_WIKILINK_RE = re.compile(r"!\[\[([^\]|#^]+)([#^][^\]|]*)?(\|[^\]]+)?\]\]")
 
 
@@ -222,6 +225,8 @@ def apply_actions(
         if resolved_archive not in archives:
             archives.append(resolved_archive)
     for path in sorted(root.rglob("*.md"), key=lambda item: item.relative_to(root).as_posix()):
+        if path.relative_to(root).parts[0] in REWRITE_EXCLUDED_ROOTS:
+            continue
         if any(_inside(archive, path.resolve()) for archive in archives):
             continue
         note = parse_markdown(path.read_text(encoding="utf-8"))
