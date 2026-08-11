@@ -173,12 +173,116 @@ class VerifyTests(unittest.TestCase):
             self.assertIn("missing-project-hub", strict); self.assertNotIn("missing-project-hub", staged)
             self.assertIn("missing-required-field", strict); self.assertNotIn("missing-required-field", staged)
 
-    def test_staged_drafts_keep_invalid_ids_legacy_markers_and_broken_links(self):
+    def test_full_transition_staged_drafts_keep_invalid_ids_but_defer_content_debt(self):
         with TemporaryDirectory() as temporary_directory:
             vault = Path(temporary_directory)
             write_note(vault / "00 인박스" / "승격 대기" / "draft.md", "id: bad\ntype: permanent\nstatus: seed", "llm_wiki [[Missing]]")
             codes = {x.code for x in verify_vault(vault, final=True, allow_staged_drafts=True)}
-            self.assertTrue({"invalid-id", "legacy-llm-marker", "unresolved-link"}.issubset(codes))
+            self.assertIn("invalid-id", codes)
+            self.assertNotIn("legacy-llm-marker", codes)
+            self.assertNotIn("unresolved-link", codes)
+
+    def test_repository_roots_are_excluded_from_note_discovery(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            for root_name in (".superpowers", "docs", "Tools", ".codex_recovery", ".obsidian", ".worktrees"):
+                path = vault / root_name / "orchestration.md"
+                path.parent.mkdir(parents=True)
+                path.write_text("not a vault note", encoding="utf-8")
+            issues = verify_vault(vault, final=False, only="orchestration.md")
+            self.assertNotIn("missing-frontmatter", {issue.code for issue in issues})
+
+    def test_full_transition_defers_only_known_content_debt(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            write_note(vault / "Notes" / "Debt.md", VALID, "llm_wiki [[Missing]]")
+            codes = {issue.code for issue in verify_vault(vault, final=False, allow_staged_drafts=True)}
+            self.assertNotIn("legacy-llm-marker", codes)
+            self.assertNotIn("unresolved-link", codes)
+
+    def test_scoped_transition_keeps_known_content_debt_strict(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            write_note(vault / "Notes" / "Debt.md", VALID, "llm_wiki [[Missing]]")
+            codes = {
+                issue.code
+                for issue in verify_vault(vault, final=False, allow_staged_drafts=True, only="Notes")
+            }
+            self.assertTrue({"legacy-llm-marker", "unresolved-link"}.issubset(codes))
+
+    def test_full_transition_keeps_structural_taxonomy_and_snapshot_errors(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            write_note(
+                vault / "Notes" / "Unsafe.md",
+                VALID.replace("20260811000000-abcd", "bad")
+                .replace("type: permanent", "type: nope")
+                .replace("status: growing", "status: nope")
+                .replace("source_quality: primary", "source_quality: nope")
+                + "\nsource_path: missing",
+                "body",
+            )
+            snapshot = vault / "invalid-snapshot.json"
+            snapshot.write_text("{", encoding="utf-8")
+            codes = {
+                issue.code
+                for issue in verify_vault(
+                    vault,
+                    final=False,
+                    allow_staged_drafts=True,
+                    obsidian_snapshot=snapshot,
+                    source_snapshot=snapshot,
+                )
+            }
+            self.assertTrue(
+                {
+                    "invalid-id",
+                    "invalid-type",
+                    "invalid-status",
+                    "invalid-source-quality",
+                    "stale-source-path",
+                    "protected-settings-changed",
+                    "source-tree-changed",
+                }.issubset(codes)
+            )
+
+    def test_cli_full_transition_succeeds_while_scoped_content_debt_fails(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            write_note(
+                vault / "Notes" / "Debt.md",
+                VALID.replace("type: permanent", "type: source"),
+                "llm_wiki [[Missing]]",
+            )
+            for filename in TEMPLATE_FILES:
+                variables = "{{date:YYYY-MM-DD}}" if filename == TEMPLATE_FILES[0] else "{{date:YYYY-MM-DD}} {{time:HHmmss}}"
+                path = vault / TEMPLATE_ROOT / filename
+                write_note(path, "template: true", variables)
+            full = subprocess.run(
+                [sys.executable, "-m", "Tools.second_brain.verify", "--vault", str(vault), "--allow-staged-drafts", "--json"],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            scoped = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "Tools.second_brain.verify",
+                    "--vault",
+                    str(vault),
+                    "--allow-staged-drafts",
+                    "--only",
+                    "Notes",
+                    "--json",
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual((0, []), (full.returncode, json.loads(full.stdout)))
+            self.assertEqual(1, scoped.returncode)
+            self.assertEqual({"legacy-llm-marker", "unresolved-link"}, {issue["code"] for issue in json.loads(scoped.stdout)})
 
     def test_only_does_not_emit_unselected_note_parse_errors(self):
         with TemporaryDirectory() as temporary_directory:

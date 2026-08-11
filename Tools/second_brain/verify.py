@@ -18,6 +18,7 @@ VALID_TYPES = {"inbox", "daily", "source", "permanent", "project", "area", "stru
 VALID_STATUSES = {"seed", "growing", "evergreen", "archived"}
 VALID_SOURCE_QUALITIES = {"discovery", "primary", "mixed", "personal"}
 LEGACY_MARKERS = ("llm_wiki", "wiki-standardized", "wiki-expanded", "LLM Wiki 검색")
+REPOSITORY_ROOTS = {".superpowers", "docs", "Tools", ".codex_recovery", ".obsidian", ".worktrees"}
 TEMPLATE_FILES = (
     "데일리 노트 템플릿.md", "소스 노트 템플릿.md", "영구 노트 템플릿.md",
     "프로젝트 노트 템플릿.md", "회고 노트 템플릿.md",
@@ -57,6 +58,10 @@ def _is_archive(relative: str) -> bool:
 
 def _is_template(relative: str) -> bool:
     return relative == TEMPLATE_ROOT or relative.startswith(TEMPLATE_ROOT + "/")
+
+
+def _is_repository_root(relative: str) -> bool:
+    return relative.split("/", 1)[0] in REPOSITORY_ROOTS
 
 
 def _selected(relative: str, only: str | None) -> bool:
@@ -126,6 +131,7 @@ def _template_issues(vault: Path, issues: list[VerificationIssue]) -> None:
 def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False, only: str | None = None, obsidian_snapshot: Path | None = None, source_snapshot: Path | None = None) -> list[VerificationIssue]:
     """Return deterministic, read-only integrity issues for a Second Brain vault."""
     root = vault.resolve()
+    full_transition = allow_staged_drafts and only is None
     issues: list[VerificationIssue] = []
     notes: list[tuple[Path, str, object]] = []
     links: dict[str, set[str]] = {}
@@ -133,7 +139,7 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
     ids: dict[str, list[str]] = {}
     for path in sorted(root.rglob("*.md"), key=lambda item: _relative(root, item)):
         relative = _relative(root, path)
-        if _is_archive(relative):
+        if _is_archive(relative) or _is_repository_root(relative):
             continue
         selected = _selected(relative, only)
         try:
@@ -246,6 +252,8 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
             for name in sorted(REQUIRED_PROJECT_HUBS - active_stems): _issue(issues, "missing-project-hub", name, "required project hub is missing")
             for name in sorted(REQUIRED_LECTURE_MAPS - active_stems): _issue(issues, "missing-lecture-map", name, "required lecture map is missing")
         _verify_snapshots(root, obsidian_snapshot, source_snapshot, issues)
+    if full_transition:
+        issues = [issue for issue in issues if issue.code not in {"legacy-llm-marker", "unresolved-link"}]
     return sorted(issues, key=lambda issue: (issue.path, issue.code, issue.message))
 
 
