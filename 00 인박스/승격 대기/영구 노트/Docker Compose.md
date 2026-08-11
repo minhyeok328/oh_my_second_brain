@@ -56,7 +56,7 @@ ML 프로젝트는 Streamlit, MLflow, DB, pipeline API처럼 여러 프로세스
 
 - [[Docker Container]]
 - [[Docker Volume]]
-- [[FastAPI]]
+- [[FastAPI는 타입 선언을 요청 검증과 문서화에 재사용한다]]
 - [[MLflow]]
 - [[Streamlit 기본 UI]]
 

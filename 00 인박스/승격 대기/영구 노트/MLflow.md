@@ -52,7 +52,7 @@ MLflow는 머신러닝 실험의 run, metric, parameter, artifact, model을 추�
 ## 관련 개념
 
 - [[XGBoost]]
-- [[FastAPI]]
+- [[FastAPI는 타입 선언을 요청 검증과 문서화에 재사용한다]]
 - [[Streamlit 기본 UI]]
 - [[Docker Compose]]
 

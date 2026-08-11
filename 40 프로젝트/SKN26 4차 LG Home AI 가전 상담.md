@@ -37,12 +37,12 @@ LG 가전 상품 DB, Django SSR UI, 찜/계정 기능, LangGraph 기반 LGneer �
 
 ## 사용한 지식
 
-- [[Django Project]], [[Django App]], [[Django ORM Model]]: 상품, 계정, 찜, 채팅 도메인을 앱으로 분리한다.
+- [[Django Project]], [[Django App]], [[Django ORM 모델은 데이터 구조와 제약을 코드로 표현한다]]: 상품, 계정, 찜, 채팅 도메인을 앱으로 분리한다.
 - [[Django Template]], [[Django View]], [[Django URL Routing]]: SSR 화면과 AJAX API를 함께 제공한다.
-- [[Django Chatbot]]: chat endpoint에서 LangGraph 챗봇을 호출하고 대화방 state를 유지한다.
+- [[Django 챗봇은 대화 상태와 요청 경계를 함께 관리해야 한다]]: chat endpoint에서 LangGraph 챗봇을 호출하고 대화방 state를 유지한다.
 - [[LangGraph는 상태 전이를 명시해 LLM 흐름을 제어한다]]: fall case, 후속 질문, 제품군 분류, intent/slot 추출, DB 검색, 답변 생성을 노드로 분리한다.
 - [[벡터 저장소는 임베딩과 메타데이터를 함께 관리해야 한다]], [[임베딩은 의미 기반 비교를 위한 좌표 표현이다]], [[RAG의 성능은 검색 단계의 품질에서 시작된다]]: Pinecone `user_manual` namespace에서 제품군별 매뉴얼 chunk를 검색한다.
-- [[React SPA]], [[Django JSON API]]: 프로젝트 후 개인 확장에서 SSR 구조를 React SPA와 JSON API 구조로 분리하는 실험에 사용했다.
+- [[React SPA는 화면 상태와 서버 상태의 경계를 분명히 해야 한다]], [[Django JSON API는 화면과 서버 책임을 분리한다]]: 프로젝트 후 개인 확장에서 SSR 구조를 React SPA와 JSON API 구조로 분리하는 실험에 사용했다.
 
 ## 프로젝트 예시
 
@@ -61,7 +61,7 @@ LG 가전 상품 DB, Django SSR UI, 찜/계정 기능, LangGraph 기반 LGneer �
 
 ## 개인 확장 메모
 
-`4th_project_change_react`는 공식 팀 산출물 이후의 개인 확장이다. 여기서 Django 템플릿 SSR을 React + TypeScript + Tailwind SPA로 분리하고, Django를 JSON API 서버로 재구성했다. 이 경험은 [[React SPA]], [[Django JSON API]], [[React API Fetch]] 노트의 프로젝트 예시로만 사용한다.
+`4th_project_change_react`는 공식 팀 산출물 이후의 개인 확장이다. 여기서 Django 템플릿 SSR을 React + TypeScript + Tailwind SPA로 분리하고, Django를 JSON API 서버로 재구성했다. 이 경험은 [[React SPA는 화면 상태와 서버 상태의 경계를 분명히 해야 한다]], [[Django JSON API는 화면과 서버 책임을 분리한다]], [[React API 요청은 로딩 실패 취소 상태를 함께 다뤄야 한다]] 노트의 프로젝트 예시로만 사용한다.
 
 개인 회고 기준으로는 공식 4차 프로젝트에서 Django template SSR 방식으로 구성했던 부분을 React로 분리된 구조로 다시 만들어 보고 싶은 욕구가 있었다. 프로젝트 종료 후 혼자 `4th_project_change_react`로 재공학하면서, 프론트 렌더링과 Django 백엔드 API 책임을 나누는 구조를 실험했다.
 
@@ -89,11 +89,11 @@ LG 가전 상품 DB, Django SSR UI, 찜/계정 기능, LangGraph 기반 LGneer �
 
 ## 다음 보강 노트
 
-- [[Django Chatbot]]
+- [[Django 챗봇은 대화 상태와 요청 경계를 함께 관리해야 한다]]
 - [[LangGraph는 상태 전이를 명시해 LLM 흐름을 제어한다]]
 - [[벡터 저장소는 임베딩과 메타데이터를 함께 관리해야 한다]]
-- [[Django JSON API]]
-- [[React SPA]]
+- [[Django JSON API는 화면과 서버 책임을 분리한다]]
+- [[React SPA는 화면 상태와 서버 상태의 경계를 분명히 해야 한다]]
 
 ## 먼저 확인할 질문
 

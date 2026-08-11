@@ -59,7 +59,7 @@ useEffect는 "렌더링 결과를 바깥 세계와 맞추는 장치"다. DOM 제
 - [[React]]
 - [[React Lifecycle]]
 - [[React State]]
-- [[React API Fetch]]
+- [[React API 요청은 로딩 실패 취소 상태를 함께 다뤄야 한다]]
 - [[Custom Hook]]
 
 ## 확인 질문

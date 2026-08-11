@@ -35,4 +35,4 @@ React SPA 라우팅 구성요소를 정리한다.
 
 - [[React Router]]
 - [[React Component]]
-- [[React API Fetch]]
+- [[React API 요청은 로딩 실패 취소 상태를 함께 다뤄야 한다]]

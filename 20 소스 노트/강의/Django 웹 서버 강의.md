@@ -39,7 +39,7 @@ id: '20260530000000-42d0'
 
 ## 분리한 영구 노트
 
-- [[Django ORM Model]] · [[Django QuerySet]]
-- [[Django CSRF]] · [[Django JSON API]]
-- [[Django Chatbot]]
+- [[Django ORM 모델은 데이터 구조와 제약을 코드로 표현한다]] · [[QuerySet은 평가 시점을 늦춰 쿼리 조합을 가능하게 한다]]
+- [[CSRF 방어는 브라우저 세션 요청의 출처를 검증한다]] · [[Django JSON API는 화면과 서버 책임을 분리한다]]
+- [[Django 챗봇은 대화 상태와 요청 경계를 함께 관리해야 한다]]
 - Django 세션과 인증 경계 — 후속 영구 노트 후보
