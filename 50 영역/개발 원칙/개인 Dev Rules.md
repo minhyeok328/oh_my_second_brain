@@ -2,17 +2,18 @@
 type: 'area'
 status: 'growing'
 created: '2026-05-30'
-updated: '2026-06-23'
-reviewed: '2026-06-23'
+updated: '2026-08-11'
+reviewed: '2026-08-11'
 tags:
   - 'personal_context'
   - 'project'
   - 'experience'
   - 'collaboration'
   - 'dev_rules'
-source:
-  - 'C:\MinHyeok\skn26_2nd_1st\2nd_project'
-  - 'C:\MinHyeok\skn26_4th_1st\4th_project'
+aliases: []
+sources:
+  - '[[40 프로젝트/SKN26 2차 신용카드 고객 이탈 분석|SKN26 2차 신용카드 고객 이탈 분석]]'
+  - '[[40 프로젝트/SKN26 4차 LG Home AI 가전 상담|SKN26 4차 LG Home AI 가전 상담]]'
 source_quality: 'personal'
 verified: false
 id: '20260530000000-6130'
@@ -20,7 +21,9 @@ id: '20260530000000-6130'
 
 # 개인 Dev Rules
 
-태그: #personal_context #project #experience #collaboration #dev_rules
+## 개인 해석
+
+아래 규칙은 기존 프로젝트 회고에서 정리한 나의 협업 기준이다. 보편적인 개발 표준이나 팀 전체의 합의로 단정하지 않는다.
 
 ## 한 줄 요약
 
@@ -87,6 +90,5 @@ id: '20260530000000-6130'
 - [[프로젝트 경험 지도]]
 - [[SKN26 2차 신용카드 고객 이탈 분석]]
 - [[SKN26 4차 LG Home AI 가전 상담]]
-- [[Git]]
-- [[GitHub]]
+- [[20 소스 노트/강의/Git 기초 강의|Git 기초 강의]]
 - [[Docker Compose는 여러 컨테이너의 실행 계약을 한곳에 모은다]]
