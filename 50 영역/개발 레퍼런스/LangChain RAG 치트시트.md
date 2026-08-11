@@ -36,4 +36,4 @@ id: '20260530000000-4d3c'
 
 - [[Document Loader]]
 - [[Text Splitter]]
-- [[RAG]]
+- [[RAG의 성능은 검색 단계의 품질에서 시작된다]]

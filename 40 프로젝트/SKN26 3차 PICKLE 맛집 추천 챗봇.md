@@ -32,12 +32,12 @@ id: '20260530000000-b119'
 
 ## 사용한 지식
 
-- [[RAG]]: 식당·메뉴·리뷰 데이터를 검색 근거로 넣어 답변한다.
-- [[LangGraph]]: route, slot extraction, connector search, generate node를 상태 그래프로 연결한다.
-- [[Function Calling]]: `@tool`과 JSON Schema 기반 슬롯 추출로 LLM 출력을 구조화한다.
-- [[Embedding]], [[Retriever]], [[Reranking]]: category, tag, menu, food, review별 유사도 검색과 후보 재정렬을 수행한다.
+- [[RAG의 성능은 검색 단계의 품질에서 시작된다]]: 식당·메뉴·리뷰 데이터를 검색 근거로 넣어 답변한다.
+- [[LangGraph는 상태 전이를 명시해 LLM 흐름을 제어한다]]: route, slot extraction, connector search, generate node를 상태 그래프로 연결한다.
+- [[함수 호출은 자연어 요청을 구조화된 도구 입력으로 바꾼다]]: `@tool`과 JSON Schema 기반 슬롯 추출로 LLM 출력을 구조화한다.
+- [[임베딩은 의미 기반 비교를 위한 좌표 표현이다]], [[검색기는 질문과 관련된 근거 후보를 좁힌다]], [[Reranking]]: category, tag, menu, food, review별 유사도 검색과 후보 재정렬을 수행한다.
 - [[SQLite]]: 식당, 메뉴, 리뷰, 태그, 관계 테이블과 base64 임베딩을 보관한다.
-- [[RAG 평가]]: goldset, route/payload/target/answer/retrieval check로 품질을 측정한다.
+- [[RAG 평가는 검색과 생성을 분리해서 측정해야 한다]]: goldset, route/payload/target/answer/retrieval check로 품질을 측정한다.
 
 ## 프로젝트 예시
 
@@ -78,11 +78,11 @@ id: '20260530000000-b119'
 
 ## 다음 보강 노트
 
-- [[RAG]]
-- [[LangGraph]]
-- [[Function Calling]]
+- [[RAG의 성능은 검색 단계의 품질에서 시작된다]]
+- [[LangGraph는 상태 전이를 명시해 LLM 흐름을 제어한다]]
+- [[함수 호출은 자연어 요청을 구조화된 도구 입력으로 바꾼다]]
 - [[SQLite]]
-- [[RAG 평가]]
+- [[RAG 평가는 검색과 생성을 분리해서 측정해야 한다]]
 
 ## 먼저 확인할 질문
 

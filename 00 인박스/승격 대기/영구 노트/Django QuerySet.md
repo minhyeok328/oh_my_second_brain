@@ -55,7 +55,7 @@ QuerySet은 SQL을 바로 실행한 결과가 아니라 "이런 조건으로 조
 - [[Django ORM Model]]
 - [[Django View]]
 - [[Django JSON API]]
-- [[Function Calling]]
+- [[함수 호출은 자연어 요청을 구조화된 도구 입력으로 바꾼다]]
 
 ## 먼저 확인할 질문
 

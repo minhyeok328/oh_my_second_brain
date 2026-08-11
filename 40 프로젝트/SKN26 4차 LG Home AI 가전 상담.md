@@ -40,8 +40,8 @@ LG 가전 상품 DB, Django SSR UI, 찜/계정 기능, LangGraph 기반 LGneer �
 - [[Django Project]], [[Django App]], [[Django ORM Model]]: 상품, 계정, 찜, 채팅 도메인을 앱으로 분리한다.
 - [[Django Template]], [[Django View]], [[Django URL Routing]]: SSR 화면과 AJAX API를 함께 제공한다.
 - [[Django Chatbot]]: chat endpoint에서 LangGraph 챗봇을 호출하고 대화방 state를 유지한다.
-- [[LangGraph]]: fall case, 후속 질문, 제품군 분류, intent/slot 추출, DB 검색, 답변 생성을 노드로 분리한다.
-- [[Vector Store]], [[Embedding]], [[RAG]]: Pinecone `user_manual` namespace에서 제품군별 매뉴얼 chunk를 검색한다.
+- [[LangGraph는 상태 전이를 명시해 LLM 흐름을 제어한다]]: fall case, 후속 질문, 제품군 분류, intent/slot 추출, DB 검색, 답변 생성을 노드로 분리한다.
+- [[벡터 저장소는 임베딩과 메타데이터를 함께 관리해야 한다]], [[임베딩은 의미 기반 비교를 위한 좌표 표현이다]], [[RAG의 성능은 검색 단계의 품질에서 시작된다]]: Pinecone `user_manual` namespace에서 제품군별 매뉴얼 chunk를 검색한다.
 - [[React SPA]], [[Django JSON API]]: 프로젝트 후 개인 확장에서 SSR 구조를 React SPA와 JSON API 구조로 분리하는 실험에 사용했다.
 
 ## 프로젝트 예시
@@ -90,8 +90,8 @@ LG 가전 상품 DB, Django SSR UI, 찜/계정 기능, LangGraph 기반 LGneer �
 ## 다음 보강 노트
 
 - [[Django Chatbot]]
-- [[LangGraph]]
-- [[Vector Store]]
+- [[LangGraph는 상태 전이를 명시해 LLM 흐름을 제어한다]]
+- [[벡터 저장소는 임베딩과 메타데이터를 함께 관리해야 한다]]
 - [[Django JSON API]]
 - [[React SPA]]
 

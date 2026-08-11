@@ -56,8 +56,8 @@ Django Chatbot은 Django view, session/auth, DB model, JavaScript 요청, LLM/RA
 
 - [[Django JSON API]]
 - [[Django Session과 Auth]]
-- [[LangGraph]]
-- [[RAG]]
+- [[LangGraph는 상태 전이를 명시해 LLM 흐름을 제어한다]]
+- [[RAG의 성능은 검색 단계의 품질에서 시작된다]]
 - [[Django CSRF]]
 
 ## 먼저 확인할 질문

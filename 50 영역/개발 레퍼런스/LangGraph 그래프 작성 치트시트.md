@@ -33,6 +33,6 @@ id: '20260530000000-cc9b'
 
 ## 관련 노트
 
-- [[LangGraph]]
-- [[LangGraph State]]
-- [[LangGraph Conditional Edge]]
+- [[LangGraph는 상태 전이를 명시해 LLM 흐름을 제어한다]]
+- [[LangGraph 상태는 노드 사이의 데이터 계약이다]]
+- [[조건부 엣지는 상태에 따라 다음 실행 경로를 선택한다]]
