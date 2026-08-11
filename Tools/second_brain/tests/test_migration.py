@@ -71,6 +71,64 @@ class MigrationTests(unittest.TestCase):
             self.assertNotEqual(completed.returncode, 0)
             self.assertFalse(output.exists())
 
+    def test_plan_output_allows_only_a_new_audit_artifact(self):
+        """Allowing arbitrary or existing output paths would let a dry run overwrite vault content."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("old", encoding="utf-8")
+            output = vault / "docs" / "superpowers" / "migrations" / "dry-run.json"
+            command = [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault), "--output", "docs/superpowers/migrations/dry-run.json"]
+
+            first = subprocess.run(command, capture_output=True, text=True)
+            first_content = output.read_text(encoding="utf-8") if output.exists() else ""
+            second = subprocess.run(command, capture_output=True, text=True)
+
+            self.assertEqual(first.returncode, 0)
+            self.assertIn('"source": "Old.md"', first_content)
+            self.assertTrue((vault / "Old.md").exists())
+            self.assertNotEqual(second.returncode, 0)
+            self.assertEqual(output.read_text(encoding="utf-8"), first_content)
+
+    def test_plan_output_rejects_ordinary_existing_and_action_collision_paths(self):
+        """An audit plan must never use a note, an existing artifact, or an action path as output."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("old", encoding="utf-8")
+            audit = vault / "docs" / "superpowers" / "migrations"
+            audit.mkdir(parents=True)
+            existing = audit / "existing.json"
+            existing.write_text("evidence", encoding="utf-8")
+            base = [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault), "--output"]
+
+            ordinary = subprocess.run(base + ["Old.md"], capture_output=True, text=True)
+            existing_run = subprocess.run(base + ["docs/superpowers/migrations/existing.json"], capture_output=True, text=True)
+            target_policy = vault / "target-policy.json"
+            target_policy.write_text(json.dumps({"archive_root": "Archive", "status_routes": {}, "path_routes": {"Old.md": {"target": "docs/superpowers/migrations/target.json"}}, "archive_fallback": True}), encoding="utf-8")
+            target = subprocess.run(base + ["docs/superpowers/migrations/target.json", "--policy", str(target_policy)], capture_output=True, text=True)
+
+            self.assertNotEqual(ordinary.returncode, 0)
+            self.assertEqual((vault / "Old.md").read_text(encoding="utf-8"), "old")
+            self.assertNotEqual(existing_run.returncode, 0)
+            self.assertEqual(existing.read_text(encoding="utf-8"), "evidence")
+            self.assertNotEqual(target.returncode, 0)
+            self.assertFalse((audit / "target.json").exists())
+
+    def test_rename_preserves_the_canonical_archive_while_updating_active_links(self):
+        """Default rename traversal must not rewrite legacy Markdown under the canonical archive."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("old", encoding="utf-8")
+            (vault / "Active.md").write_text("[[Old]]", encoding="utf-8")
+            archived = vault / "90 보관함" / "이전 LLM Wiki" / "Legacy.md"
+            archived.parent.mkdir(parents=True)
+            legacy = "Legacy [[Old]]\r\n"
+            archived.write_bytes(legacy.encode("utf-8"))
+
+            subprocess.run([sys.executable, "-m", "Tools.second_brain.migration", "rename", "--vault", str(vault), "--source", "Old.md", "--target", "New.md", "--alias", "Old", "--apply"], capture_output=True, text=True, check=True)
+
+            self.assertEqual((vault / "Active.md").read_text(encoding="utf-8"), "[[New]]")
+            self.assertEqual(archived.read_bytes(), legacy.encode("utf-8"))
+
     def test_rename_command_requires_apply_then_preserves_link_heading_and_alias(self):
         """A rename without consent or one that loses link suffixes would corrupt active notes."""
         with TemporaryDirectory() as directory:

@@ -14,6 +14,8 @@ from Tools.second_brain.policy import MigrationPolicy
 
 
 PROTECTED_PATHS = {".obsidian/core-plugins.json", ".obsidian/graph.json", ".obsidian/workspace.json"}
+AUDIT_OUTPUT_ROOT = Path("docs/superpowers/migrations")
+CANONICAL_ARCHIVE_ROOT = Path("90 보관함/이전 LLM Wiki")
 EMBED_WIKILINK_RE = re.compile(r"!\[\[([^\]|#^]+)([#^][^\]|]*)?(\|[^\]]+)?\]\]")
 
 
@@ -110,9 +112,11 @@ def apply_actions(
         if action.action != "archive":
             _normalize_note(target, action.metadata, action.source)
     root = vault.resolve()
-    archive = (root / archive_root).resolve() if archive_root else None
+    archives = [(root / CANONICAL_ARCHIVE_ROOT).resolve()]
+    if archive_root:
+        archives.append((root / archive_root).resolve())
     for path in sorted(root.rglob("*.md"), key=lambda item: item.relative_to(root).as_posix()):
-        if archive is not None and _inside(archive, path.resolve()):
+        if any(_inside(archive, path.resolve()) for archive in archives):
             continue
         note = parse_markdown(path.read_text(encoding="utf-8"))
         rewritten_body = _rewrite_embedded_note_links(rewrite_wikilinks(note.body, title_map), title_map)
@@ -132,13 +136,24 @@ def _plan_json(actions: list[MigrationAction]) -> str:
     return json.dumps([asdict(action) for action in actions], ensure_ascii=False, indent=2) + "\n"
 
 
-def _resolve_output(vault: Path, output: Path) -> Path:
+def _resolve_output(
+    vault: Path,
+    output: Path,
+    validated: list[tuple[MigrationAction, Path, Path]],
+) -> Path:
     root = vault.resolve()
     resolved = output.resolve() if output.is_absolute() else (root / output).resolve()
     if not _inside(root, resolved):
         raise ValueError("output is outside vault")
+    if not _inside((root / AUDIT_OUTPUT_ROOT).resolve(), resolved):
+        raise ValueError("output must be under docs/superpowers/migrations")
     if resolved.relative_to(root).as_posix() in PROTECTED_PATHS:
         raise ValueError("protected Obsidian file")
+    for _, source, target in validated:
+        if resolved == source or resolved == target:
+            raise ValueError("output collides with an action source or target")
+    if resolved.exists():
+        raise ValueError("output already exists")
     return resolved
 
 
@@ -159,12 +174,12 @@ def main() -> int:
         actions = build_actions(scan_notes(args.vault), policy)
         if args.command == "apply" and not args.apply:
             parser.error("apply requires --apply")
-        _validate_actions(args.vault, actions)
+        validated = _validate_actions(args.vault, actions)
         rendered_plan = _plan_json(actions)
         if args.output is None:
             print(rendered_plan, end="")
         else:
-            output = _resolve_output(args.vault, args.output)
+            output = _resolve_output(args.vault, args.output, validated)
             output.parent.mkdir(parents=True, exist_ok=True)
             output.write_text(rendered_plan, encoding="utf-8")
         if args.command == "apply":
