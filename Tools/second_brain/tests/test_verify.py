@@ -1,5 +1,6 @@
 import errno
 from contextlib import redirect_stderr
+import hashlib
 from io import StringIO
 import json
 import os
@@ -48,7 +49,9 @@ updated: 2026-08-11
 source_quality: primary
 verified: true
 sources:
-  - source"""
+  - https://docs.djangoproject.com/en/6.0/"""
+
+OFFICIAL_SOURCE = "https://docs.djangoproject.com/en/6.0/"
 
 APPROVED_PROJECT_HUBS = {
     "SKN26 1차 차량 운영비 프로젝트",
@@ -118,6 +121,131 @@ class VerifyTests(unittest.TestCase):
 
         self.assertIn("invalid-source-quality", self.issues_for(secondary))
 
+    def test_permanent_verified_metadata_must_be_an_explicit_boolean(self):
+        invalid_values = (
+            VALID.replace("verified: true\n", ""),
+            VALID.replace("verified: true", "verified: 'true'"),
+            VALID.replace("verified: true", "verified: 1"),
+        )
+
+        for metadata in invalid_values:
+            with self.subTest(metadata=metadata):
+                self.assertIn("invalid-verified", self.issues_for(metadata))
+
+    def test_permanent_sources_reject_unsupported_evidence_entries(self):
+        unsupported_sources = (
+            "source",
+            "ftp://docs.djangoproject.com/en/6.0/",
+            "https://docs.djangoproject.com/en/6.0/bad path",
+            "relative/path/to/notes.md",
+            r"C:\Windows\System32\drivers\etc\hosts",
+            r"C:\MinHyeok\lecture\task-15b-source-does-not-exist",
+        )
+
+        for source in unsupported_sources:
+            with self.subTest(source=source):
+                metadata = VALID.replace(OFFICIAL_SOURCE, source)
+                self.assertIn("invalid-source", self.issues_for(metadata))
+
+    def test_discovery_hosts_cannot_satisfy_a_permanent_note(self):
+        discovery_sources = (
+            "https://namu.wiki/w/RAG",
+            "https://www.reddit.com/r/learnpython/comments/example/",
+            "https://stackoverflow.com/questions/1/example",
+            "https://chatgpt.com/share/example",
+            "https://claude.ai/share/example",
+            "https://www.perplexity.ai/search/example",
+        )
+
+        for source in discovery_sources:
+            with self.subTest(source=source):
+                codes = self.issues_for(VALID.replace(OFFICIAL_SOURCE, source))
+                self.assertIn("discovery-only-permanent", codes)
+                self.assertIn("missing-primary-source", codes)
+
+    def test_unknown_url_hosts_do_not_count_as_primary(self):
+        codes = self.issues_for(VALID.replace(OFFICIAL_SOURCE, "https://example.com/research"))
+
+        self.assertNotIn("invalid-source", codes)
+        self.assertIn("missing-primary-source", codes)
+
+    def test_current_approved_official_hosts_count_as_primary(self):
+        approved_sources = (
+            "https://arxiv.org/abs/2005.11401",
+            "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401",
+            "https://developers.openai.com/api/docs/quickstart",
+            "https://dev.mysql.com/doc/refman/8.4/en/select.html",
+            "https://docs.djangoproject.com/en/6.0/topics/db/models/",
+            "https://docs.docker.com/compose/",
+            "https://docs.langchain.com/oss/python/langgraph/graph-api",
+            "https://docs.streamlit.io/develop/api-reference/execution-flow",
+            "https://fastapi.tiangolo.com/tutorial/body/",
+            "https://mlflow.org/docs/latest/ml/tracking/",
+            "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html",
+            "https://react.dev/reference/react/useEffect",
+            "https://requests.readthedocs.io/en/latest/user/quickstart/",
+            "https://scikit-learn.org/stable/modules/model_evaluation.html",
+            "https://tanstack.com/query/latest/docs/reference/QueryClient",
+            "https://www.sqlite.org/onefile.html",
+            "https://xgboost.readthedocs.io/en/stable/tutorials/model.html",
+        )
+
+        for source in approved_sources:
+            with self.subTest(source=source):
+                self.assertNotIn("missing-primary-source", self.issues_for(VALID.replace(OFFICIAL_SOURCE, source)))
+
+    def test_existing_approved_local_roots_count_as_primary(self):
+        for source in (r"C:\MinHyeok\lecture", r"C:\MinHyeok\skn26_projects"):
+            with self.subTest(source=source):
+                codes = self.issues_for(VALID.replace(OFFICIAL_SOURCE, source))
+                self.assertNotIn("invalid-source", codes)
+                self.assertNotIn("missing-primary-source", codes)
+
+    def test_sources_wikilink_must_resolve_uniquely_in_the_active_vault(self):
+        secondary = VALID.replace("source_quality: primary", "source_quality: secondary").replace(
+            "verified: true", "verified: false"
+        )
+        self.assertNotIn("invalid-source", self.issues_for(secondary.replace(OFFICIAL_SOURCE, "'[[Target]]'")))
+        self.assertIn(
+            "invalid-source",
+            self.issues_for(secondary.replace(OFFICIAL_SOURCE, "'[[Missing Source]]'")),
+        )
+
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            write_note(vault / "One" / "Evidence.md", VALID, "one")
+            write_note(vault / "Two" / "Evidence.md", VALID.replace("20260811000000-abcd", "20260811000001-abcd"), "two")
+            write_note(
+                vault / "Permanent.md",
+                secondary.replace("20260811000000-abcd", "20260811000002-abcd").replace(
+                    OFFICIAL_SOURCE, "'[[Evidence]]'"
+                ),
+                "[[One/Evidence]]",
+            )
+
+            self.assertIn("invalid-source", {issue.code for issue in verify_vault(vault, final=False)})
+
+    def test_sources_wikilink_cannot_target_archive(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            secondary = VALID.replace("source_quality: primary", "source_quality: secondary").replace(
+                "verified: true", "verified: false"
+            )
+            write_note(vault / "Target.md", VALID, "target")
+            write_note(vault / ARCHIVE_ROOT / "Archived Evidence.md", "", "archived")
+            write_note(
+                vault / "Permanent.md",
+                secondary.replace("20260811000000-abcd", "20260811000001-abcd").replace(
+                    OFFICIAL_SOURCE, "'[[Archived Evidence]]'"
+                ),
+                "[[Target]]",
+            )
+
+            issues = [issue for issue in verify_vault(vault, final=False) if issue.path == "Permanent.md"]
+
+            self.assertIn("invalid-source", {issue.code for issue in issues})
+            self.assertTrue(any("archived" in issue.message for issue in issues))
+
     def test_reports_links_markers_and_stale_sources(self):
         self.assertIn("unresolved-link", self.issues_for(VALID, "[[Missing]]"))
         self.assertIn("legacy-llm-marker", self.issues_for(VALID, "llm_wiki"))
@@ -140,6 +268,36 @@ class VerifyTests(unittest.TestCase):
             source = vault / "source.json"; source.write_text(json.dumps({str(vault): []}), encoding="utf-8")
             codes = {x.code for x in verify_vault(vault, final=True, obsidian_snapshot=obsidian, source_snapshot=source)}
             self.assertTrue({"missing-project-hub", "missing-lecture-map", "protected-settings-changed", "source-tree-changed"}.issubset(codes))
+
+    def test_protected_snapshot_relative_keys_resolve_from_vault_outside_vault_cwd(self):
+        with TemporaryDirectory() as temporary_directory, TemporaryDirectory() as other_directory:
+            vault = Path(temporary_directory)
+            graph = vault / ".obsidian" / "graph.json"
+            core_plugins = vault / ".obsidian" / "core-plugins.json"
+            graph.parent.mkdir(parents=True)
+            graph.write_text("{}", encoding="utf-8")
+            core_plugins.write_text("[]", encoding="utf-8")
+            snapshot = vault / "obsidian.json"
+            snapshot.write_text(
+                json.dumps(
+                    {
+                        r".obsidian\graph.json": hashlib.sha256(b"{}").hexdigest(),
+                        str(core_plugins): hashlib.sha256(b"[]").hexdigest(),
+                    }
+                ),
+                encoding="utf-8",
+            )
+            previous_cwd = Path.cwd()
+            try:
+                os.chdir(other_directory)
+                codes = {
+                    issue.code
+                    for issue in verify_vault(vault, final=False, obsidian_snapshot=snapshot)
+                }
+            finally:
+                os.chdir(previous_cwd)
+
+            self.assertNotIn("protected-settings-changed", codes)
 
     def test_required_project_and_lecture_map_names_match_the_approved_contract(self):
         self.assertEqual(APPROVED_PROJECT_HUBS, REQUIRED_PROJECT_HUBS)

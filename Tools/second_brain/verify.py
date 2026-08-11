@@ -9,6 +9,7 @@ import re
 import stat
 import tempfile
 from typing import BinaryIO
+from urllib.parse import urlparse
 
 from Tools.second_brain.note_io import extract_wikilinks, parse_markdown
 from Tools.second_brain.snapshot import hash_files, snapshot_tree
@@ -41,6 +42,37 @@ JSON_REPORT_ROOT = Path("docs/superpowers/migrations")
 WINDOWS_ILLEGAL_PATH_CHARACTERS = frozenset('<>:"|?*')
 ID_RE = re.compile(r"^\d{14}-[a-z0-9]{4}$")
 EMBED_RE = re.compile(r"!\[\[([^\]|#^]+)(?:[#^][^\]|]*)?(?:\|[^\]]+)?\]\]")
+SOURCE_WIKILINK_RE = re.compile(r"^\[\[([^\]|#^]+)(?:[#^][^\]|]*)?(?:\|[^\]]+)?\]\]$")
+
+# Primary URL evidence is intentionally allowlisted. Unknown hosts remain usable
+# citations, but cannot independently promote a factual permanent note.
+PRIMARY_SOURCE_HOSTS = frozenset(
+    {
+        "arxiv.org",
+        "dev.mysql.com",
+        "developer.mozilla.org",
+        "developers.openai.com",
+        "docs.djangoproject.com",
+        "docs.docker.com",
+        "docs.langchain.com",
+        "docs.streamlit.io",
+        "fastapi.tiangolo.com",
+        "mlflow.org",
+        "pandas.pydata.org",
+        "react.dev",
+        "requests.readthedocs.io",
+        "scikit-learn.org",
+        "tanstack.com",
+        "www.sqlite.org",
+        "xgboost.readthedocs.io",
+    }
+)
+DISCOVERY_COMMUNITY_HOSTS = frozenset({"quora.com", "reddit.com", "stackoverflow.com"})
+DISCOVERY_AI_ANSWER_HOSTS = frozenset(
+    {"chatgpt.com", "claude.ai", "copilot.microsoft.com", "gemini.google.com", "perplexity.ai"}
+)
+DISCOVERY_SOURCE_HOSTS = frozenset({"namu.wiki"}) | DISCOVERY_COMMUNITY_HOSTS | DISCOVERY_AI_ANSWER_HOSTS
+PRIMARY_LOCAL_ROOTS = (PureWindowsPath(r"C:\MinHyeok\lecture"), PureWindowsPath(r"C:\MinHyeok\skn26_projects"))
 
 
 @dataclass(frozen=True)
@@ -125,8 +157,120 @@ def _add_index(index: dict[str, set[str]], key: str, relative: str) -> None:
     index.setdefault(_link_key(key), set()).add(relative)
 
 
+def _host_matches(host: str, registered_hosts: frozenset[str]) -> bool:
+    return any(host == registered or host.endswith("." + registered) for registered in registered_hosts)
+
+
+def _classify_source(
+    value: object,
+    active_links: dict[str, set[str]],
+    archive_links: dict[str, set[str]],
+) -> tuple[str, str | None]:
+    if not isinstance(value, str) or not value.strip():
+        return "invalid", "source entry must be a non-empty string"
+    source = value.strip()
+    wikilink = SOURCE_WIKILINK_RE.fullmatch(source)
+    if wikilink:
+        key = _link_key(wikilink.group(1))
+        active_targets = active_links.get(key, set())
+        if len(active_targets) == 1:
+            return "internal", None
+        if len(active_targets) > 1:
+            return "invalid", f"ambiguous internal source: {source}"
+        if archive_links.get(key):
+            return "invalid", f"internal source targets archived note: {source}"
+        return "invalid", f"unresolved internal source: {source}"
+    if source.startswith("[[") or source.endswith("]]"):
+        return "invalid", f"malformed internal source: {source}"
+
+    try:
+        parsed = urlparse(source)
+        port = parsed.port
+    except ValueError:
+        return "invalid", f"malformed source URL: {source}"
+    if parsed.scheme in {"http", "https"}:
+        if any(character.isspace() or ord(character) < 32 for character in source):
+            return "invalid", f"malformed source URL: {source}"
+        host = (parsed.hostname or "").lower()
+        if not host or parsed.username is not None or parsed.password is not None:
+            return "invalid", f"malformed source URL: {source}"
+        if _host_matches(host, DISCOVERY_SOURCE_HOSTS):
+            return "discovery", None
+        if parsed.scheme == "https" and port in {None, 443} and host in PRIMARY_SOURCE_HOSTS:
+            return "primary", None
+        return "secondary", None
+    if "://" in source:
+        return "invalid", f"unsupported source URL scheme: {source}"
+
+    windows_path = PureWindowsPath(source)
+    if windows_path.is_absolute():
+        if ".." in windows_path.parts:
+            return "invalid", f"local source path contains traversal: {source}"
+        if not any(windows_path.is_relative_to(root) for root in PRIMARY_LOCAL_ROOTS):
+            return "invalid", f"local source is outside approved roots: {source}"
+        try:
+            exists = Path(source).exists()
+        except OSError:
+            exists = False
+        if not exists:
+            return "invalid", f"local source does not exist: {source}"
+        return "primary", None
+    return "invalid", f"unsupported source entry: {source}"
+
+
+def _permanent_source_issues(
+    metadata: dict[str, object],
+    relative: str,
+    active_links: dict[str, set[str]],
+    archive_links: dict[str, set[str]],
+    issues: list[VerificationIssue],
+) -> None:
+    verified = metadata.get("verified")
+    if type(verified) is not bool:
+        _issue(issues, "invalid-verified", relative, "permanent note verified must be an explicit boolean")
+
+    sources = metadata.get("sources")
+    if not isinstance(sources, list) or not sources:
+        _issue(issues, "missing-required-field", relative, "permanent note needs sources")
+        source_kinds: list[str] = []
+    else:
+        source_kinds = []
+        for index, source in enumerate(sources):
+            kind, message = _classify_source(source, active_links, archive_links)
+            if kind == "invalid":
+                _issue(issues, "invalid-source", relative, f"sources[{index}]: {message}")
+            else:
+                source_kinds.append(kind)
+
+    quality = str(metadata.get("source_quality", ""))
+    if source_kinds and all(kind == "discovery" for kind in source_kinds) and quality != "discovery":
+        _issue(issues, "discovery-only-permanent", relative, "permanent note has discovery-only evidence")
+    if quality != "personal" and verified is True and "primary" not in source_kinds:
+        _issue(
+            issues,
+            "missing-primary-source",
+            relative,
+            "verified factual permanent note needs a recognized official or original primary source",
+        )
+
+
 def _read_snapshot(path: Path) -> object:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _protected_snapshot_hashes(vault: Path, keys: dict[str, str]) -> dict[str, str]:
+    root = vault.resolve()
+    actual: dict[str, str] = {}
+    for key in keys:
+        snapshot_path = Path(key)
+        if snapshot_path.is_absolute():
+            target = snapshot_path
+        else:
+            target = (root / snapshot_path).resolve(strict=True)
+            target.relative_to(root)
+        digest = hash_files([target])[str(target)]
+        actual[key] = digest
+    return actual
 
 
 def _unsafe_windows_path_component(component: str) -> bool:
@@ -342,8 +486,8 @@ def _verify_snapshots(vault: Path, obsidian_snapshot: Path | None, source_snapsh
             _issue(issues, "protected-settings-changed", str(obsidian_snapshot), "invalid protected settings snapshot")
         else:
             try:
-                actual = hash_files([Path(path) for path in expected])
-            except OSError:
+                actual = _protected_snapshot_hashes(vault, expected)
+            except (OSError, RuntimeError, ValueError):
                 actual = {}
             if actual != expected:
                 _issue(issues, "protected-settings-changed", str(obsidian_snapshot), "protected Obsidian settings differ from snapshot")
@@ -390,11 +534,16 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
     issues: list[VerificationIssue] = []
     notes: list[tuple[Path, str, object]] = []
     links: dict[str, set[str]] = {}
+    archive_links: dict[str, set[str]] = {}
     attachments: dict[str, set[str]] = {}
     ids: dict[str, list[str]] = {}
     for path in sorted(root.rglob("*.md"), key=lambda item: _relative(root, item)):
         relative = _relative(root, path)
-        if _is_archive(relative) or _is_repository_root(relative):
+        if _is_archive(relative):
+            _add_index(archive_links, path.with_suffix("").relative_to(root).as_posix(), relative)
+            _add_index(archive_links, path.stem, relative)
+            continue
+        if _is_repository_root(relative):
             continue
         selected = _selected(relative, only)
         unsafe_reason = _unsafe_markdown_reason(root, path)
@@ -444,9 +593,6 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
             if not str(note.metadata.get(field, "")).strip():
                 _issue(issues, "missing-required-field", relative, f"missing required field: {field}")
         if note_type == "permanent":
-            sources = note.metadata.get("sources")
-            if not isinstance(sources, list) or not sources:
-                _issue(issues, "missing-required-field", relative, "permanent note needs sources")
             if status not in {"growing", "evergreen"}: _issue(issues, "invalid-status", relative, "permanent note must be growing or evergreen")
             if quality == "discovery": _issue(issues, "discovery-only-permanent", relative, "permanent note cannot use discovery sources only")
             if status == "evergreen" and note.metadata.get("verified") is not True:
@@ -465,6 +611,9 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
     for _, relative, note in notes:
         if not _selected(relative, only):
             continue
+        staged_draft = allow_staged_drafts and relative.startswith("00 인박스/승격 대기/")
+        if str(note.metadata.get("type", "")) == "permanent" and not staged_draft:
+            _permanent_source_issues(note.metadata, relative, links, archive_links, issues)
         for link in extract_wikilinks(note.body):
             targets = links.get(_link_key(link), set())
             if len(targets) > 1:
@@ -500,7 +649,6 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
                 _issue(issues, "unresolved-link", relative, f"ambiguous attachment embed: {embed}")
             else:
                 _issue(issues, "unresolved-link", relative, f"unresolved embed: {embed}")
-        staged_draft = allow_staged_drafts and relative.startswith("00 인박스/승격 대기/")
         if str(note.metadata.get("type", "")) == "permanent" and not staged_draft:
             note_embeds = [embed for embed in EMBED_RE.findall(note.body) if len(links.get(_link_key(embed), set())) == 1]
             if not extract_wikilinks(note.body) and not note_embeds:
