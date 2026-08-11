@@ -4,9 +4,10 @@ import argparse
 from dataclasses import asdict, dataclass
 import hashlib
 import json
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import re
 import shutil
+import stat
 
 from Tools.second_brain.inventory import NoteRecord, scan_notes
 from Tools.second_brain.note_io import parse_markdown, render_markdown, rewrite_wikilinks
@@ -23,6 +24,7 @@ REWRITE_EXCLUDED_ROOTS = frozenset(
     for root in (".superpowers", "docs", "Tools", ".codex_recovery", ".obsidian", ".worktrees")
 )
 EMBED_WIKILINK_RE = re.compile(r"!\[\[([^\]|#^]+)([#^][^\]|]*)?(\|[^\]]+)?\]\]")
+WINDOWS_ILLEGAL_PATH_CHARACTERS = frozenset('<>:"|?*')
 
 
 @dataclass(frozen=True)
@@ -55,7 +57,35 @@ def _inside(root: Path, candidate: Path) -> bool:
         return False
 
 
-def _has_symlink_component(root: Path, relative_path: Path) -> bool:
+def _unsafe_windows_path_component(component: str) -> bool:
+    if component in (".", ".."):
+        return False
+    if not component or component.endswith((" ", ".")):
+        return True
+    if any(
+        ord(character) < 32 or character in WINDOWS_ILLEGAL_PATH_CHARACTERS
+        for character in component
+    ):
+        return True
+    return PureWindowsPath(component).is_reserved()
+
+
+def _is_link_or_reparse_point(path: Path) -> bool:
+    try:
+        if path.is_symlink():
+            return True
+        is_junction = getattr(path, "is_junction", None)
+        if is_junction is not None and is_junction():
+            return True
+        attributes = getattr(path.lstat(), "st_file_attributes", 0)
+    except FileNotFoundError:
+        return False
+    except (OSError, RuntimeError) as error:
+        raise ValueError("migration path cannot be inspected safely") from error
+    return bool(attributes & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0))
+
+
+def _has_link_or_reparse_component(root: Path, relative_path: Path) -> bool:
     candidate = root
     for part in relative_path.parts:
         if part in ("", "."):
@@ -64,7 +94,11 @@ def _has_symlink_component(root: Path, relative_path: Path) -> bool:
             candidate = candidate.parent
             continue
         candidate = candidate / part
-        if candidate != root and _inside(root, candidate) and candidate.is_symlink():
+        if (
+            candidate != root
+            and _inside(root, candidate)
+            and _is_link_or_reparse_point(candidate)
+        ):
             return True
     return False
 
@@ -133,10 +167,18 @@ def _validate_actions(vault: Path, actions: list[MigrationAction]) -> list[tuple
         source_path, target_path = Path(action.source), Path(action.target)
         if source_path.is_absolute() or target_path.is_absolute():
             raise ValueError("source or target must be vault-relative")
-        if _has_symlink_component(root, source_path):
-            raise ValueError("source path contains a symbolic link")
-        if _has_symlink_component(root, target_path):
-            raise ValueError("target path contains a symbolic link")
+        if any(_unsafe_windows_path_component(part) for part in source_path.parts):
+            raise ValueError("source path contains an unsafe Windows path component")
+        if any(_unsafe_windows_path_component(part) for part in target_path.parts):
+            raise ValueError("target path contains an unsafe Windows path component")
+        if _has_link_or_reparse_component(root, source_path):
+            raise ValueError(
+                "source path contains a symbolic link, junction, or reparse point"
+            )
+        if _has_link_or_reparse_component(root, target_path):
+            raise ValueError(
+                "target path contains a symbolic link, junction, or reparse point"
+            )
         source, target = (root / source_path).resolve(), (root / target_path).resolve()
         if not _inside(root, source) or not _inside(root, target):
             raise ValueError("source or target is outside vault")
@@ -205,7 +247,7 @@ def _resolve_rewrite_candidate(root: Path, path: Path) -> Path | None:
     if relative.parts[0].casefold() in REWRITE_EXCLUDED_ROOTS:
         return None
     try:
-        if _has_symlink_component(root, relative):
+        if _has_link_or_reparse_component(root, relative):
             return None
         resolved = path.resolve()
         if not _inside(root, resolved) or not resolved.is_file():
@@ -219,6 +261,73 @@ def _resolve_rewrite_candidate(root: Path, path: Path) -> Path | None:
     return resolved
 
 
+def _create_parent_directories(
+    root: Path,
+    parent: Path,
+    created_directories: list[tuple[Path, tuple[int, int] | None]],
+) -> None:
+    missing = []
+    candidate = parent
+    while candidate != root and not candidate.exists():
+        missing.append(candidate)
+        candidate = candidate.parent
+    for directory in reversed(missing):
+        try:
+            directory.mkdir()
+        except FileExistsError:
+            if not directory.is_dir():
+                raise
+        else:
+            created_directories.append((directory, None))
+            status = directory.stat()
+            created_directories[-1] = (
+                directory,
+                (status.st_dev, status.st_ino),
+            )
+
+
+def _rollback_actions(
+    moved: list[tuple[Path, Path]],
+    original_bytes: dict[Path, bytes],
+    created_directories: list[tuple[Path, tuple[int, int] | None]],
+) -> list[str]:
+    failures = []
+    for path, value in reversed(tuple(original_bytes.items())):
+        try:
+            path.write_bytes(value)
+        except Exception as error:
+            failures.append(
+                f"restore {path}: {type(error).__name__}: {error}"
+            )
+    for source, target in reversed(moved):
+        try:
+            if source.exists() or source.is_symlink():
+                raise FileExistsError(f"original source already exists: {source}")
+            if not target.exists() and not target.is_symlink():
+                raise FileNotFoundError(f"moved target is missing: {target}")
+            shutil.move(str(target), str(source))
+        except Exception as error:
+            failures.append(
+                f"move {target} back to {source}: {type(error).__name__}: {error}"
+            )
+    for directory, expected_identity in reversed(created_directories):
+        try:
+            if expected_identity is None:
+                raise RuntimeError("created directory identity is unavailable")
+            status = directory.stat()
+            actual_identity = status.st_dev, status.st_ino
+            if actual_identity != expected_identity:
+                raise RuntimeError("created directory identity changed")
+            directory.rmdir()
+        except FileNotFoundError:
+            continue
+        except Exception as error:
+            failures.append(
+                f"remove created directory {directory}: {type(error).__name__}: {error}"
+            )
+    return failures
+
+
 def apply_actions(
     vault: Path,
     actions: list[MigrationAction],
@@ -228,40 +337,76 @@ def apply_actions(
 ) -> None:
     """Validate every move, then relocate notes and rewrite active note links."""
     validated = _validate_actions(vault, actions)
-    for _, source, target in validated:
-        if source == target:
-            continue
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(source), str(target))
-    for action, _, target in validated:
-        if action.action != "archive":
-            _normalize_note(target, action.metadata, action.source)
     root = vault.resolve()
-    archives = [(root / CANONICAL_ARCHIVE_ROOT).resolve()]
-    if archive_root:
-        archives.append((root / archive_root).resolve())
-    for configured_archive in archive_roots or []:
-        resolved_archive = (root / configured_archive).resolve()
-        if resolved_archive not in archives:
-            archives.append(resolved_archive)
-    for path in sorted(root.rglob("*.md"), key=lambda item: item.relative_to(root).as_posix()):
-        rewrite_path = _resolve_rewrite_candidate(root, path)
-        if rewrite_path is None:
-            continue
-        if any(_inside(archive, rewrite_path) for archive in archives):
-            continue
-        note = parse_markdown(rewrite_path.read_text(encoding="utf-8"))
-        rewritten_body = _rewrite_embedded_note_links(rewrite_wikilinks(note.body, title_map), title_map)
-        sources = note.metadata.get("sources")
-        rewritten_sources = [rewrite_wikilinks(str(value), title_map) for value in sources] if isinstance(sources, list) else sources
-        if rewritten_body != note.body or rewritten_sources != sources:
-            if not note.metadata:
-                rewrite_path.write_text(rewritten_body, encoding="utf-8")
+    moved: list[tuple[Path, Path]] = []
+    original_bytes: dict[Path, bytes] = {}
+    created_directories: list[tuple[Path, tuple[int, int] | None]] = []
+
+    def remember_bytes(path: Path) -> None:
+        if path not in original_bytes:
+            original_bytes[path] = path.read_bytes()
+
+    try:
+        for _, source, target in validated:
+            if source == target:
                 continue
-            note.body = rewritten_body
-            if isinstance(sources, list):
-                note.metadata["sources"] = rewritten_sources
-            rewrite_path.write_text(render_markdown(note), encoding="utf-8")
+            _create_parent_directories(root, target.parent, created_directories)
+            shutil.move(str(source), str(target))
+            moved.append((source, target))
+        for action, _, target in validated:
+            if action.action != "archive":
+                if action.metadata:
+                    remember_bytes(target)
+                _normalize_note(target, action.metadata, action.source)
+        archives = [(root / CANONICAL_ARCHIVE_ROOT).resolve()]
+        if archive_root:
+            archives.append((root / archive_root).resolve())
+        for configured_archive in archive_roots or []:
+            resolved_archive = (root / configured_archive).resolve()
+            if resolved_archive not in archives:
+                archives.append(resolved_archive)
+        for path in sorted(
+            root.rglob("*.md"),
+            key=lambda item: item.relative_to(root).as_posix(),
+        ):
+            rewrite_path = _resolve_rewrite_candidate(root, path)
+            if rewrite_path is None:
+                continue
+            if any(_inside(archive, rewrite_path) for archive in archives):
+                continue
+            note = parse_markdown(rewrite_path.read_text(encoding="utf-8"))
+            rewritten_body = _rewrite_embedded_note_links(
+                rewrite_wikilinks(note.body, title_map),
+                title_map,
+            )
+            sources = note.metadata.get("sources")
+            rewritten_sources = (
+                [rewrite_wikilinks(str(value), title_map) for value in sources]
+                if isinstance(sources, list)
+                else sources
+            )
+            if rewritten_body != note.body or rewritten_sources != sources:
+                remember_bytes(rewrite_path)
+                if not note.metadata:
+                    rewrite_path.write_text(rewritten_body, encoding="utf-8")
+                    continue
+                note.body = rewritten_body
+                if isinstance(sources, list):
+                    note.metadata["sources"] = rewritten_sources
+                rewrite_path.write_text(render_markdown(note), encoding="utf-8")
+    except Exception as original_error:
+        rollback_failures = _rollback_actions(
+            moved,
+            original_bytes,
+            created_directories,
+        )
+        if rollback_failures:
+            details = "; ".join(rollback_failures)
+            raise RuntimeError(
+                f"migration failed ({type(original_error).__name__}: {original_error}); "
+                f"rollback was incomplete ({details})"
+            ) from original_error
+        raise
 
 
 def _plan_json(actions: list[MigrationAction]) -> str:

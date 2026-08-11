@@ -2,7 +2,10 @@ import errno
 import json
 import os
 from pathlib import Path
+import shutil
+from types import SimpleNamespace
 import subprocess
+import stat
 import sys
 from tempfile import TemporaryDirectory
 import unittest
@@ -36,10 +39,7 @@ def _create_symlink_or_skip(link: Path, target: Path) -> None:
     try:
         link.symlink_to(target)
     except OSError as error:
-        if getattr(error, "winerror", None) == 1314 or error.errno in {
-            errno.EACCES,
-            errno.EPERM,
-        }:
+        if getattr(error, "winerror", None) == 1314:
             raise unittest.SkipTest(
                 f"symbolic-link creation is unavailable on this host: {error}"
             ) from error
@@ -115,6 +115,8 @@ class MigrationTests(unittest.TestCase):
         self.assertTrue(callable(helper), "symlink creation helper is missing")
         errors = (
             OSError(errno.ENOSPC, "disk full"),
+            PermissionError(errno.EACCES, "permission denied"),
+            PermissionError(errno.EPERM, "operation not permitted"),
             NotImplementedError("unexpected unsupported operation"),
         )
         with TemporaryDirectory() as directory:
@@ -127,27 +129,20 @@ class MigrationTests(unittest.TestCase):
 
                     self.assertIs(raised.exception, error)
 
-    def test_symlink_creation_helper_skips_only_recognized_privilege_errors(self):
-        """Known link privilege failures should be the only errors converted to a skip."""
+    def test_symlink_creation_helper_skips_only_windows_privilege_error(self):
+        """Only WinError 1314 should make a real-symlink regression inconclusive."""
         helper = globals().get("_create_symlink_or_skip")
         self.assertTrue(callable(helper), "symlink creation helper is missing")
         windows_privilege_error = OSError(errno.EIO, "symbolic-link privilege unavailable")
         windows_privilege_error.winerror = 1314
-        errors = (
-            windows_privilege_error,
-            PermissionError(errno.EACCES, "permission denied"),
-            PermissionError(errno.EPERM, "operation not permitted"),
-        )
         with TemporaryDirectory() as directory:
             vault = Path(directory)
-            for error in errors:
-                with self.subTest(error=str(error)):
-                    with patch.object(Path, "symlink_to", side_effect=error):
-                        with self.assertRaisesRegex(
-                            unittest.SkipTest,
-                            "symbolic-link creation is unavailable on this host",
-                        ):
-                            helper(vault / "Alias.md", Path("policy.json"))
+            with patch.object(Path, "symlink_to", side_effect=windows_privilege_error):
+                with self.assertRaisesRegex(
+                    unittest.SkipTest,
+                    "symbolic-link creation is unavailable on this host",
+                ):
+                    helper(vault / "Alias.md", Path("policy.json"))
 
     def test_plan_command_is_a_dry_run_without_an_output_path(self):
         """A default plan write would violate dry-run safety and alter a vault unexpectedly."""
@@ -713,6 +708,110 @@ class MigrationTests(unittest.TestCase):
                 self.assertFalse((vault / "First.md").exists())
                 self.assertFalse(target_path.exists())
 
+    def test_apply_rejects_unsafe_windows_components_before_any_move(self):
+        """Reserved, illegal, ADS, control, or trailing-dot/space names must fail in preflight."""
+        unsafe_paths = (
+            "CON.md",
+            "Folder./Note.md",
+            "Folder /Note.md",
+            "Bad?.md",
+            "Bad\x01.md",
+            "Note.md:stream",
+        )
+        for role in ("source", "target"):
+            for unsafe_path in unsafe_paths:
+                with self.subTest(role=role, path=repr(unsafe_path)), TemporaryDirectory() as directory:
+                    vault = Path(directory)
+                    (vault / "A.md").write_text("A", encoding="utf-8")
+                    (vault / "B.md").write_text("B", encoding="utf-8")
+                    second = (
+                        MigrationAction(unsafe_path, "Second.md", "move", {})
+                        if role == "source"
+                        else MigrationAction("B.md", unsafe_path, "move", {})
+                    )
+
+                    with self.assertRaisesRegex(
+                        ValueError,
+                        f"{role} path contains an unsafe Windows path component",
+                    ):
+                        apply_actions(
+                            vault,
+                            [MigrationAction("A.md", "First.md", "move", {}), second],
+                            {},
+                        )
+
+                    self.assertEqual((vault / "A.md").read_text(encoding="utf-8"), "A")
+                    self.assertEqual((vault / "B.md").read_text(encoding="utf-8"), "B")
+                    self.assertFalse((vault / "First.md").exists())
+                    self.assertFalse((vault / "Second.md").exists())
+
+    def test_apply_preserves_valid_korean_windows_components(self):
+        """Windows hardening must not reject ordinary Korean note and directory names."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source = vault / "원본 노트.md"
+            source.write_text("내용", encoding="utf-8")
+
+            apply_actions(
+                vault,
+                [MigrationAction("원본 노트.md", "새 폴더/새 노트.md", "move", {})],
+                {},
+            )
+
+            self.assertFalse(source.exists())
+            self.assertEqual((vault / "새 폴더" / "새 노트.md").read_text(encoding="utf-8"), "내용")
+
+    def test_apply_rejects_junction_and_reparse_components_before_any_move(self):
+        """Windows aliases not reported by is_symlink must still fail action preflight."""
+        reparse_flag = getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)
+        cases = ("junction_source_parent", "reparse_target_parent")
+        for case in cases:
+            with self.subTest(case=case), TemporaryDirectory() as directory:
+                vault = Path(directory)
+                (vault / "A.md").write_text("A", encoding="utf-8")
+                linked_source = vault / "Linked" / "B.md"
+                linked_source.parent.mkdir()
+                linked_source.write_text("B", encoding="utf-8")
+                target_parent = vault / "Reparse"
+                target_parent.mkdir()
+                component = linked_source.parent if case == "junction_source_parent" else target_parent
+                action = (
+                    MigrationAction("Linked/B.md", "Second.md", "move", {})
+                    if case == "junction_source_parent"
+                    else MigrationAction("Linked/B.md", "Reparse/Second.md", "move", {})
+                )
+                real_lstat = Path.lstat
+
+                def lstat(candidate: Path, *args, **kwargs):
+                    if case == "reparse_target_parent" and candidate == component:
+                        return SimpleNamespace(
+                            st_file_attributes=reparse_flag,
+                            st_mode=stat.S_IFDIR,
+                        )
+                    return real_lstat(candidate, *args, **kwargs)
+
+                with patch.object(
+                    Path,
+                    "is_junction",
+                    new=lambda candidate: case == "junction_source_parent" and candidate == component,
+                    create=True,
+                ):
+                    with patch.object(Path, "lstat", new=lstat):
+                        with self.assertRaisesRegex(
+                            ValueError,
+                            "(source|target) path contains a symbolic link, junction, or reparse point",
+                        ):
+                            apply_actions(
+                                vault,
+                                [MigrationAction("A.md", "First.md", "move", {}), action],
+                                {},
+                            )
+
+                self.assertEqual((vault / "A.md").read_text(encoding="utf-8"), "A")
+                self.assertEqual(linked_source.read_text(encoding="utf-8"), "B")
+                self.assertFalse((vault / "First.md").exists())
+                self.assertFalse((target_parent / "Second.md").exists())
+
     def test_apply_rejects_a_non_markdown_resolved_source_before_any_move(self):
         """Checking only the reviewed suffix could move a non-Markdown canonical source."""
         with TemporaryDirectory() as directory:
@@ -863,6 +962,188 @@ class MigrationTests(unittest.TestCase):
                 self.assertEqual((vault / "B.md").read_text(encoding="utf-8"), "B")
                 self.assertFalse((vault / "First.md").exists())
                 self.assertFalse((vault / "Second.md").exists())
+
+    def test_apply_rolls_back_first_move_and_created_directories_when_second_move_fails(self):
+        """A later move error must restore earlier moves without removing pre-existing parents."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            first_bytes = b"A\r\n"
+            second_bytes = b"B\r\n"
+            (vault / "A.md").write_bytes(first_bytes)
+            (vault / "B.md").write_bytes(second_bytes)
+            existing_parent = vault / "Existing"
+            existing_parent.mkdir()
+            real_move = shutil.move
+            move_calls = 0
+
+            def fail_second_move(source: str, target: str):
+                nonlocal move_calls
+                move_calls += 1
+                if move_calls == 2:
+                    raise OSError("second move failed")
+                return real_move(source, target)
+
+            with patch("Tools.second_brain.migration.shutil.move", side_effect=fail_second_move):
+                with self.assertRaisesRegex(OSError, "second move failed"):
+                    apply_actions(
+                        vault,
+                        [
+                            MigrationAction("A.md", "Existing/First/One.md", "move", {}),
+                            MigrationAction("B.md", "Existing/Second/Two.md", "move", {}),
+                        ],
+                        {},
+                    )
+
+            self.assertEqual((vault / "A.md").read_bytes(), first_bytes)
+            self.assertEqual((vault / "B.md").read_bytes(), second_bytes)
+            self.assertTrue(existing_parent.is_dir())
+            self.assertFalse((existing_parent / "First").exists())
+            self.assertFalse((existing_parent / "Second").exists())
+
+    def test_apply_rolls_back_moved_note_after_partial_normalization_write(self):
+        """A normalization write error must restore the source bytes and remove its new parent."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            original = b"---\r\ncreated: 2026-08-11\r\n---\r\nBody\r\n"
+            source = vault / "Old.md"
+            target = vault / "Created" / "New.md"
+            source.write_bytes(original)
+            real_write_text = Path.write_text
+
+            def fail_normalization(candidate: Path, value: str, *args, **kwargs):
+                if candidate == target:
+                    candidate.write_bytes(b"partial normalization")
+                    raise OSError("normalization write failed")
+                return real_write_text(candidate, value, *args, **kwargs)
+
+            with patch.object(Path, "write_text", new=fail_normalization):
+                with self.assertRaisesRegex(OSError, "normalization write failed"):
+                    apply_actions(
+                        vault,
+                        [MigrationAction("Old.md", "Created/New.md", "move", {"aliases": ["Old"]})],
+                        {},
+                    )
+
+            self.assertEqual(source.read_bytes(), original)
+            self.assertFalse(target.exists())
+            self.assertFalse(target.parent.exists())
+
+    def test_apply_rolls_back_prior_rewrite_and_move_after_partial_rewrite_write(self):
+        """A rewrite write error must restore every changed note byte-for-byte and undo the move."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source_bytes = b"old\r\n"
+            first_active_bytes = b"First [[Old]]\r\n"
+            second_active_bytes = b"Second [[Old]]\r\n"
+            source = vault / "Old.md"
+            first_active = vault / "Active A.md"
+            second_active = vault / "Active B.md"
+            target = vault / "Created" / "New.md"
+            source.write_bytes(source_bytes)
+            first_active.write_bytes(first_active_bytes)
+            second_active.write_bytes(second_active_bytes)
+            real_write_text = Path.write_text
+
+            def fail_second_rewrite(candidate: Path, value: str, *args, **kwargs):
+                if candidate == second_active:
+                    candidate.write_bytes(b"partial rewrite")
+                    raise OSError("rewrite write failed")
+                return real_write_text(candidate, value, *args, **kwargs)
+
+            with patch.object(Path, "write_text", new=fail_second_rewrite):
+                with self.assertRaisesRegex(OSError, "rewrite write failed"):
+                    apply_actions(
+                        vault,
+                        [MigrationAction("Old.md", "Created/New.md", "move", {})],
+                        {"Old": "New"},
+                    )
+
+            self.assertEqual(source.read_bytes(), source_bytes)
+            self.assertEqual(first_active.read_bytes(), first_active_bytes)
+            self.assertEqual(second_active.read_bytes(), second_active_bytes)
+            self.assertFalse(target.exists())
+            self.assertFalse(target.parent.exists())
+
+    def test_apply_reports_original_and_rollback_failures_without_destructive_cleanup(self):
+        """A rollback error must remain explicit and leave an unrecovered target intact."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "A.md").write_text("A", encoding="utf-8")
+            (vault / "B.md").write_text("B", encoding="utf-8")
+            first_target = vault / "Created" / "First.md"
+            original_failure = OSError("second move failed")
+            rollback_failure = OSError("rollback move failed")
+            real_move = shutil.move
+
+            def fail_forward_and_rollback(source: str, target: str):
+                source_path = Path(source)
+                if source_path == vault / "B.md":
+                    raise original_failure
+                if source_path == first_target:
+                    raise rollback_failure
+                return real_move(source, target)
+
+            with patch(
+                "Tools.second_brain.migration.shutil.move",
+                side_effect=fail_forward_and_rollback,
+            ):
+                with self.assertRaisesRegex(
+                    RuntimeError,
+                    "migration failed .*second move failed.*rollback was incomplete.*rollback move failed",
+                ) as raised:
+                    apply_actions(
+                        vault,
+                        [
+                            MigrationAction("A.md", "Created/First.md", "move", {}),
+                            MigrationAction("B.md", "Created/Second.md", "move", {}),
+                        ],
+                        {},
+                    )
+
+            self.assertIs(raised.exception.__cause__, original_failure)
+            self.assertFalse((vault / "A.md").exists())
+            self.assertTrue(first_target.is_file())
+            self.assertEqual((vault / "B.md").read_text(encoding="utf-8"), "B")
+
+    def test_apply_rollback_does_not_remove_a_replaced_created_directory(self):
+        """Cleanup must identify a created directory before removing an empty path at its name."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "A.md").write_text("A", encoding="utf-8")
+            (vault / "B.md").write_text("B", encoding="utf-8")
+            created = vault / "Created"
+            first_target = created / "First.md"
+            original_failure = OSError("second move failed after directory replacement")
+            real_move = shutil.move
+
+            def replace_directory_then_fail(source: str, target: str):
+                if Path(source) == vault / "B.md":
+                    first_target.unlink()
+                    created.rmdir()
+                    created.mkdir()
+                    raise original_failure
+                return real_move(source, target)
+
+            with patch(
+                "Tools.second_brain.migration.shutil.move",
+                side_effect=replace_directory_then_fail,
+            ):
+                with self.assertRaisesRegex(
+                    RuntimeError,
+                    "rollback was incomplete",
+                ) as raised:
+                    apply_actions(
+                        vault,
+                        [
+                            MigrationAction("A.md", "Created/First.md", "move", {}),
+                            MigrationAction("B.md", "Created/Second.md", "move", {}),
+                        ],
+                        {},
+                    )
+
+            self.assertIs(raised.exception.__cause__, original_failure)
+            self.assertTrue(created.is_dir())
+            self.assertEqual((vault / "B.md").read_text(encoding="utf-8"), "B")
 
     def test_rename_preserves_the_canonical_archive_while_updating_active_links(self):
         """Default rename traversal must not rewrite legacy Markdown under the canonical archive."""
