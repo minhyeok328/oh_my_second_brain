@@ -24,15 +24,16 @@ TEMPLATE_FILES = (
     "프로젝트 노트 템플릿.md", "회고 노트 템플릿.md",
 )
 REQUIRED_PROJECT_HUBS = {
-    "SKN26 1차 차량 운행비 프로젝트", "SKN26 2차 신용카드 고객 이탈 분석",
+    "SKN26 1차 차량 운영비 프로젝트", "SKN26 2차 신용카드 고객 이탈 분석",
     "SKN26 3차 PICKLE 맛집 추천 챗봇", "SKN26 4차 LG Home AI 가전 상담",
     "SKN26 Final HumouR AI HR 채용 보조",
 }
 REQUIRED_LECTURE_MAPS = {
     "Python 학습 지도", "MySQL 학습 지도", "데이터 수집 학습 지도", "데이터 분석 학습 지도",
     "머신러닝 학습 지도", "딥러닝 기초 학습 지도", "NLP 딥러닝 학습 지도", "LLM과 RAG 학습 지도",
-    "멀티모달 딥러닝 학습 지도", "파이프라인 학습 지도", "서버 학습 지도", "DevOps 학습 지도",
+    "멀티모달 딥러닝 학습 지도", "웹 클라이언트 학습 지도", "웹 서버 학습 지도", "DevOps 학습 지도",
 }
+JSON_REPORT_ROOT = Path("docs/superpowers/migrations")
 ID_RE = re.compile(r"^\d{14}-[a-z0-9]{4}$")
 EMBED_RE = re.compile(r"!\[\[([^\]|#^]+)(?:[#^][^\]|]*)?(?:\|[^\]]+)?\]\]")
 
@@ -108,6 +109,30 @@ def _add_index(index: dict[str, set[str]], key: str, relative: str) -> None:
 
 def _read_snapshot(path: Path) -> object:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _json_output_path(vault: Path, value: str) -> Path:
+    relative = Path(value)
+    if relative.is_absolute() or relative.anchor or relative.drive:
+        raise ValueError("JSON report path must be vault-relative")
+    if relative.suffix.lower() != ".json":
+        raise ValueError("JSON report path must end in .json")
+    if relative.parent != JSON_REPORT_ROOT:
+        raise ValueError(f"JSON report path must be directly under {JSON_REPORT_ROOT.as_posix()}")
+    candidate = vault.resolve()
+    for part in relative.parts:
+        candidate /= part
+        if candidate.is_symlink():
+            raise ValueError("JSON report path must not contain symbolic links")
+    try:
+        candidate.resolve(strict=False).relative_to(vault.resolve())
+    except (OSError, RuntimeError, ValueError) as error:
+        raise ValueError("JSON report path escapes the vault") from error
+    if not candidate.parent.is_dir():
+        raise ValueError("JSON report directory does not exist")
+    if candidate.exists() and not candidate.is_file():
+        raise ValueError("JSON report path is not a regular file")
+    return candidate
 
 
 def _verify_snapshots(vault: Path, obsidian_snapshot: Path | None, source_snapshot: Path | None, issues: list[VerificationIssue]) -> None:
@@ -303,10 +328,24 @@ def main() -> int:
     parser.add_argument("--only")
     parser.add_argument("--obsidian-snapshot", type=Path)
     parser.add_argument("--source-snapshot", type=Path)
-    parser.add_argument("--json", action="store_true")
+    parser.add_argument("--json", nargs="?", const="-", metavar="VAULT_RELATIVE_PATH")
     args = parser.parse_args()
+    json_output = None
+    if args.json not in {None, "-"}:
+        try:
+            json_output = _json_output_path(args.vault, args.json)
+        except ValueError as error:
+            parser.error(str(error))
     issues = verify_vault(args.vault, final=args.final, allow_staged_drafts=args.allow_staged_drafts, only=args.only, obsidian_snapshot=args.obsidian_snapshot, source_snapshot=args.source_snapshot)
-    if args.json: print(json.dumps([asdict(issue) for issue in issues], ensure_ascii=False, sort_keys=True))
+    if args.json:
+        payload = json.dumps([asdict(issue) for issue in issues], ensure_ascii=False, sort_keys=True)
+        if json_output is None:
+            print(payload)
+        else:
+            try:
+                json_output.write_text(payload + "\n", encoding="utf-8")
+            except OSError as error:
+                parser.error(f"cannot write JSON report: {error}")
     else:
         for issue in issues: print(f"{issue.code}: {issue.path}: {issue.message}")
     return 1 if issues else 0

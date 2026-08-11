@@ -7,7 +7,16 @@ from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
 
-from Tools.second_brain.verify import ARCHIVE_GUIDE, ARCHIVE_ROOT, TEMPLATE_FILES, TEMPLATE_ROOT, VerificationIssue, verify_vault
+from Tools.second_brain.verify import (
+    ARCHIVE_GUIDE,
+    ARCHIVE_ROOT,
+    REQUIRED_LECTURE_MAPS,
+    REQUIRED_PROJECT_HUBS,
+    TEMPLATE_FILES,
+    TEMPLATE_ROOT,
+    VerificationIssue,
+    verify_vault,
+)
 
 
 def write_note(path: Path, metadata: str, body: str = "[[Target]]") -> None:
@@ -15,9 +24,9 @@ def write_note(path: Path, metadata: str, body: str = "[[Target]]") -> None:
     path.write_text(f"---\n{metadata}\n---\n{body}\n", encoding="utf-8")
 
 
-def create_symlink_or_skip(link: Path, target: Path) -> None:
+def create_symlink_or_skip(link: Path, target: Path, *, target_is_directory: bool = False) -> None:
     try:
-        link.symlink_to(target)
+        link.symlink_to(target, target_is_directory=target_is_directory)
     except OSError as error:
         if getattr(error, "winerror", None) == 1314 or error.errno in {errno.EACCES, errno.EPERM}:
             raise unittest.SkipTest(f"symbolic-link creation is unavailable on this host: {error}") from error
@@ -33,6 +42,28 @@ source_quality: primary
 verified: true
 sources:
   - source"""
+
+APPROVED_PROJECT_HUBS = {
+    "SKN26 1차 차량 운영비 프로젝트",
+    "SKN26 2차 신용카드 고객 이탈 분석",
+    "SKN26 3차 PICKLE 맛집 추천 챗봇",
+    "SKN26 4차 LG Home AI 가전 상담",
+    "SKN26 Final HumouR AI HR 채용 보조",
+}
+APPROVED_LECTURE_MAPS = {
+    "Python 학습 지도",
+    "MySQL 학습 지도",
+    "데이터 수집 학습 지도",
+    "데이터 분석 학습 지도",
+    "머신러닝 학습 지도",
+    "딥러닝 기초 학습 지도",
+    "NLP 딥러닝 학습 지도",
+    "LLM과 RAG 학습 지도",
+    "멀티모달 딥러닝 학습 지도",
+    "웹 클라이언트 학습 지도",
+    "웹 서버 학습 지도",
+    "DevOps 학습 지도",
+}
 
 
 class VerifyTests(unittest.TestCase):
@@ -90,6 +121,58 @@ class VerifyTests(unittest.TestCase):
             source = vault / "source.json"; source.write_text(json.dumps({str(vault): []}), encoding="utf-8")
             codes = {x.code for x in verify_vault(vault, final=True, obsidian_snapshot=obsidian, source_snapshot=source)}
             self.assertTrue({"missing-project-hub", "missing-lecture-map", "protected-settings-changed", "source-tree-changed"}.issubset(codes))
+
+    def test_required_project_and_lecture_map_names_match_the_approved_contract(self):
+        self.assertEqual(APPROVED_PROJECT_HUBS, REQUIRED_PROJECT_HUBS)
+        self.assertEqual(APPROVED_LECTURE_MAPS, REQUIRED_LECTURE_MAPS)
+
+    def test_final_verifier_accepts_exact_approved_project_and_lecture_map_names(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            approved_names = sorted(APPROVED_PROJECT_HUBS | APPROVED_LECTURE_MAPS)
+            for index, name in enumerate(approved_names):
+                metadata = VALID.replace("20260811000000-abcd", f"202608110000{index:02d}-a{index:03x}")
+                write_note(vault / f"{name}.md", metadata, "approved contract note")
+
+            completeness_issues = {
+                issue.code
+                for issue in verify_vault(vault, final=True)
+                if issue.code in {"missing-project-hub", "missing-lecture-map"}
+            }
+
+            self.assertEqual(set(), completeness_issues)
+
+    def test_stale_project_and_lecture_map_substitutes_do_not_satisfy_contract(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            names = (
+                APPROVED_PROJECT_HUBS
+                - {"SKN26 1차 차량 운영비 프로젝트"}
+                | {"SKN26 1차 차량 운행비 프로젝트"}
+            )
+            names |= (
+                APPROVED_LECTURE_MAPS
+                - {"웹 클라이언트 학습 지도", "웹 서버 학습 지도"}
+                | {"파이프라인 학습 지도", "서버 학습 지도"}
+            )
+            for index, name in enumerate(sorted(names)):
+                metadata = VALID.replace("20260811000000-abcd", f"202608110000{index:02d}-b{index:03x}")
+                write_note(vault / f"{name}.md", metadata, "stale contract note")
+
+            missing = {
+                (issue.code, issue.path)
+                for issue in verify_vault(vault, final=True)
+                if issue.code in {"missing-project-hub", "missing-lecture-map"}
+            }
+
+            self.assertEqual(
+                {
+                    ("missing-project-hub", "SKN26 1차 차량 운영비 프로젝트"),
+                    ("missing-lecture-map", "웹 클라이언트 학습 지도"),
+                    ("missing-lecture-map", "웹 서버 학습 지도"),
+                },
+                missing,
+            )
 
     def test_json_output_is_machine_readable(self):
         with TemporaryDirectory() as temporary_directory:
@@ -465,6 +548,177 @@ class VerifyTests(unittest.TestCase):
             self.assertEqual((0, []), (full.returncode, json.loads(full.stdout)))
             self.assertEqual(1, scoped.returncode)
             self.assertEqual({"legacy-llm-marker", "unresolved-link"}, {issue["code"] for issue in json.loads(scoped.stdout)})
+
+    def test_cli_json_supports_stdout_and_safe_vault_relative_report_files(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            write_note(
+                vault / "Notes" / "Valid.md",
+                VALID.replace("type: permanent", "type: source"),
+                "valid",
+            )
+            reports = vault / "docs" / "superpowers" / "migrations"
+            reports.mkdir(parents=True)
+
+            stdout_result = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "Tools.second_brain.verify",
+                    "--vault",
+                    str(vault),
+                    "--only",
+                    "Notes",
+                    "--json",
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(0, stdout_result.returncode)
+            self.assertEqual([], json.loads(stdout_result.stdout))
+
+            success_path = "docs/superpowers/migrations/success.json"
+            success_result = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "Tools.second_brain.verify",
+                    "--vault",
+                    str(vault),
+                    "--only",
+                    "Notes",
+                    "--json",
+                    success_path,
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(0, success_result.returncode)
+            self.assertEqual("", success_result.stdout)
+            self.assertEqual("[]\n", (vault / success_path).read_text(encoding="utf-8"))
+
+            (vault / "Notes" / "Broken.md").write_text("missing frontmatter", encoding="utf-8")
+            failure_path = "docs/superpowers/migrations/failure.json"
+            failure_result = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "Tools.second_brain.verify",
+                    "--vault",
+                    str(vault),
+                    "--only",
+                    "Notes",
+                    "--json",
+                    failure_path,
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            failure_text = (vault / failure_path).read_text(encoding="utf-8")
+            self.assertEqual(1, failure_result.returncode)
+            self.assertEqual("", failure_result.stdout)
+            self.assertTrue(failure_text.endswith("\n"))
+            self.assertEqual(
+                [{"code": "missing-frontmatter", "message": "note has no frontmatter", "path": "Notes/Broken.md"}],
+                json.loads(failure_text),
+            )
+
+    def test_cli_json_rejects_unsafe_or_unapproved_report_paths_without_mutation(self):
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            vault = root / "vault"
+            reports = vault / "docs" / "superpowers" / "migrations"
+            reports.mkdir(parents=True)
+            cases = {
+                str(root / "absolute.json"): root / "absolute.json",
+                "../traversal.json": root / "traversal.json",
+                "docs/superpowers/migrations/report.txt": reports / "report.txt",
+                "outside-approved-directory.json": vault / "outside-approved-directory.json",
+            }
+            for argument, target in cases.items():
+                with self.subTest(argument=argument):
+                    target.write_text("sentinel", encoding="utf-8")
+                    result = subprocess.run(
+                        [
+                            sys.executable,
+                            "-m",
+                            "Tools.second_brain.verify",
+                            "--vault",
+                            str(vault),
+                            "--json",
+                            argument,
+                        ],
+                        text=True,
+                        capture_output=True,
+                        check=False,
+                    )
+                    self.assertEqual(2, result.returncode)
+                    self.assertEqual("sentinel", target.read_text(encoding="utf-8"))
+
+    def test_cli_json_rejects_symlinked_report_file_without_mutating_target(self):
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            vault = root / "vault"
+            reports = vault / "docs" / "superpowers" / "migrations"
+            reports.mkdir(parents=True)
+            target = root / "outside.json"
+            target.write_text("sentinel", encoding="utf-8")
+            create_symlink_or_skip(reports / "report.json", target)
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "Tools.second_brain.verify",
+                    "--vault",
+                    str(vault),
+                    "--json",
+                    "docs/superpowers/migrations/report.json",
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+            self.assertEqual(2, result.returncode)
+            self.assertEqual("sentinel", target.read_text(encoding="utf-8"))
+
+    def test_cli_json_rejects_symlinked_report_parent_without_mutating_target(self):
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            vault = root / "vault"
+            (vault / "docs").mkdir(parents=True)
+            outside_parent = root / "outside-superpowers"
+            reports = outside_parent / "migrations"
+            reports.mkdir(parents=True)
+            target = reports / "report.json"
+            target.write_text("sentinel", encoding="utf-8")
+            create_symlink_or_skip(
+                vault / "docs" / "superpowers",
+                outside_parent,
+                target_is_directory=True,
+            )
+
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "Tools.second_brain.verify",
+                    "--vault",
+                    str(vault),
+                    "--json",
+                    "docs/superpowers/migrations/report.json",
+                ],
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+
+            self.assertEqual(2, result.returncode)
+            self.assertEqual("sentinel", target.read_text(encoding="utf-8"))
 
     def test_only_does_not_emit_unselected_note_parse_errors(self):
         with TemporaryDirectory() as temporary_directory:
