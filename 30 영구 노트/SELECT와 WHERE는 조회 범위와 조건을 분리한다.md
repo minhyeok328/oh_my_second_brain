@@ -13,6 +13,7 @@ aliases:
 sources:
   - 'https://dev.mysql.com/doc/refman/8.4/en/select.html'
   - 'https://dev.mysql.com/doc/refman/8.4/en/selecting-rows.html'
+  - 'https://dev.mysql.com/doc/refman/8.4/en/execution-plan-information.html'
   - 'C:\MinHyeok\lecture\02_mysql_workspace'
 source_quality: 'mixed'
 verified: true
@@ -31,10 +32,11 @@ id: '20260530000000-84db'
 
 ## 한계와 반례
 
-`WHERE`를 생략하면 모든 행이 선택되며, `WHERE`는 집계가 끝난 그룹을 거르는 `HAVING`과 같은 단계가 아니다. 필요한 열과 조건을 적었다고 성능이 자동 보장되는 것도 아니므로 인덱스, 실행 계획, 정렬과 조인 비용은 별도로 확인해야 한다.
+`WHERE`를 생략하면 모든 행이 선택되며, `WHERE`는 집계가 끝난 그룹을 거르는 `HAVING`과 같은 단계가 아니다. 필요한 열과 조건을 적었다고 효율적인 조회가 자동 보장되는 것도 아니다. MySQL optimizer가 테이블·열·인덱스·조건을 바탕으로 선택한 실행 계획은 `EXPLAIN`으로 별도 확인해야 한다.
 
 ## 확인한 근거
 
 - 2026-08-11: MySQL 8.4 공식 `SELECT` 문서에서 `select_expr`가 가져올 열을 나타내고 `WHERE` 조건이 참인 행을 선택하며, `WHERE`가 없으면 모든 행을 선택함을 확인했다.
 - 2026-08-11: MySQL 공식 행 선택 예제에서 `WHERE`를 사용한 행 필터와 생략 시 전체 행 조회의 차이를 확인했다.
+- 2026-08-11: MySQL 8.4 공식 실행 계획 문서에서 optimizer가 테이블·열·인덱스와 `WHERE` 조건을 바탕으로 실행 계획을 선택하며 `EXPLAIN`으로 이를 점검하는 범위를 확인했다.
 - 강의 자료 확인(개인 해석): 승인된 `02_mysql_workspace`에서 DQL과 조건 조회 실습을 확인했지만 버전·SQL 모드에 따른 결과 차이는 후속 질문으로 남아 있음을 확인했다.

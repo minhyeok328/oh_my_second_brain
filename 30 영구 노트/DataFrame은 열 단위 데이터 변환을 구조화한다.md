@@ -13,6 +13,7 @@ aliases:
 sources:
   - 'https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html'
   - 'https://pandas.pydata.org/docs/user_guide/indexing.html'
+  - 'https://pandas.pydata.org/docs/user_guide/basics.html#iteration'
   - 'C:\MinHyeok\lecture\04_data_analysis_workspace'
 source_quality: 'mixed'
 verified: true
@@ -31,10 +32,11 @@ pandas DataFrame은 행과 열의 라벨을 가진 2차원 표로 서로 다른 
 
 ## 한계와 반례
 
-DataFrame이라는 구조만으로 열의 업무 의미, 단위, 결측값 정책이나 데이터 품질이 보장되지는 않는다. 라벨 정렬은 편리하지만 의도하지 않은 인덱스가 섞이면 값이 어긋날 수 있고, 매우 큰 데이터나 행별 Python 반복에서는 메모리와 실행 비용이 커질 수 있다.
+내 운영 판단으로는 DataFrame이라는 구조만으로 열의 업무 의미, 단위, 결측값 정책이나 데이터 품질이 보장된다고 보지 않는다. 라벨 정렬은 의도하지 않은 인덱스가 섞이면 값을 어긋나게 할 수 있고, pandas 공식 문서가 안내하듯 행 반복은 일반적으로 느리므로 가능한 경우 벡터화된 해법을 먼저 찾아야 한다.
 
 ## 확인한 근거
 
 - 2026-08-11: pandas 공식 DataFrame API에서 DataFrame이 행·열 라벨을 가진 2차원, 크기 가변, 이질적 표 데이터 구조이며 연산이 라벨에 맞춰 정렬됨을 확인했다.
 - 2026-08-11: pandas 공식 인덱싱 문서에서 라벨·위치·불리언 조건에 따른 명시적 선택 방법을 확인했다.
+- 2026-08-11: pandas 공식 기본 기능의 iteration 절에서 행 반복은 일반적으로 느리며 가능한 경우 벡터화된 해법을 찾으라고 안내하는 범위를 확인했다.
 - 강의 자료 확인(개인 해석): 승인된 `04_data_analysis_workspace`에서 pandas 기반 데이터 가공과 분석 흐름을 확인했고, 처리 판단의 전후 통계 기록은 후속 질문으로 남아 있음을 확인했다.

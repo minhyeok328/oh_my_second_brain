@@ -13,6 +13,7 @@ aliases:
 sources:
   - 'https://docs.docker.com/compose/intro/compose-application-model/'
   - 'https://docs.docker.com/compose/'
+  - 'https://docs.docker.com/compose/how-tos/startup-order/'
   - 'C:\MinHyeok\lecture\12_devops_workspace'
 source_quality: 'mixed'
 verified: true
@@ -31,10 +32,11 @@ Docker Compose는 한 애플리케이션을 이루는 서비스, 네트워크, �
 
 ## 한계와 반례
 
-Compose 파일은 애플리케이션의 실행 구성을 선언하지만 서비스가 실제 요청을 받을 준비가 됐는지, 비밀 값이 안전한지, 운영 환경에서 확장과 롤백이 가능한지까지 자동 보장하지 않는다. 단일 프로세스만 필요한 작업에는 이 계약의 유지 비용이 더 클 수 있다.
+`depends_on`의 기본 시작 순서는 컨테이너가 실행 중인 상태까지만 기다리며, 서비스가 요청을 받을 준비가 됐다는 뜻은 아니다. 준비 상태가 필요한 의존성에는 `healthcheck`와 `condition: service_healthy`를 별도로 정의해야 한다. 내 운영 판단으로는 단일 프로세스만 필요한 작업에는 이 실행 계약을 유지하는 비용이 이점보다 클 수 있다.
 
 ## 확인한 근거
 
 - 2026-08-11: Docker 공식 Compose 애플리케이션 모델에서 서비스·네트워크·볼륨·설정·비밀을 Compose 파일로 정의하고 `docker compose up`으로 실행하는 범위를 확인했다.
 - 2026-08-11: Docker 공식 Compose 개요에서 하나의 YAML 파일이 여러 컨테이너 애플리케이션의 서비스와 수명 주기를 관리하는 기준임을 확인했다.
-- 강의 자료 확인(개인 해석): 승인된 `12_devops_workspace`에는 Dockerfile과 Compose 실습이 있지만 상태 확인·비밀 관리·롤백은 근거 공백으로 남아 있음을 확인했다.
+- 2026-08-11: Docker 공식 시작 순서 문서에서 Compose가 기본적으로 컨테이너의 실행까지만 기다리고, 준비 상태는 `healthcheck`와 `service_healthy` 조건으로 구분함을 확인했다.
+- 강의 자료 확인(개인 해석): 승인된 `12_devops_workspace`에는 Dockerfile과 Compose 실습이 있지만 준비 상태 확인은 공식 문서로 보강해야 하는 범위임을 확인했다.

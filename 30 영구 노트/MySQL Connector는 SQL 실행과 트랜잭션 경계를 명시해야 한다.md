@@ -13,6 +13,7 @@ aliases:
 sources:
   - 'https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-execute.html'
   - 'https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlconnection-commit.html'
+  - 'https://dev.mysql.com/doc/connector-python/en/connector-python-connection-pooling.html'
   - 'C:\MinHyeok\lecture\02_mysql_workspace'
 source_quality: 'mixed'
 verified: true
@@ -31,10 +32,11 @@ MySQL Connector/Python에서 cursor의 SQL 실행과 connection의 commit·rollb
 
 ## 한계와 반례
 
-commit은 이미 잘못 작성된 SQL이나 여러 서비스에 걸친 일관성을 해결하지 않는다. 읽기 전용 조회에는 변경 트랜잭션 확정이 필요하지 않을 수 있고, 연결 풀·재시도·격리 수준이 중요한 서비스에서는 단순한 함수 하나로 connection을 열고 닫는 구조가 부족하다.
+`commit()`은 현재 트랜잭션의 변경을 확정하고, 변경을 폐기할 때는 `rollback()`을 사용하는 경계다. 읽기 전용 조회에는 확정할 변경이 없고, 연결을 반복해서 요청하는 애플리케이션은 매번 새 connection을 만드는 방식과 준비된 connection을 제공하는 pool의 수명 주기를 구분해야 한다. pooled connection의 `close()`는 실제 종료가 아니라 pool 반환이다.
 
 ## 확인한 근거
 
 - 2026-08-11: MySQL Connector/Python 공식 `cursor.execute()` 문서에서 SQL 문과 파라미터를 분리해 실행하는 API를 확인했다.
 - 2026-08-11: MySQL Connector/Python 공식 `commit()` 문서에서 트랜잭션 테이블의 변경을 확정하며, 폐기할 때는 `rollback()`을 사용한다는 경계를 확인했다.
+- 2026-08-11: MySQL Connector/Python 공식 connection pooling 문서에서 pool이 준비된 connection을 요청자에게 제공하고, pooled connection의 `close()`가 connection을 pool로 반환하는 수명 주기를 확인했다.
 - 강의 자료 확인(개인 해석): 승인된 `02_mysql_workspace`에는 SQL과 트랜잭션 예제가 있지만 애플리케이션의 connection·예외 처리 경계는 후속 질문으로 남아 있음을 확인했다.
