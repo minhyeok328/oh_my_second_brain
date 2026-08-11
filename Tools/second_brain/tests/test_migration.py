@@ -993,6 +993,126 @@ class MigrationTests(unittest.TestCase):
             for system_note, original in system_notes.items():
                 self.assertEqual(system_note.read_bytes(), original)
 
+    def test_apply_system_root_exclusion_is_case_insensitive(self):
+        """Case variants of repository roots must not become platform-dependent rewrite targets."""
+        for system_root in ("Docs", "TOOLS"):
+            with self.subTest(system_root=system_root), TemporaryDirectory() as directory:
+                vault = Path(directory)
+                (vault / "Old.md").write_text("old", encoding="utf-8")
+                system_note = vault / system_root / "Repository document.md"
+                system_note.parent.mkdir(parents=True)
+                original = f"{system_root} [[Old]]\r\n".encode("utf-8")
+                system_note.write_bytes(original)
+
+                apply_actions(
+                    vault,
+                    [MigrationAction("Old.md", "New.md", "move", {})],
+                    {"Old": "New"},
+                )
+
+                self.assertEqual(system_note.read_bytes(), original)
+
+    def test_apply_skips_a_simulated_symlink_rewrite_candidate(self):
+        """A lexical symlink candidate must never be opened by the rewrite traversal."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("old", encoding="utf-8")
+            alias = vault / "30 영구 노트" / "Alias.md"
+            alias.parent.mkdir(parents=True)
+            original = b"Alias [[Old]]\r\n"
+            alias.write_bytes(original)
+
+            with patch.object(
+                Path,
+                "is_symlink",
+                new=lambda candidate: candidate == alias,
+            ):
+                apply_actions(
+                    vault,
+                    [MigrationAction("Old.md", "New.md", "move", {})],
+                    {"Old": "New"},
+                )
+
+            self.assertTrue((vault / "New.md").is_file())
+            self.assertEqual(alias.read_bytes(), original)
+
+    def test_apply_skips_rewrite_candidates_with_unsafe_resolved_targets(self):
+        """Resolved paths outside the vault, to non-Markdown files, or to directories must be ignored."""
+        for target_kind in ("system", "outside", "non_markdown", "non_regular"):
+            with self.subTest(target_kind=target_kind), TemporaryDirectory() as directory:
+                base = Path(directory)
+                vault = base / "vault"
+                vault.mkdir()
+                (vault / "Old.md").write_text("old", encoding="utf-8")
+                alias = vault / "30 영구 노트" / "Alias.md"
+                alias.parent.mkdir(parents=True)
+                original = b"Alias [[Old]]\r\n"
+                alias.write_bytes(original)
+
+                if target_kind == "system":
+                    resolved_target = vault / "docs" / "Plan.md"
+                    resolved_target.parent.mkdir()
+                    resolved_target.write_text("system", encoding="utf-8")
+                elif target_kind == "outside":
+                    resolved_target = base / "External.md"
+                    resolved_target.write_text("outside", encoding="utf-8")
+                elif target_kind == "non_markdown":
+                    resolved_target = vault / "Assets" / "Target.txt"
+                    resolved_target.parent.mkdir()
+                    resolved_target.write_text("asset", encoding="utf-8")
+                else:
+                    resolved_target = vault / "Folder"
+                    resolved_target.mkdir()
+
+                real_resolve = Path.resolve
+
+                def resolve_alias(candidate: Path, *args, **kwargs) -> Path:
+                    if candidate == alias:
+                        return resolved_target
+                    return real_resolve(candidate, *args, **kwargs)
+
+                with patch.object(Path, "resolve", new=resolve_alias):
+                    apply_actions(
+                        vault,
+                        [MigrationAction("Old.md", "New.md", "move", {})],
+                        {"Old": "New"},
+                    )
+
+                self.assertTrue((vault / "New.md").is_file())
+                self.assertEqual(alias.read_bytes(), original)
+
+    def test_apply_skips_real_active_symlinks_to_system_or_outside_markdown(self):
+        """Following an active-path symlink must not rewrite a system or external Markdown target."""
+        for target_kind in ("system", "outside"):
+            with self.subTest(target_kind=target_kind), TemporaryDirectory() as directory:
+                base = Path(directory)
+                vault = base / "vault"
+                vault.mkdir()
+                (vault / "Old.md").write_text("old", encoding="utf-8")
+                alias = vault / "30 영구 노트" / "Alias.md"
+                alias.parent.mkdir(parents=True)
+                original = f"{target_kind} [[Old]]\r\n".encode("utf-8")
+
+                if target_kind == "system":
+                    target = vault / "docs" / "Plan.md"
+                    target.parent.mkdir()
+                    link_target = Path("../docs/Plan.md")
+                else:
+                    target = base / "External.md"
+                    link_target = Path("../../External.md")
+                target.write_bytes(original)
+                _create_symlink_or_skip(alias, link_target)
+
+                apply_actions(
+                    vault,
+                    [MigrationAction("Old.md", "New.md", "move", {})],
+                    {"Old": "New"},
+                )
+
+                self.assertTrue((vault / "New.md").is_file())
+                self.assertTrue(alias.is_symlink())
+                self.assertEqual(target.read_bytes(), original)
+
     def test_apply_rejects_duplicate_targets_before_writing(self):
         """Late collision detection could partially move a vault."""
         with TemporaryDirectory() as directory:

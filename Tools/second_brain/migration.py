@@ -19,7 +19,8 @@ CANONICAL_ARCHIVE_ROOT = Path("90 보관함/이전 LLM Wiki")
 SUPPORTED_ACTIONS = frozenset({"archive", "move"})
 ACTION_FIELDS = frozenset({"action", "metadata", "source", "target"})
 REWRITE_EXCLUDED_ROOTS = frozenset(
-    {".superpowers", "docs", "Tools", ".codex_recovery", ".obsidian", ".worktrees"}
+    root.casefold()
+    for root in (".superpowers", "docs", "Tools", ".codex_recovery", ".obsidian", ".worktrees")
 )
 EMBED_WIKILINK_RE = re.compile(r"!\[\[([^\]|#^]+)([#^][^\]|]*)?(\|[^\]]+)?\]\]")
 
@@ -199,6 +200,25 @@ def _rewrite_embedded_note_links(body: str, title_map: dict[str, str]) -> str:
     return EMBED_WIKILINK_RE.sub(replace, body)
 
 
+def _resolve_rewrite_candidate(root: Path, path: Path) -> Path | None:
+    relative = path.relative_to(root)
+    if relative.parts[0].casefold() in REWRITE_EXCLUDED_ROOTS:
+        return None
+    try:
+        if _has_symlink_component(root, relative):
+            return None
+        resolved = path.resolve()
+        if not _inside(root, resolved) or not resolved.is_file():
+            return None
+        if resolved.suffix.casefold() != ".md":
+            return None
+        if resolved.relative_to(root).parts[0].casefold() in REWRITE_EXCLUDED_ROOTS:
+            return None
+    except OSError:
+        return None
+    return resolved
+
+
 def apply_actions(
     vault: Path,
     actions: list[MigrationAction],
@@ -225,22 +245,23 @@ def apply_actions(
         if resolved_archive not in archives:
             archives.append(resolved_archive)
     for path in sorted(root.rglob("*.md"), key=lambda item: item.relative_to(root).as_posix()):
-        if path.relative_to(root).parts[0] in REWRITE_EXCLUDED_ROOTS:
+        rewrite_path = _resolve_rewrite_candidate(root, path)
+        if rewrite_path is None:
             continue
-        if any(_inside(archive, path.resolve()) for archive in archives):
+        if any(_inside(archive, rewrite_path) for archive in archives):
             continue
-        note = parse_markdown(path.read_text(encoding="utf-8"))
+        note = parse_markdown(rewrite_path.read_text(encoding="utf-8"))
         rewritten_body = _rewrite_embedded_note_links(rewrite_wikilinks(note.body, title_map), title_map)
         sources = note.metadata.get("sources")
         rewritten_sources = [rewrite_wikilinks(str(value), title_map) for value in sources] if isinstance(sources, list) else sources
         if rewritten_body != note.body or rewritten_sources != sources:
             if not note.metadata:
-                path.write_text(rewritten_body, encoding="utf-8")
+                rewrite_path.write_text(rewritten_body, encoding="utf-8")
                 continue
             note.body = rewritten_body
             if isinstance(sources, list):
                 note.metadata["sources"] = rewritten_sources
-            path.write_text(render_markdown(note), encoding="utf-8")
+            rewrite_path.write_text(render_markdown(note), encoding="utf-8")
 
 
 def _plan_json(actions: list[MigrationAction]) -> str:
