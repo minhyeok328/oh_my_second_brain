@@ -17,23 +17,25 @@ class NoteDocument:
 
 def _parse_scalar(raw: str) -> Any:
     value = raw.strip()
-    if value == "[]":
-        return []
-    if value.startswith("[") or value.endswith("]"):
-        raise ValueError("non-empty inline lists are unsupported")
-    if value.lower() in {"true", "false"}:
-        return value.lower() == "true"
     if len(value) >= 2 and value[0] == value[-1] == "'":
         return value[1:-1].replace("''", "'")
     if len(value) >= 2 and value[0] == value[-1] == '"':
         return value[1:-1].replace('\\"', '"').replace("\\\\", "\\")
+    if value == "[]":
+        return []
+    if value.startswith("{") or value.endswith("}"):
+        raise ValueError("unsupported YAML collection syntax")
+    if value.startswith("[") or value.endswith("]"):
+        raise ValueError("non-empty inline lists are unsupported")
+    if value.lower() in {"true", "false"}:
+        return value.lower() == "true"
     return value
 
 
 def parse_markdown(text: str) -> NoteDocument:
     normalized = text.replace("\r\n", "\n")
     if not normalized.startswith("---\n"):
-        return NoteDocument({}, normalized.strip() + "\n")
+        return NoteDocument({}, normalized)
     end = normalized.find("\n---\n", 4)
     if end < 0:
         raise ValueError("frontmatter closing boundary is missing")
@@ -57,7 +59,7 @@ def parse_markdown(text: str) -> NoteDocument:
             current_list = key
         else:
             metadata[key] = _parse_scalar(raw)
-    body = normalized[end + 5 :].lstrip("\n").rstrip() + "\n"
+    body = normalized[end + 5 :]
     return NoteDocument(metadata, body)
 
 
@@ -79,8 +81,8 @@ def render_markdown(note: NoteDocument) -> str:
                 lines.extend(f"  - {_render_scalar(item)}" for item in value)
         else:
             lines.append(f"{key}: {_render_scalar(value)}")
-    lines.extend([FRONTMATTER_BOUNDARY, "", note.body.rstrip(), ""])
-    return "\n".join(lines)
+    lines.append(FRONTMATTER_BOUNDARY)
+    return "\n".join(lines) + "\n" + note.body
 
 
 def extract_wikilinks(body: str) -> list[str]:
