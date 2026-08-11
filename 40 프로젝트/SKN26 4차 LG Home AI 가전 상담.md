@@ -16,6 +16,7 @@ sources:
   - 'C:\MinHyeok\skn26_projects\4th_project\products\views.py'
   - 'C:\MinHyeok\skn26_projects\4th_project\static\js\api-response.js'
   - 'C:\MinHyeok\skn26_projects\4th_project\static\js\chatpage.js'
+  - 'C:\MinHyeok\skn26_projects\4th_project\static\js\wishlist-toggle.js'
   - 'C:\MinHyeok\skn26_projects\4th_project\static\js\search\filter.js'
   - 'https://minhyeok328.github.io/'
 source_quality: 'mixed'
@@ -39,13 +40,13 @@ id: '20260530000000-69b5'
 ## 직접 기여
 
 - README 역할 표는 서민혁에게 Frontend를 배정한다. 서민혁 개인 회고는 Figma 화면 구조, Tailwind CSS·Django 템플릿·JavaScript 구현, Git 브랜치와 static/template 구조 정리를 직접 수행했다고 기록한다. (근거: `README.md` Team, 서민혁 개인 회고)
-- 개인 포트폴리오는 GET·SSR 검색 상태와 페이지네이션, 찜·채팅 JSON 통신의 CSRF·오류·로딩·중복 요청 처리, AI 응답 정제와 DOM 표시를 직접 기여로 적는다. 저장소에는 해당 구현이 확인된다. (근거: 포트폴리오 직접 기여, `products\views.py`, `static\js\api-response.js`, `static\js\chatpage.js`, `static\js\search\filter.js`)
+- 개인 포트폴리오는 GET·SSR 검색 상태와 페이지네이션, 찜·채팅 JSON 통신의 CSRF·오류·로딩·중복 요청 처리, AI 응답 정제와 DOM 표시를 직접 기여로 적는다. 저장소에는 해당 구현이 확인된다. (근거: 포트폴리오 직접 기여, `products\views.py`, `static\js\api-response.js`, `static\js\chatpage.js`, `static\js\wishlist-toggle.js`, `static\js\search\filter.js`)
 - LangGraph·Pinecone·상품 DB는 팀 시스템 연동 범위다. README 역할 표가 각각 다른 팀원에게 Backend, RAG, Database, LangGraph를 배정하므로 서민혁의 모델링 단독 기여로 쓰지 않는다. (근거: `README.md` Team)
 
 ## 의사결정과 근거
 
 - 검색 조건과 페이지 상태를 URL 쿼리스트링에 보존하는 GET·SSR 흐름을 사용했다. 새로고침 뒤에도 서버 검색 결과와 화면 조건을 같은 기준으로 복원하려는 선택이다. (근거: 포트폴리오 기술 설계와 판단, `products\views.py`, `static\js\search\filter.js`)
-- 찜·채팅 요청은 공통 JSON 응답 처리, CSRF, 오류 표시와 기능별 실행 중 상태를 사용했다. 정상 응답뿐 아니라 실패와 반복 입력도 화면 상태로 다루려는 선택이며 [[CSRF 방어는 브라우저 세션 요청의 출처를 검증한다]]와 연결된다. (근거: 포트폴리오 기술 설계와 판단, `static\js\api-response.js`, `static\js\chatpage.js`)
+- 찜·채팅 요청은 공통 JSON 응답 처리, CSRF, 오류 표시와 기능별 실행 중 상태를 사용했다. 정상 응답뿐 아니라 실패와 반복 입력도 화면 상태로 다루려는 선택이며 [[CSRF 방어는 브라우저 세션 요청의 출처를 검증한다]]와 연결된다. (근거: 포트폴리오 기술 설계와 판단, `static\js\api-response.js`, `static\js\chatpage.js`, `static\js\wishlist-toggle.js`)
 
 ## 실패·디버깅
 
@@ -68,5 +69,6 @@ id: '20260530000000-69b5'
 - `C:\MinHyeok\skn26_projects\4th_project\README.md` — 팀 역할, 서비스 범위, 기술 구성, 제한과 개인 회고 (2026-08-11 확인)
 - `C:\MinHyeok\skn26_projects\4th_project\products\views.py` — GET 조건·ORM 검색·Paginator 흐름 (2026-08-11 확인)
 - `C:\MinHyeok\skn26_projects\4th_project\static\js\api-response.js` — 공통 JSON·CSRF·오류 처리 (2026-08-11 확인)
+- `C:\MinHyeok\skn26_projects\4th_project\static\js\wishlist-toggle.js` — `wishlistInFlight` 중복 요청 차단, 버튼 disabled·`aria-busy` 상태와 CSRF 포함 `fetchJson` 요청·네트워크/파싱 오류 처리 (2026-08-11 확인)
 - `C:\MinHyeok\skn26_projects\4th_project\static\js\chatpage.js` 및 `static\js\search\filter.js` — 채팅 정제·중복 요청 방지와 필터 상태 처리 (2026-08-11 확인)
 - `https://minhyeok328.github.io/` — LG Home AI 가전 상담 상세 모달의 개인 역할·판단·회고; 별도 심층 URL은 제공되지 않음 (2026-08-11 확인)
