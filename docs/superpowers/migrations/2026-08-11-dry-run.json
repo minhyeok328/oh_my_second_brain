@@ -1,0 +1,2294 @@
+[
+  {
+    "source": "Knowledge/Assets/source_outline.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Assets/source_outline.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] DevOps와 배포.md",
+    "target": "20 소스 노트/강의/DevOps와 배포 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] Django 웹 서버.md",
+    "target": "20 소스 노트/강의/Django 웹 서버 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] Git 기초.md",
+    "target": "20 소스 노트/강의/Git 기초 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] LLM과 RAG.md",
+    "target": "20 소스 노트/강의/LLM과 RAG 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] MySQL과 관계형 데이터베이스.md",
+    "target": "20 소스 노트/강의/MySQL과 관계형 데이터베이스 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] NLP 딥러닝.md",
+    "target": "20 소스 노트/강의/NLP 딥러닝 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] Python 기초와 Streamlit.md",
+    "target": "20 소스 노트/강의/Python 기초와 Streamlit 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] React와 CI CD.md",
+    "target": "20 소스 노트/강의/React와 CI CD 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] 데이터 분석.md",
+    "target": "20 소스 노트/강의/데이터 분석 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] 데이터 수집.md",
+    "target": "20 소스 노트/강의/데이터 수집 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] 딥러닝 기초.md",
+    "target": "20 소스 노트/강의/딥러닝 기초 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] 머신러닝.md",
+    "target": "20 소스 노트/강의/머신러닝 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] 멀티모달 딥러닝.md",
+    "target": "20 소스 노트/강의/멀티모달 딥러닝 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Literature Notes/[Lecture] 웹 클라이언트.md",
+    "target": "20 소스 노트/강의/웹 클라이언트 강의.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "primary",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Maps of Content/CI CD MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/CI CD MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/Data Analysis MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/Data Analysis MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/Database MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/Database MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/Deep Learning MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/Deep Learning MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/Design Pattern MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/Design Pattern MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/DevOps MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/DevOps MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/Knowledge Index.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/Knowledge Index.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/LLM RAG MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/LLM RAG MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/LLM Wiki 검색 스코프.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/LLM Wiki 검색 스코프.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/LLM Wiki 검색 품질 게이트.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/LLM Wiki 검색 품질 게이트.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/LLM Wiki 보강 백로그.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/LLM Wiki 보강 백로그.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/LLM Wiki 운영 원칙.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/LLM Wiki 운영 원칙.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/LLM Wiki 전환 리포트.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/LLM Wiki 전환 리포트.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/Machine Learning MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/Machine Learning MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/Multimodal MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/Multimodal MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/NLP MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/NLP MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/Python MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/Python MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/React MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/React MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/Web MOC.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/Web MOC.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/노트 링크 관계.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/노트 링크 관계.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/생성 노트 목록.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/생성 노트 목록.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/전체 구조 분석.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/전체 구조 분석.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/전체 노트 트리 구조.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/전체 노트 트리 구조.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/중복 제거 보고서.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/중복 제거 보고서.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Maps of Content/태그 체계.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Maps of Content/태그 체계.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/ASGI.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/ASGI.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/AWS EC2.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/AWS EC2.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/AWS Elastic Beanstalk.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/AWS Elastic Beanstalk.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/AWS IAM Role.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/AWS IAM Role.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Abstract Factory Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Abstract Factory Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Adapter Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Adapter Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Attention.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Attention.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/BLIP.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/BLIP.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/BOM.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/BOM.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/BoW와 TF-IDF.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/BoW와 TF-IDF.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Bridge Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Bridge Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Builder Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Builder Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/CI CD.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/CI CD.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/CLIP.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/CLIP.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/CNN.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/CNN.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/CSS Box Model.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/CSS Box Model.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/CSS Flex와 Grid.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/CSS Flex와 Grid.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/CatBoost.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/CatBoost.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Chain of Responsibility Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Chain of Responsibility Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Chat Model.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Chat Model.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Command Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Command Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Component Composition.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Component Composition.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Composite Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Composite Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Custom Hook.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Custom Hook.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/DOM Event.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/DOM Event.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/DOM.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/DOM.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Decorator Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Decorator Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django App.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Django App.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django CSRF.md",
+    "target": "00 인박스/승격 대기/영구 노트/Django CSRF.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django Chatbot.md",
+    "target": "00 인박스/승격 대기/영구 노트/Django Chatbot.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django Form.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Django Form.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django JSON API.md",
+    "target": "00 인박스/승격 대기/영구 노트/Django JSON API.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django Migration.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Django Migration.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django ORM Model.md",
+    "target": "00 인박스/승격 대기/영구 노트/Django ORM Model.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django Project.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Django Project.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django QuerySet.md",
+    "target": "00 인박스/승격 대기/영구 노트/Django QuerySet.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django Session과 Auth.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Django Session과 Auth.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django Settings.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Django Settings.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django Static과 Media.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Django Static과 Media.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django Template.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Django Template.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django URL Routing.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Django URL Routing.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Django View.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Django View.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Docker Compose.md",
+    "target": "00 인박스/승격 대기/영구 노트/Docker Compose.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Docker Container.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Docker Container.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Docker Image.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Docker Image.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Docker Network.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Docker Network.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Docker Volume.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Docker Volume.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Dockerfile.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Dockerfile.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Document Loader.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Document Loader.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/EB CLI.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/EB CLI.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/EDA.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/EDA.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/ES6 Spread와 Destructuring.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/ES6 Spread와 Destructuring.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/ES6 화살표 함수.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/ES6 화살표 함수.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Embedding.md",
+    "target": "00 인박스/승격 대기/영구 노트/Embedding.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Facade Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Facade Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Factory Method Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Factory Method Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/FastAPI.md",
+    "target": "00 인박스/승격 대기/영구 노트/FastAPI.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Feature Engineering.md",
+    "target": "00 인박스/승격 대기/영구 노트/Feature Engineering.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Feature Scaling.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Feature Scaling.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Fine-tuning.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Fine-tuning.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Flyweight Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Flyweight Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Function Calling.md",
+    "target": "00 인박스/승격 대기/영구 노트/Function Calling.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Generation Optimization.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Generation Optimization.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Git.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Git.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/GitHub Actions Secrets.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/GitHub Actions Secrets.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/GitHub Actions Workflow.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/GitHub Actions Workflow.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/GitHub Actions.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/GitHub Actions.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/GitHub.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/GitHub.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Gunicorn과 Uvicorn.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Gunicorn과 Uvicorn.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/HTML.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/HTML.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Image Generation.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Image Generation.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Interpreter Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Interpreter Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Iterator Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Iterator Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/JSON.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/JSON.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/JSX.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/JSX.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/JavaScript 객체 리터럴.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/JavaScript 객체 리터럴.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/JavaScript 배열.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/JavaScript 배열.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/JavaScript 변수와 타입.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/JavaScript 변수와 타입.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/JavaScript 비동기.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/JavaScript 비동기.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/JavaScript 프로토타입.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/JavaScript 프로토타입.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/JavaScript 함수와 스코프.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/JavaScript 함수와 스코프.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/LLM.md",
+    "target": "00 인박스/승격 대기/영구 노트/LLM.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/LSTM.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/LSTM.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/LangChain.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/LangChain.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/LangGraph Conditional Edge.md",
+    "target": "00 인박스/승격 대기/영구 노트/LangGraph Conditional Edge.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/LangGraph Node와 Edge.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/LangGraph Node와 Edge.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/LangGraph State.md",
+    "target": "00 인박스/승격 대기/영구 노트/LangGraph State.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/LangGraph.md",
+    "target": "00 인박스/승격 대기/영구 노트/LangGraph.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Language Modeling.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Language Modeling.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/MLflow.md",
+    "target": "00 인박스/승격 대기/영구 노트/MLflow.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Matplotlib.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Matplotlib.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Mediator Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Mediator Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Memento Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Memento Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Middleware.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Middleware.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Multi-Agent.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Multi-Agent.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Multimodal RAG.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Multimodal RAG.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/MySQL Connector Python.md",
+    "target": "00 인박스/승격 대기/영구 노트/MySQL Connector Python.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/MySQL 사용자와 권한.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/MySQL 사용자와 권한.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/NLP 전처리.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/NLP 전처리.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Nginx.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Nginx.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/NumPy ndarray.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/NumPy ndarray.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/NumPy 브로드캐스팅.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/NumPy 브로드캐스팅.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Observer Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Observer Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/OpenAI API.md",
+    "target": "00 인박스/승격 대기/영구 노트/OpenAI API.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/OpenAPI.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/OpenAPI.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Output Parser.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Output Parser.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/PCA.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/PCA.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Pandas DataFrame.md",
+    "target": "00 인박스/승격 대기/영구 노트/Pandas DataFrame.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Pandas GroupBy.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Pandas GroupBy.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Pandas Merge.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Pandas Merge.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Pandas Series.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Pandas Series.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Pandas 결측치 처리.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Pandas 결측치 처리.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Pandas 인덱싱.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Pandas 인덱싱.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Parser.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Parser.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Procfile.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Procfile.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Prompt Engineering.md",
+    "target": "00 인박스/승격 대기/영구 노트/Prompt Engineering.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Prompt Template.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Prompt Template.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Prototype Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Prototype Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Proxy Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Proxy Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/PyTorch Tensor.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/PyTorch Tensor.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/PyTorch 학습 루프.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/PyTorch 학습 루프.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python Enum.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python Enum.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python map filter reduce.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python map filter reduce.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python match case.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python match case.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 딕셔너리.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 딕셔너리.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 람다 함수.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 람다 함수.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 리스트.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 리스트.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 모듈과 네임스페이스.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 모듈과 네임스페이스.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 문자열.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 문자열.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 반복문.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 반복문.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 변수.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 변수.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 상속.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 상속.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 세트.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 세트.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 연산자.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 연산자.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 예외 처리.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 예외 처리.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 자료형.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 자료형.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 조건문.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 조건문.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 추상 클래스.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 추상 클래스.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 캡슐화.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 캡슐화.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 컴프리헨션.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 컴프리헨션.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 클래스와 객체.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 클래스와 객체.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 타입 힌트.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 타입 힌트.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 튜플.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 튜플.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 파일 입출력.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 파일 입출력.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 함수.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 함수.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Python 형변환.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Python 형변환.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Query Expansion.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Query Expansion.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/RAG 평가.md",
+    "target": "00 인박스/승격 대기/영구 노트/RAG 평가.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/RAG.md",
+    "target": "00 인박스/승격 대기/영구 노트/RAG.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/RNN.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/RNN.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Random Forest.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Random Forest.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/React API Fetch.md",
+    "target": "00 인박스/승격 대기/영구 노트/React API Fetch.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/React Component.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/React Component.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/React Event Handling.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/React Event Handling.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/React Lifecycle.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/React Lifecycle.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/React List Key.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/React List Key.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/React Props.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/React Props.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/React Router.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/React Router.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/React SPA.md",
+    "target": "00 인박스/승격 대기/영구 노트/React SPA.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/React State.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/React State.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/React.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/React.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Requests.md",
+    "target": "00 인박스/승격 대기/영구 노트/Requests.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Reranking.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Reranking.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Retriever.md",
+    "target": "00 인박스/승격 대기/영구 노트/Retriever.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Runnable.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Runnable.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SLLM.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/SLLM.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SQL DDL.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/SQL DDL.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SQL DML.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/SQL DML.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SQL GROUP BY.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/SQL GROUP BY.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SQL JOIN.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/SQL JOIN.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SQL SELECT와 WHERE.md",
+    "target": "00 인박스/승격 대기/영구 노트/SQL SELECT와 WHERE.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SQL 서브쿼리.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/SQL 서브쿼리.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SQL 제약조건.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/SQL 제약조건.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SQL 트랜잭션.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/SQL 트랜잭션.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SQLite.md",
+    "target": "00 인박스/승격 대기/영구 노트/SQLite.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/SVM.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/SVM.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Scikit-learn Estimator.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Scikit-learn Estimator.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Seaborn.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Seaborn.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Seq2Seq.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Seq2Seq.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Singleton Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Singleton Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/State Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/State Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Strategy Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Strategy Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Streamlit Session State.md",
+    "target": "00 인박스/승격 대기/영구 노트/Streamlit Session State.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Streamlit 기본 UI.md",
+    "target": "00 인박스/승격 대기/영구 노트/Streamlit 기본 UI.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Subword Tokenizer.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Subword Tokenizer.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Template Method Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Template Method Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Text Classification.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Text Classification.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Text Splitter.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Text Splitter.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Timer.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Timer.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Train Test Split.md",
+    "target": "00 인박스/승격 대기/영구 노트/Train Test Split.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Transfer Learning.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Transfer Learning.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Transformer.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Transformer.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Vector Store.md",
+    "target": "00 인박스/승격 대기/영구 노트/Vector Store.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Video RAG.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Video RAG.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Vision Transformer.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Vision Transformer.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Visitor Pattern.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Visitor Pattern.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Voicebot.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Voicebot.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/WSGI.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/WSGI.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/Word Embedding.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/Word Embedding.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/XGBoost.md",
+    "target": "00 인박스/승격 대기/영구 노트/XGBoost.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/useCallback.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/useCallback.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/useContext.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/useContext.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/useEffect.md",
+    "target": "00 인박스/승격 대기/영구 노트/useEffect.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/useMemo.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/useMemo.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/useReducer.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/useReducer.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/useRef.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/useRef.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/useState.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/useState.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/결정트리.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/결정트리.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/경사하강법.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/경사하강법.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/과적합.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/과적합.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/관계형 데이터베이스.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/관계형 데이터베이스.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/교차검증.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/교차검증.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/데이터 전처리.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/데이터 전처리.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/동적 웹 스크래핑.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/동적 웹 스크래핑.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/디자인 패턴.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/디자인 패턴.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/로지스틱 회귀.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/로지스틱 회귀.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/미분과 그래디언트.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/미분과 그래디언트.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/분류 평가 지표.md",
+    "target": "00 인박스/승격 대기/영구 노트/분류 평가 지표.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Permanent Notes/선형회귀.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/선형회귀.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/손실함수.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/손실함수.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/신경망 출력층.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/신경망 출력층.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/앙상블 학습.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/앙상블 학습.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/역전파.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/역전파.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/옵티마이저.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/옵티마이저.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/정규화와 드롭아웃.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/정규화와 드롭아웃.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/정적 웹 스크래핑.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/정적 웹 스크래핑.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/추천시스템.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/추천시스템.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/클러스터링.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/클러스터링.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/토큰화.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/토큰화.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/퍼셉트론.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/퍼셉트론.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/하이퍼파라미터 튜닝.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/하이퍼파라미터 튜닝.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/활성화 함수.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/활성화 함수.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Permanent Notes/회귀 평가 지표.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Permanent Notes/회귀 평가 지표.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Projects/SKN26 1차 프로젝트 - 차량 TCO.md",
+    "target": "40 프로젝트/SKN26 1차 차량 운영비 프로젝트.md",
+    "action": "move",
+    "metadata": {
+      "type": "project",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Projects/SKN26 2차 프로젝트 - 카드 이탈 예측.md",
+    "target": "40 프로젝트/SKN26 2차 신용카드 고객 이탈 분석.md",
+    "action": "move",
+    "metadata": {
+      "type": "project",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Projects/SKN26 3차 프로젝트 - PICKLE RAG 챗봇.md",
+    "target": "40 프로젝트/SKN26 3차 PICKLE 맛집 추천 챗봇.md",
+    "action": "move",
+    "metadata": {
+      "type": "project",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Projects/SKN26 4차 프로젝트 - LG Home.md",
+    "target": "40 프로젝트/SKN26 4차 LG Home AI 가전 상담.md",
+    "action": "move",
+    "metadata": {
+      "type": "project",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": true
+    }
+  },
+  {
+    "source": "Knowledge/Projects/프로젝트 경험 MOC.md",
+    "target": "40 프로젝트/프로젝트 경험 지도.md",
+    "action": "move",
+    "metadata": {
+      "type": "structure",
+      "status": "growing",
+      "source_quality": "personal",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Projects/프로젝트 실패와 디버깅 로그.md",
+    "target": "40 프로젝트/공통/프로젝트 실패와 디버깅 로그.md",
+    "action": "move",
+    "metadata": {
+      "type": "project",
+      "status": "growing",
+      "source_quality": "personal",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Projects/프로젝트 의사결정 로그.md",
+    "target": "40 프로젝트/공통/프로젝트 의사결정 로그.md",
+    "action": "move",
+    "metadata": {
+      "type": "project",
+      "status": "growing",
+      "source_quality": "personal",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Projects/프로젝트 적용 로그.md",
+    "target": "40 프로젝트/공통/프로젝트 적용 로그.md",
+    "action": "move",
+    "metadata": {
+      "type": "project",
+      "status": "growing",
+      "source_quality": "personal",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Questions/RAG 검색 실패 사례.md",
+    "target": "00 인박스/RAG 검색 실패 사례.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Questions/RAG 평가 질문 세트.md",
+    "target": "00 인박스/RAG 평가 질문 세트.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Questions/질문 인박스.md",
+    "target": "00 인박스/질문 인박스.md",
+    "action": "move",
+    "metadata": {
+      "type": "inbox",
+      "status": "seed",
+      "source_quality": "personal",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/README.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/README.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Reference Notes/Conda 환경 설정.md",
+    "target": "50 영역/개발 레퍼런스/Conda 환경 설정.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/Django 명령어 모음.md",
+    "target": "50 영역/개발 레퍼런스/Django 명령어 모음.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/Docker CLI.md",
+    "target": "50 영역/개발 레퍼런스/Docker CLI.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/Docker Compose.md",
+    "target": "50 영역/개발 레퍼런스/Docker Compose.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/Git 명령어 모음.md",
+    "target": "50 영역/개발 레퍼런스/Git 명령어 모음.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/GitHub Actions EB 배포 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/GitHub Actions EB 배포 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/JavaScript DOM 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/JavaScript DOM 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/LangChain RAG 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/LangChain RAG 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/LangGraph 그래프 작성 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/LangGraph 그래프 작성 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/MySQL SQL 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/MySQL SQL 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/NLP 전처리 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/NLP 전처리 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/OpenAI API 기본 호출.md",
+    "target": "50 영역/개발 레퍼런스/OpenAI API 기본 호출.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/Pandas 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/Pandas 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/PyTorch 학습 루프 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/PyTorch 학습 루프 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/Python 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/Python 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/React Hooks 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/React Hooks 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/React Router 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/React Router 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/Scikit-learn 워크플로우.md",
+    "target": "50 영역/개발 레퍼런스/Scikit-learn 워크플로우.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/Streamlit 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/Streamlit 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/WSGI ASGI 배포 명령어.md",
+    "target": "50 영역/개발 레퍼런스/WSGI ASGI 배포 명령어.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Reference Notes/시각화 치트시트.md",
+    "target": "50 영역/개발 레퍼런스/시각화 치트시트.md",
+    "action": "move",
+    "metadata": {
+      "type": "source",
+      "status": "growing",
+      "source_quality": "mixed",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Sources/외부 참조 정책.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Sources/외부 참조 정책.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Templates/LLM Wiki Note Template.md",
+    "target": "90 보관함/이전 LLM Wiki/Knowledge/Templates/LLM Wiki Note Template.md",
+    "action": "archive",
+    "metadata": {}
+  },
+  {
+    "source": "Knowledge/Thinking/개인 Dev Rules.md",
+    "target": "50 영역/개발 원칙/개인 Dev Rules.md",
+    "action": "move",
+    "metadata": {
+      "type": "area",
+      "status": "growing",
+      "source_quality": "personal",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Thinking/생각과 회고 MOC.md",
+    "target": "60 구조 노트/생각과 회고 지도.md",
+    "action": "move",
+    "metadata": {
+      "type": "structure",
+      "status": "growing",
+      "source_quality": "personal",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Thinking/프로젝트 기반 개발자 정체성.md",
+    "target": "50 영역/커리어/프로젝트 기반 개발자 정체성.md",
+    "action": "move",
+    "metadata": {
+      "type": "reflection",
+      "status": "growing",
+      "source_quality": "personal",
+      "verified": false
+    }
+  },
+  {
+    "source": "Knowledge/Thinking/프로젝트 회고 질문 세트.md",
+    "target": "50 영역/회고/프로젝트 회고 질문 세트.md",
+    "action": "move",
+    "metadata": {
+      "type": "area",
+      "status": "growing",
+      "source_quality": "personal",
+      "verified": false
+    }
+  }
+]
