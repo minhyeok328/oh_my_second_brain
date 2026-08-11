@@ -1,26 +1,63 @@
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 from Tools.second_brain.inventory import NoteRecord
 from Tools.second_brain.migration import MigrationAction, apply_actions, build_actions, make_id
 from Tools.second_brain.policy import MigrationPolicy
 
 
+def _run_migration(vault: Path, *arguments: str, **options):
+    environment = os.environ.copy()
+    repository_root = str(Path(__file__).resolve().parents[3])
+    existing_pythonpath = environment.get("PYTHONPATH")
+    environment["PYTHONPATH"] = (
+        os.pathsep.join((repository_root, existing_pythonpath))
+        if existing_pythonpath
+        else repository_root
+    )
+    return subprocess.run(
+        [sys.executable, "-m", "Tools.second_brain.migration", *arguments],
+        cwd=vault,
+        env=environment,
+        capture_output=True,
+        text=True,
+        **options,
+    )
+
+
 class MigrationTests(unittest.TestCase):
+    def test_migration_cli_helper_isolates_cwd_and_preserves_pythonpath(self):
+        """Repository-CWD execution or a replaced environment could corrupt files or break imports."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            helper = globals().get("_run_migration")
+            self.assertTrue(callable(helper), "migration CLI helper is missing")
+
+            with patch.dict(os.environ, {"PYTHONPATH": "existing-path", "PRESERVED": "yes"}, clear=True):
+                with patch.object(subprocess, "run", return_value=subprocess.CompletedProcess([], 0)) as run:
+                    helper(vault, "plan", "--vault", str(vault))
+
+            command = run.call_args.args[0]
+            options = run.call_args.kwargs
+            repository_root = str(Path(__file__).resolve().parents[3])
+            self.assertEqual(command, [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault)])
+            self.assertEqual(options["cwd"], vault)
+            self.assertEqual(options["env"]["PRESERVED"], "yes")
+            self.assertEqual(options["env"]["PYTHONPATH"], os.pathsep.join((repository_root, "existing-path")))
+
     def test_plan_command_is_a_dry_run_without_an_output_path(self):
         """A default plan write would violate dry-run safety and alter a vault unexpectedly."""
         with TemporaryDirectory() as directory:
             vault = Path(directory)
             (vault / "Old.md").write_text("# old", encoding="utf-8")
 
-            completed = subprocess.run(
-                [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault)],
-                capture_output=True, text=True, check=True,
-            )
+            completed = _run_migration(vault, "plan", "--vault", str(vault), check=True)
 
             self.assertIn('"source": "Old.md"', completed.stdout)
             self.assertTrue((vault / "Old.md").exists())
@@ -35,17 +72,11 @@ class MigrationTests(unittest.TestCase):
             for command in ("plan", "apply"):
                 for output in protected:
                     with self.subTest(command=command, output=output):
-                        completed = subprocess.run(
-                            [sys.executable, "-m", "Tools.second_brain.migration", command, "--vault", str(vault), "--output", output],
-                            capture_output=True, text=True,
-                        )
+                        completed = _run_migration(vault, command, "--vault", str(vault), "--output", output)
                         self.assertNotEqual(completed.returncode, 0)
                         self.assertFalse((vault / output).exists())
             outside = vault.parent / f"{vault.name}-outside-plan.json"
-            completed = subprocess.run(
-                [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault), "--output", str(outside)],
-                capture_output=True, text=True,
-            )
+            completed = _run_migration(vault, "plan", "--vault", str(vault), "--output", str(outside))
             self.assertNotEqual(completed.returncode, 0)
             self.assertFalse(outside.exists())
 
@@ -63,9 +94,8 @@ class MigrationTests(unittest.TestCase):
             archive.write_text("legacy", encoding="utf-8")
             output = vault / "plan.json"
 
-            completed = subprocess.run(
-                [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault), "--policy", str(policy), "--output", "plan.json"],
-                capture_output=True, text=True,
+            completed = _run_migration(
+                vault, "plan", "--vault", str(vault), "--policy", str(policy), "--output", "plan.json"
             )
 
             self.assertNotEqual(completed.returncode, 0)
@@ -77,11 +107,11 @@ class MigrationTests(unittest.TestCase):
             vault = Path(directory)
             (vault / "Old.md").write_text("old", encoding="utf-8")
             output = vault / "docs" / "superpowers" / "migrations" / "dry-run.json"
-            command = [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault), "--output", "docs/superpowers/migrations/dry-run.json"]
+            command = ["plan", "--vault", str(vault), "--output", "docs/superpowers/migrations/dry-run.json"]
 
-            first = subprocess.run(command, capture_output=True, text=True)
+            first = _run_migration(vault, *command)
             first_content = output.read_text(encoding="utf-8") if output.exists() else ""
-            second = subprocess.run(command, capture_output=True, text=True)
+            second = _run_migration(vault, *command)
 
             self.assertEqual(first.returncode, 0)
             self.assertIn('"source": "Old.md"', first_content)
@@ -96,9 +126,8 @@ class MigrationTests(unittest.TestCase):
             (vault / "Old.md").write_text("old", encoding="utf-8")
             audit_root = vault / "docs" / "superpowers" / "migrations"
 
-            completed = subprocess.run(
-                [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault), "--output", "docs/superpowers/migrations"],
-                capture_output=True, text=True,
+            completed = _run_migration(
+                vault, "plan", "--vault", str(vault), "--output", "docs/superpowers/migrations"
             )
 
             self.assertNotEqual(completed.returncode, 0)
@@ -113,13 +142,15 @@ class MigrationTests(unittest.TestCase):
             audit.mkdir(parents=True)
             existing = audit / "existing.json"
             existing.write_text("evidence", encoding="utf-8")
-            base = [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault), "--output"]
+            base = ["plan", "--vault", str(vault), "--output"]
 
-            ordinary = subprocess.run(base + ["Old.md"], capture_output=True, text=True)
-            existing_run = subprocess.run(base + ["docs/superpowers/migrations/existing.json"], capture_output=True, text=True)
+            ordinary = _run_migration(vault, *(base + ["Old.md"]))
+            existing_run = _run_migration(vault, *(base + ["docs/superpowers/migrations/existing.json"]))
             target_policy = vault / "target-policy.json"
             target_policy.write_text(json.dumps({"archive_root": "Archive", "status_routes": {}, "path_routes": {"Old.md": {"target": "docs/superpowers/migrations/target.json"}}, "archive_fallback": True}), encoding="utf-8")
-            target = subprocess.run(base + ["docs/superpowers/migrations/target.json", "--policy", str(target_policy)], capture_output=True, text=True)
+            target = _run_migration(
+                vault, *(base + ["docs/superpowers/migrations/target.json", "--policy", str(target_policy)])
+            )
 
             self.assertNotEqual(ordinary.returncode, 0)
             self.assertEqual((vault / "Old.md").read_text(encoding="utf-8"), "old")
@@ -139,7 +170,20 @@ class MigrationTests(unittest.TestCase):
             legacy = "Legacy [[Old]]\r\n"
             archived.write_bytes(legacy.encode("utf-8"))
 
-            subprocess.run([sys.executable, "-m", "Tools.second_brain.migration", "rename", "--vault", str(vault), "--source", "Old.md", "--target", "New.md", "--alias", "Old", "--apply"], capture_output=True, text=True, check=True)
+            _run_migration(
+                vault,
+                "rename",
+                "--vault",
+                str(vault),
+                "--source",
+                "Old.md",
+                "--target",
+                "New.md",
+                "--alias",
+                "Old",
+                "--apply",
+                check=True,
+            )
 
             self.assertEqual((vault / "Active.md").read_text(encoding="utf-8"), "[[New]]")
             self.assertEqual(archived.read_bytes(), legacy.encode("utf-8"))
@@ -150,12 +194,12 @@ class MigrationTests(unittest.TestCase):
             vault = Path(directory)
             (vault / "Old.md").write_text("# old", encoding="utf-8")
             (vault / "Active.md").write_text("See [[Old#Heading|Alias]]", encoding="utf-8")
-            base = [sys.executable, "-m", "Tools.second_brain.migration", "rename", "--vault", str(vault), "--source", "Old.md", "--target", "New.md", "--alias", "Old"]
+            base = ["rename", "--vault", str(vault), "--source", "Old.md", "--target", "New.md", "--alias", "Old"]
 
-            denied = subprocess.run(base, capture_output=True, text=True)
+            denied = _run_migration(vault, *base)
             self.assertNotEqual(denied.returncode, 0)
             self.assertTrue((vault / "Old.md").exists())
-            subprocess.run(base + ["--apply"], capture_output=True, text=True, check=True)
+            _run_migration(vault, *(base + ["--apply"]), check=True)
 
             self.assertEqual((vault / "Active.md").read_text(encoding="utf-8"), "See [[New#Heading|Alias]]")
 
