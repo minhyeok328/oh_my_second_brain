@@ -14,6 +14,7 @@ from Tools.second_brain.policy import MigrationPolicy
 
 
 PROTECTED_PATHS = {".obsidian/core-plugins.json", ".obsidian/graph.json", ".obsidian/workspace.json"}
+EMBED_WIKILINK_RE = re.compile(r"!\[\[([^\]|#^]+)([#^][^\]|]*)?(\|[^\]]+)?\]\]")
 
 
 @dataclass(frozen=True)
@@ -50,7 +51,7 @@ def _validate_actions(vault: Path, actions: list[MigrationAction]) -> list[tuple
     root = vault.resolve()
     validated = []
     targets: set[Path] = set()
-    sources = set()
+    sources: set[Path] = set()
     for action in actions:
         source, target = (root / action.source).resolve(), (root / action.target).resolve()
         if not _inside(root, source) or not _inside(root, target):
@@ -59,6 +60,8 @@ def _validate_actions(vault: Path, actions: list[MigrationAction]) -> list[tuple
             raise ValueError("protected Obsidian file")
         if target in targets:
             raise ValueError("duplicate target")
+        if source in sources:
+            raise ValueError("duplicate source")
         if not source.is_file():
             raise ValueError(f"source does not exist: {action.source}")
         targets.add(target)
@@ -80,7 +83,22 @@ def _normalize_note(path: Path, metadata: dict[str, object], old_path: str) -> N
     path.write_text(render_markdown(note), encoding="utf-8")
 
 
-def apply_actions(vault: Path, actions: list[MigrationAction], title_map: dict[str, str]) -> None:
+def _rewrite_embedded_note_links(body: str, title_map: dict[str, str]) -> str:
+    def replace(match: re.Match[str]) -> str:
+        title = match.group(1).strip()
+        suffix = match.group(2) or ""
+        alias = match.group(3) or ""
+        return f"![[{title_map.get(title, title)}{suffix}{alias}]]"
+
+    return EMBED_WIKILINK_RE.sub(replace, body)
+
+
+def apply_actions(
+    vault: Path,
+    actions: list[MigrationAction],
+    title_map: dict[str, str],
+    archive_root: str | None = None,
+) -> None:
     """Validate every move, then relocate notes and rewrite active note links."""
     validated = _validate_actions(vault, actions)
     for _, source, target in validated:
@@ -92,9 +110,12 @@ def apply_actions(vault: Path, actions: list[MigrationAction], title_map: dict[s
         if action.action != "archive":
             _normalize_note(target, action.metadata, action.source)
     root = vault.resolve()
+    archive = (root / archive_root).resolve() if archive_root else None
     for path in sorted(root.rglob("*.md"), key=lambda item: item.relative_to(root).as_posix()):
+        if archive is not None and _inside(archive, path.resolve()):
+            continue
         note = parse_markdown(path.read_text(encoding="utf-8"))
-        rewritten_body = rewrite_wikilinks(note.body, title_map)
+        rewritten_body = _rewrite_embedded_note_links(rewrite_wikilinks(note.body, title_map), title_map)
         sources = note.metadata.get("sources")
         rewritten_sources = [rewrite_wikilinks(str(value), title_map) for value in sources] if isinstance(sources, list) else sources
         if rewritten_body != note.body or rewritten_sources != sources:
@@ -111,6 +132,16 @@ def _plan_json(actions: list[MigrationAction]) -> str:
     return json.dumps([asdict(action) for action in actions], ensure_ascii=False, indent=2) + "\n"
 
 
+def _resolve_output(vault: Path, output: Path) -> Path:
+    root = vault.resolve()
+    resolved = output.resolve() if output.is_absolute() else (root / output).resolve()
+    if not _inside(root, resolved):
+        raise ValueError("output is outside vault")
+    if resolved.relative_to(root).as_posix() in PROTECTED_PATHS:
+        raise ValueError("protected Obsidian file")
+    return resolved
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Plan and safely apply a Second Brain migration.")
     commands = parser.add_subparsers(dest="command", required=True)
@@ -124,15 +155,20 @@ def main() -> int:
     rename.add_argument("--vault", type=Path, required=True); rename.add_argument("--source", required=True); rename.add_argument("--target", required=True); rename.add_argument("--alias", required=True); rename.add_argument("--apply", action="store_true")
     args = parser.parse_args()
     if args.command in {"plan", "apply"}:
-        actions = build_actions(scan_notes(args.vault), MigrationPolicy.load(args.policy))
+        policy = MigrationPolicy.load(args.policy)
+        actions = build_actions(scan_notes(args.vault), policy)
+        if args.command == "apply" and not args.apply:
+            parser.error("apply requires --apply")
+        _validate_actions(args.vault, actions)
         rendered_plan = _plan_json(actions)
         if args.output is None:
             print(rendered_plan, end="")
         else:
-            args.output.write_text(rendered_plan, encoding="utf-8")
+            output = _resolve_output(args.vault, args.output)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(rendered_plan, encoding="utf-8")
         if args.command == "apply":
-            if not args.apply: parser.error("apply requires --apply")
-            apply_actions(args.vault, actions, {Path(action.source).stem: Path(action.target).stem for action in actions})
+            apply_actions(args.vault, actions, {Path(action.source).stem: Path(action.target).stem for action in actions}, policy.archive_root)
         return 0
     if not args.apply: parser.error("rename requires --apply")
     action = MigrationAction(args.source, args.target, "move", {"aliases": [args.alias]})
