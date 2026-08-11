@@ -1,0 +1,28 @@
+{
+  "archive_root": "90 蹂닿????댁쟾 LLM Wiki",
+  "staging_root": "00 ?몃컯???밴꺽 ?湲?",
+  "status_routes": {
+    "source-expanded": {"target": "20 ?뚯뒪 ?명듃/媛뺤쓽", "type": "source", "status": "growing", "source_quality": "primary", "verified": true, "strip_prefix": "[Lecture] ", "append_suffix": " 媛뺤쓽"},
+    "reference": {"target": "50 ?곸뿭/媛쒕컻 ?덊띁?곗뒪", "type": "source", "status": "growing", "source_quality": "mixed", "verified": false},
+    "wiki-expanded": {"target": "00 ?몃컯???밴꺽 ?湲??곴뎄 ?명듃", "type": "inbox", "status": "seed", "source_quality": "mixed", "verified": false},
+    "project-expanded": {"target": "40 ?꾨줈?앺듃", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true}
+  },
+  "path_routes": {
+    "Knowledge/Thinking/媛쒖씤 Dev Rules.md": {"target": "50 ?곸뿭/媛쒕컻 ?먯튃/媛쒖씤 Dev Rules.md", "type": "area", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Thinking/?앷컖怨??뚭퀬 MOC.md": {"target": "60 援ъ“ ?명듃/?앷컖怨??뚭퀬 吏??md", "type": "structure", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Thinking/?꾨줈?앺듃 湲곕컲 媛쒕컻???뺤껜??md": {"target": "50 ?곸뿭/而ㅻ━???꾨줈?앺듃 湲곕컲 媛쒕컻???뺤껜??md", "type": "reflection", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Thinking/?꾨줈?앺듃 ?뚭퀬 吏덈Ц ?명듃.md": {"target": "50 ?곸뿭/?뚭퀬/?꾨줈?앺듃 ?뚭퀬 吏덈Ц ?명듃.md", "type": "area", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Projects/?꾨줈?앺듃 寃쏀뿕 MOC.md": {"target": "40 ?꾨줈?앺듃/?꾨줈?앺듃 寃쏀뿕 吏??md", "type": "structure", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Projects/?꾨줈?앺듃 ?곸슜 濡쒓렇.md": {"target": "40 ?꾨줈?앺듃/怨듯넻/?꾨줈?앺듃 ?곸슜 濡쒓렇.md", "type": "project", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Projects/?꾨줈?앺듃 ?섏궗寃곗젙 濡쒓렇.md": {"target": "40 ?꾨줈?앺듃/怨듯넻/?꾨줈?앺듃 ?섏궗寃곗젙 濡쒓렇.md", "type": "project", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Projects/?꾨줈?앺듃 ?ㅽ뙣? ?붾쾭源?濡쒓렇.md": {"target": "40 ?꾨줈?앺듃/怨듯넻/?꾨줈?앺듃 ?ㅽ뙣? ?붾쾭源?濡쒓렇.md", "type": "project", "status": "growing", "source_quality": "personal", "verified": false},
+    "Knowledge/Questions/吏덈Ц ?몃컯??md": {"target": "00 ?몃컯??吏덈Ц ?몃컯??md", "type": "inbox", "status": "seed", "source_quality": "personal", "verified": false},
+    "Knowledge/Questions/RAG 寃???ㅽ뙣 ?щ?.md": {"target": "00 ?몃컯??RAG 寃???ㅽ뙣 ?щ?.md", "type": "inbox", "status": "seed", "source_quality": "mixed", "verified": false},
+    "Knowledge/Questions/RAG ?됯? 吏덈Ц ?명듃.md": {"target": "00 ?몃컯??RAG ?됯? 吏덈Ц ?명듃.md", "type": "inbox", "status": "seed", "source_quality": "mixed", "verified": false},
+    "Knowledge/Projects/SKN26 1李??꾨줈?앺듃 - 李⑤웾 TCO.md": {"target": "40 ?꾨줈?앺듃/SKN26 1李?李⑤웾 ?댁쁺鍮??꾨줈?앺듃.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true},
+    "Knowledge/Projects/SKN26 2李??꾨줈?앺듃 - 移대뱶 ?댄깉 ?덉륫.md": {"target": "40 ?꾨줈?앺듃/SKN26 2李??좎슜移대뱶 怨좉컼 ?댄깉 遺꾩꽍.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true},
+    "Knowledge/Projects/SKN26 3李??꾨줈?앺듃 - PICKLE RAG 梨쀫큸.md": {"target": "40 ?꾨줈?앺듃/SKN26 3李?PICKLE 留쏆쭛 異붿쿇 梨쀫큸.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true},
+    "Knowledge/Projects/SKN26 4李??꾨줈?앺듃 - LG Home.md": {"target": "40 ?꾨줈?앺듃/SKN26 4李?LG Home AI 媛???곷떞.md", "type": "project", "status": "growing", "source_quality": "mixed", "verified": true}
+  },
+  "archive_fallback": true
+}

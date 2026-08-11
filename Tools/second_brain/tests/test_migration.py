@@ -1,0 +1,108 @@
+from pathlib import Path
+import subprocess
+import sys
+from tempfile import TemporaryDirectory
+import unittest
+
+from Tools.second_brain.inventory import NoteRecord
+from Tools.second_brain.migration import MigrationAction, apply_actions, build_actions, make_id
+from Tools.second_brain.policy import MigrationPolicy
+
+
+class MigrationTests(unittest.TestCase):
+    def test_plan_command_is_a_dry_run_without_an_output_path(self):
+        """A default plan write would violate dry-run safety and alter a vault unexpectedly."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("# old", encoding="utf-8")
+
+            completed = subprocess.run(
+                [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault)],
+                capture_output=True, text=True, check=True,
+            )
+
+            self.assertIn('"source": "Old.md"', completed.stdout)
+            self.assertTrue((vault / "Old.md").exists())
+            self.assertFalse((vault / "migration-plan.json").exists())
+
+    def test_rename_command_requires_apply_then_preserves_link_heading_and_alias(self):
+        """A rename without consent or one that loses link suffixes would corrupt active notes."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("# old", encoding="utf-8")
+            (vault / "Active.md").write_text("See [[Old#Heading|Alias]]", encoding="utf-8")
+            base = [sys.executable, "-m", "Tools.second_brain.migration", "rename", "--vault", str(vault), "--source", "Old.md", "--target", "New.md", "--alias", "Old"]
+
+            denied = subprocess.run(base, capture_output=True, text=True)
+            self.assertNotEqual(denied.returncode, 0)
+            self.assertTrue((vault / "Old.md").exists())
+            subprocess.run(base + ["--apply"], capture_output=True, text=True, check=True)
+
+            self.assertEqual((vault / "Active.md").read_text(encoding="utf-8"), "See [[New#Heading|Alias]]")
+
+    def test_build_actions_archives_by_preserving_the_old_relative_path(self):
+        """Flattening archives would make original paths and attachments impossible to recover."""
+        policy = MigrationPolicy.load(Path(__file__).parents[1] / "migration-policy.json")
+        actions = build_actions([NoteRecord("Knowledge/Old.md", "Old", {}, [])], policy)
+
+        self.assertEqual(actions[0].action, "archive")
+        self.assertEqual(actions[0].target, "90 蹂닿????댁쟾 LLM Wiki/Knowledge/Old.md")
+
+    def test_apply_refuses_target_outside_vault_without_moving_source(self):
+        """Skipping containment validation could overwrite files outside the user's vault."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("old", encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "outside vault"):
+                apply_actions(vault, [MigrationAction("Old.md", "../escape.md", "move", {})], {})
+
+            self.assertTrue((vault / "Old.md").exists())
+
+    def test_apply_never_allows_protected_obsidian_files_through_path_normalization(self):
+        """A traversal-normalized protected target would silently alter user graph settings."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("old", encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "protected Obsidian file"):
+                apply_actions(vault, [MigrationAction("Old.md", "tmp/../.obsidian/graph.json", "move", {})], {})
+
+            self.assertTrue((vault / "Old.md").exists())
+
+    def test_apply_moves_sources_and_rewrites_active_note_links_after_success(self):
+        """Deleting sources or dropping headings and aliases would make a migration irreversible."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("# old", encoding="utf-8")
+            (vault / "Active.md").write_text("See [[Old#Heading|Alias]]", encoding="utf-8")
+
+            apply_actions(vault, [MigrationAction("Old.md", "New.md", "move", {})], {"Old": "New"})
+
+            self.assertFalse((vault / "Old.md").exists())
+            self.assertEqual((vault / "New.md").read_text(encoding="utf-8"), "# old")
+            self.assertEqual((vault / "Active.md").read_text(encoding="utf-8"), "See [[New#Heading|Alias]]")
+
+    def test_apply_rejects_duplicate_targets_before_writing(self):
+        """Late collision detection could partially move a vault."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "A.md").write_text("A", encoding="utf-8")
+            (vault / "B.md").write_text("B", encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "duplicate target"):
+                apply_actions(vault, [
+                    MigrationAction("A.md", "New.md", "move", {}),
+                    MigrationAction("B.md", "New.md", "move", {}),
+                ], {})
+
+            self.assertTrue((vault / "A.md").exists())
+            self.assertTrue((vault / "B.md").exists())
+
+    def test_make_id_uses_created_day_and_old_path_hash(self):
+        """An unstable identifier would break reversible migration evidence."""
+        self.assertEqual(make_id("Knowledge/Old.md", "2026-08-11"), "20260811000000-8ec1")
+
+
+if __name__ == "__main__":
+    unittest.main()
