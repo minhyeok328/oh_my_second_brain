@@ -23,7 +23,7 @@ def snapshot_tree(root: Path) -> list[dict[str, object]]:
     files = []
     for path in root.rglob("*"):
         relative_path = path.relative_to(root)
-        if any(part in EXCLUDED_DIRECTORIES for part in relative_path.parts) or not path.is_file():
+        if any(part in EXCLUDED_DIRECTORIES for part in relative_path.parts[:-1]) or not path.is_file():
             continue
         stat = path.stat()
         files.append(

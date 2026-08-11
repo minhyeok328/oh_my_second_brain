@@ -26,6 +26,7 @@ class SnapshotTests(unittest.TestCase):
             source_root = Path(temporary_directory)
             (source_root / "nested").mkdir()
             (source_root / "nested" / "note.txt").write_text("note", encoding="utf-8")
+            (source_root / "nested" / "build").write_text("regular file", encoding="utf-8")
             (source_root / "node_modules").mkdir()
             (source_root / "node_modules" / "cache.js").write_text("cache", encoding="utf-8")
             (source_root / "build").mkdir()
@@ -33,7 +34,7 @@ class SnapshotTests(unittest.TestCase):
 
             snapshot = snapshot_tree(source_root)
 
-            self.assertEqual([entry["path"] for entry in snapshot], ["nested/note.txt"])
+            self.assertEqual([entry["path"] for entry in snapshot], ["nested/build", "nested/note.txt"])
             self.assertEqual(set(snapshot[0]), {"path", "size", "st_mtime_ns"})
 
     def test_hash_files_returns_sha256_for_each_requested_path(self):
