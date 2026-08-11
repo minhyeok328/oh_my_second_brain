@@ -97,6 +97,40 @@ class VerifyTests(unittest.TestCase):
             write_note(vault / "Broken.md", VALID, "![[Missing]] ![[assets/lost.png]]")
             self.assertIn("unresolved-link", {x.code for x in verify_vault(vault, final=False) if x.path == "Broken.md"})
 
+    def test_permanent_note_embed_to_an_active_note_satisfies_internal_link_rule(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            write_note(vault / "Other Note.md", VALID.replace("abcd", "1111"), "target")
+            write_note(vault / "Embedded.md", VALID.replace("abcd", "2222"), "![[Other Note]]")
+            issues = [x for x in verify_vault(vault, final=False) if x.path == "Embedded.md"]
+            self.assertNotIn("missing-required-field", {x.code for x in issues})
+
+    def test_staged_drafts_keep_taxonomy_integrity_errors(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            write_note(vault / "00 인박스" / "승격 대기" / "draft.md", "type: nope\nstatus: nope\nsource_quality: nope", "draft")
+            codes = {x.code for x in verify_vault(vault, final=True, allow_staged_drafts=True)}
+            self.assertTrue({"invalid-type", "invalid-status", "invalid-source-quality"}.issubset(codes))
+
+    def test_archive_guide_accepts_bare_and_path_qualified_links(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            guide = vault / ARCHIVE_GUIDE; write_note(guide, "", "guide")
+            guide_path = guide.relative_to(vault).with_suffix("").as_posix()
+            write_note(vault / "Active.md", VALID, f"[[{guide.stem}#section|label]] [[{guide_path}#section|label]]")
+            self.assertNotIn("unresolved-link", {x.code for x in verify_vault(vault, final=False) if x.path == "Active.md"})
+
+    def test_attachment_embeds_resolve_unique_basenames_and_reject_duplicates(self):
+        with TemporaryDirectory() as temporary_directory:
+            vault = Path(temporary_directory)
+            (vault / "assets" / "one").mkdir(parents=True)
+            (vault / "assets" / "one" / "image.png").write_bytes(b"png")
+            write_note(vault / "Active.md", VALID, "![[image.png]]")
+            self.assertNotIn("unresolved-link", {x.code for x in verify_vault(vault, final=False) if x.path == "Active.md"})
+            (vault / "assets" / "two").mkdir(); (vault / "assets" / "two" / "image.png").write_bytes(b"png")
+            messages = [x.message for x in verify_vault(vault, final=False) if x.path == "Active.md" and x.code == "unresolved-link"]
+            self.assertEqual(1, len(messages)); self.assertIn("ambiguous", messages[0])
+
     def test_templates_are_required_even_when_directory_is_missing(self):
         with TemporaryDirectory() as temporary_directory:
             issues = verify_vault(Path(temporary_directory), final=False)

@@ -129,6 +129,7 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
     issues: list[VerificationIssue] = []
     notes: list[tuple[Path, str, object]] = []
     links: dict[str, set[str]] = {}
+    attachments: dict[str, set[str]] = {}
     ids: dict[str, list[str]] = {}
     for path in sorted(root.rglob("*.md"), key=lambda item: _relative(root, item)):
         relative = _relative(root, path)
@@ -165,22 +166,21 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
             _issue(issues, "stale-source-path", relative, f"source_path does not exist: {source_path}")
         if any(marker in note.body for marker in LEGACY_MARKERS):
             _issue(issues, "legacy-llm-marker", relative, "legacy LLM marker is allowed only in archive")
+        note_type, status = str(note.metadata.get("type", "")), str(note.metadata.get("status", ""))
+        quality = str(note.metadata.get("source_quality", ""))
+        if note_type and note_type not in VALID_TYPES: _issue(issues, "invalid-type", relative, f"unsupported type: {note_type}")
+        if status and status not in VALID_STATUSES: _issue(issues, "invalid-status", relative, f"unsupported status: {status}")
+        if quality and quality not in VALID_SOURCE_QUALITIES: _issue(issues, "invalid-source-quality", relative, f"unsupported source_quality: {quality}")
         staged_draft = allow_staged_drafts and relative.startswith("00 인박스/승격 대기/")
         if staged_draft:
             continue
         for field in REQUIRED_FIELDS:
             if not str(note.metadata.get(field, "")).strip():
                 _issue(issues, "missing-required-field", relative, f"missing required field: {field}")
-        note_type, status = str(note.metadata.get("type", "")), str(note.metadata.get("status", ""))
-        quality = str(note.metadata.get("source_quality", ""))
-        if note_type and note_type not in VALID_TYPES: _issue(issues, "invalid-type", relative, f"unsupported type: {note_type}")
-        if status and status not in VALID_STATUSES: _issue(issues, "invalid-status", relative, f"unsupported status: {status}")
-        if quality and quality not in VALID_SOURCE_QUALITIES: _issue(issues, "invalid-source-quality", relative, f"unsupported source_quality: {quality}")
         if note_type == "permanent":
             sources = note.metadata.get("sources")
             if not isinstance(sources, list) or not sources:
                 _issue(issues, "missing-required-field", relative, "permanent note needs sources")
-            if not extract_wikilinks(note.body): _issue(issues, "missing-required-field", relative, "permanent note needs an internal link")
             if status not in {"growing", "evergreen"}: _issue(issues, "invalid-status", relative, "permanent note must be growing or evergreen")
             if quality == "discovery": _issue(issues, "discovery-only-permanent", relative, "permanent note cannot use discovery sources only")
             if status == "evergreen" and note.metadata.get("verified") is not True:
@@ -192,6 +192,10 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
     for identifier, paths in sorted(ids.items()):
         if len(paths) > 1:
             for relative in paths: _issue(issues, "duplicate-id", relative, f"duplicate id: {identifier}")
+    for path in sorted(root.rglob("*"), key=lambda item: _relative(root, item)):
+        if path.is_file() and path.suffix.lower() != ".md":
+            relative = _relative(root, path)
+            attachments.setdefault(path.name, set()).add(relative)
     for _, relative, note in notes:
         if not _selected(relative, only):
             continue
@@ -201,7 +205,7 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
                 _issue(issues, "unresolved-link", relative, f"ambiguous internal link: {link}")
             elif not targets:
                 guide = root / ARCHIVE_GUIDE
-                if _link_key(link) == _link_key(guide.stem) and guide.exists():
+                if _link_key(link) in {_link_key(guide.stem), _link_key(_relative(root, guide))} and guide.exists():
                     continue
                 archive_candidate = root / ARCHIVE_ROOT / f"{_link_key(link)}.md"
                 if archive_candidate.exists():
@@ -221,8 +225,20 @@ def verify_vault(vault: Path, *, final: bool, allow_staged_drafts: bool = False,
                 exists = attachment.is_file()
             except ValueError:
                 exists = False
-            if not exists:
+            if exists:
+                continue
+            matching_attachments = attachments.get(Path(key).name, set()) if "/" not in key else set()
+            if len(matching_attachments) == 1:
+                continue
+            if len(matching_attachments) > 1:
+                _issue(issues, "unresolved-link", relative, f"ambiguous attachment embed: {embed}")
+            else:
                 _issue(issues, "unresolved-link", relative, f"unresolved embed: {embed}")
+        staged_draft = allow_staged_drafts and relative.startswith("00 인박스/승격 대기/")
+        if str(note.metadata.get("type", "")) == "permanent" and not staged_draft:
+            note_embeds = [embed for embed in EMBED_RE.findall(note.body) if len(links.get(_link_key(embed), set())) == 1]
+            if not extract_wikilinks(note.body) and not note_embeds:
+                _issue(issues, "missing-required-field", relative, "permanent note needs an internal link")
     if only is None:
         _template_issues(root, issues)
         if final and not allow_staged_drafts:
