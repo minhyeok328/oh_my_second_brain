@@ -89,6 +89,21 @@ class MigrationTests(unittest.TestCase):
             self.assertNotEqual(second.returncode, 0)
             self.assertEqual(output.read_text(encoding="utf-8"), first_content)
 
+    def test_plan_output_rejects_the_audit_directory_root(self):
+        """Writing a file at the audit directory root would block future migration evidence."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            (vault / "Old.md").write_text("old", encoding="utf-8")
+            audit_root = vault / "docs" / "superpowers" / "migrations"
+
+            completed = subprocess.run(
+                [sys.executable, "-m", "Tools.second_brain.migration", "plan", "--vault", str(vault), "--output", "docs/superpowers/migrations"],
+                capture_output=True, text=True,
+            )
+
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertFalse(audit_root.exists())
+
     def test_plan_output_rejects_ordinary_existing_and_action_collision_paths(self):
         """An audit plan must never use a note, an existing artifact, or an action path as output."""
         with TemporaryDirectory() as directory:

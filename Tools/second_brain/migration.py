@@ -145,7 +145,8 @@ def _resolve_output(
     resolved = output.resolve() if output.is_absolute() else (root / output).resolve()
     if not _inside(root, resolved):
         raise ValueError("output is outside vault")
-    if not _inside((root / AUDIT_OUTPUT_ROOT).resolve(), resolved):
+    audit_root = (root / AUDIT_OUTPUT_ROOT).resolve()
+    if resolved == audit_root or not _inside(audit_root, resolved):
         raise ValueError("output must be under docs/superpowers/migrations")
     if resolved.relative_to(root).as_posix() in PROTECTED_PATHS:
         raise ValueError("protected Obsidian file")
