@@ -1,7 +1,7 @@
 # Second Brain 마이그레이션 최종 검증 보고서
 
-- 검증일: 2026-08-11
-- 검증 기준 커밋: `694e88fa40d683392eb410b7e1bcb33ada29f549`
+- 검증일: 2026-08-12
+- 검증 기준 커밋: `ed4a67d`
 - 검증 범위: 활성 Second Brain, 보관함, 템플릿, 보호된 Obsidian 설정, 외부 강의·프로젝트 소스 스냅샷
 - strict verifier 결과: 오류 0건 (`2026-08-11-final-report.json`의 정확한 바이트는 `5B 5D 0A`, 즉 `[]\n`)
 
@@ -9,13 +9,13 @@
 
 | 검증 | 명령 | 종료 코드 | 결과 |
 |---|---|---:|---|
-| 전체 테스트 | `python -m unittest discover -s Tools/second_brain/tests -v` | 0 | 115개 통과, Windows 심볼릭 링크 권한 관련 예상 스킵 6개 |
+| 전체 테스트 | `python -m unittest discover -s Tools/second_brain/tests -v` | 0 | 총 150개 중 142개 통과, Windows 심볼릭 링크 권한 관련 예상 스킵 8개 |
 | strict 최종 검증 | `python -m Tools.second_brain.verify --vault . --final --obsidian-snapshot docs/superpowers/migrations/2026-08-11-obsidian-snapshot.json --source-snapshot docs/superpowers/migrations/2026-08-11-source-snapshot.json --json docs/superpowers/migrations/2026-08-11-final-report.json` | 0 | JSON `[]\n` |
-| 레거시 표식 검색 | `rg -n 'llm_wiki|wiki-standardized|wiki-expanded|source-expanded|project-expanded|LLM Wiki 검수'`를 홈과 활성 루트에 실행 | 1 | 무매치(예상 결과) |
+| 레거시 표식 검색 | `rg -n 'llm_wiki|wiki-standardized|wiki-expanded|source-expanded|project-expanded|LLM Wiki 검색'`을 홈과 활성 루트에 실행 | 1 | 무매치(예상 결과) |
 | 이전 절대 경로 검색 | `rg -n 'C:\\lecture|C:\\MinHyeok\\skn26_(1st|2nd|3rd|4th)'`를 홈과 활성 루트에 실행 | 1 | 무매치(예상 결과) |
 | Obsidian 보호 스냅샷 | `python -m Tools.second_brain.snapshot --verify-hashes docs/superpowers/migrations/2026-08-11-obsidian-snapshot.json` | 0 | 승인된 작업 복사본과 일치 |
 | 외부 소스 스냅샷 | `python -m Tools.second_brain.snapshot --verify-tree docs/superpowers/migrations/2026-08-11-source-snapshot.json` | 0 | 강의·프로젝트 원본 트리와 일치 |
-| diff 형식 | `git diff --check` | 0 | 오류 없음 |
+| diff 형식 | `git diff --check 3345148..HEAD` | 0 | 전체 마이그레이션 범위 오류 없음 |
 
 회귀 검색 범위는 `Second Brain 홈.md`, `00 인박스`, `10 데일리`, `20 소스 노트`, `30 영구 노트`, `40 프로젝트`, `50 영역`, `60 구조 노트`, `99 템플릿`으로 제한했다. 저장소 문서와 테스트 fixture는 검색 대상에서 제외했다.
 
@@ -86,13 +86,13 @@
 
 ## 보호 설정과 외부 원본 기준선
 
-`.obsidian/core-plugins.json`, `.obsidian/graph.json`, `.obsidian/workspace.json`은 마이그레이션 전에 존재하던 승인된 작업 복사본 변경이며 Git HEAD와 의도적으로 다르다. 이 세 파일은 스테이징하거나 복원하지 않았다. 현재 바이트는 작업 복사본 스냅샷과 일치한다.
+`.obsidian/core-plugins.json`, `.obsidian/graph.json`, `.obsidian/workspace.json`은 마이그레이션 전에 존재하던 승인된 작업 복사본 상태이며, 이 세 파일은 스테이징하거나 복원하지 않았다. 현재 바이트는 작업 복사본 스냅샷과 일치한다. Git blob 기준 `core-plugins.json`은 HEAD와 동일하고 `graph.json`, `workspace.json`만 HEAD와 다르다. Git status가 세 파일을 모두 표시하는 것은 `core-plugins.json`의 작업 트리 줄바꿈 상태까지 포함한 결과다.
 
 - `.obsidian/core-plugins.json`: `763cf20a921fd9955735b278006820b90b207b2fc04d9e79ca648279c7c14276`
 - `.obsidian/graph.json`: `d26e4e9b656d9161d71127a4a66afe7bc4bf19c69fe378c307d91eb9e819ec41`
 - `.obsidian/workspace.json`: `aa372cd537776c13cccf17a166fc5ba3b23e1253cf9cfef3c0808243fd742f4e`
 
-외부 `C:\MinHyeok\lecture`와 `C:\MinHyeok\skn26_projects` 트리는 승인된 source snapshot과 일치한다. 외부 원본을 수정하거나 스냅샷 차이를 복원하지 않았다.
+외부 `C:\MinHyeok\lecture`와 `C:\MinHyeok\skn26_projects` 트리는 승인된 source snapshot과 일치한다. 외부 원본을 수정하거나 스냅샷 차이를 복원하지 않았다. 프로젝트 트리는 계획 초안의 예상 996개가 아니라 최초 실제 스냅샷 생성 시 확인된 1005개이며, 문서화된 제외 규칙을 임의로 늘리지 않고 그 실제 기준선을 보존했다.
 
 ## 의도적으로 남긴 검토 부채
 
@@ -102,4 +102,4 @@
 - `RAG 검색 실패 사례.md`, `RAG 평가 질문 세트.md`, `질문 인박스.md`의 질문은 미답변이다. 재현 결과와 근거가 생기기 전에는 영구 사실로 승격하지 않는다.
 - `가져오기 검토 목록.md`는 미처리 항목을 위한 관리용 seed다.
 - `Git 기초 강의.md`와 `React와 CI CD 강의.md`는 승인된 강의 경로에서 직접 근거를 찾지 못한 범위를 명시한다. 별도 공식 자료나 실제 프로젝트 설정을 확보하기 전에는 그 공백을 채운 것으로 보지 않는다.
-
+- 마이그레이션 적용의 파일 변경 경로는 Windows handle 기반으로 안전성을 확보했으며 다른 운영체제에서는 변경 전에 `ENOTSUP`으로 중단한다. 롤백 저널은 메모리 기반이므로 프로세스 강제 종료나 전원 손실 뒤에는 승인 plan과 파일시스템을 수동 대조해야 한다.
