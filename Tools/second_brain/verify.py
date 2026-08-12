@@ -52,21 +52,32 @@ PRIMARY_SOURCE_HOSTS = frozenset(
         "dev.mysql.com",
         "developer.mozilla.org",
         "developers.openai.com",
+        "docs.aws.amazon.com",
+        "docs.conda.io",
         "docs.djangoproject.com",
         "docs.docker.com",
+        "docs.github.com",
         "docs.langchain.com",
+        "docs.python.org",
+        "docs.pytorch.org",
         "docs.streamlit.io",
         "fastapi.tiangolo.com",
+        "git-scm.com",
+        "matplotlib.org",
         "mlflow.org",
         "pandas.pydata.org",
+        "pip.pypa.io",
         "react.dev",
+        "reactrouter.com",
         "requests.readthedocs.io",
         "scikit-learn.org",
+        "seaborn.pydata.org",
         "tanstack.com",
         "www.sqlite.org",
         "xgboost.readthedocs.io",
     }
 )
+PRIMARY_GITHUB_ORGANIZATIONS = frozenset({"actions", "aws-actions"})
 DISCOVERY_COMMUNITY_HOSTS = frozenset({"quora.com", "reddit.com", "stackoverflow.com"})
 DISCOVERY_AI_ANSWER_HOSTS = frozenset(
     {"chatgpt.com", "claude.ai", "copilot.microsoft.com", "gemini.google.com", "perplexity.ai"}
@@ -161,6 +172,18 @@ def _host_matches(host: str, registered_hosts: frozenset[str]) -> bool:
     return any(host == registered or host.endswith("." + registered) for registered in registered_hosts)
 
 
+def _is_primary_hosted_path(host: str, path: str) -> bool:
+    raw_parts = path.split("/")
+    if "%" in path or "\\" in path or any(part in {".", ".."} for part in raw_parts):
+        return False
+    parts = tuple(part for part in raw_parts if part)
+    if host == "github.com":
+        return len(parts) >= 2 and parts[0] in PRIMARY_GITHUB_ORGANIZATIONS
+    if host == "huggingface.co":
+        return len(parts) >= 2 and parts[0] == "docs"
+    return False
+
+
 def _classify_source(
     value: object,
     active_links: dict[str, set[str]],
@@ -196,8 +219,9 @@ def _classify_source(
             return "invalid", f"malformed source URL: {source}"
         if _host_matches(host, DISCOVERY_SOURCE_HOSTS):
             return "discovery", None
-        if parsed.scheme == "https" and port in {None, 443} and host in PRIMARY_SOURCE_HOSTS:
-            return "primary", None
+        if parsed.scheme == "https" and port in {None, 443}:
+            if host in PRIMARY_SOURCE_HOSTS or _is_primary_hosted_path(host, parsed.path):
+                return "primary", None
         return "secondary", None
     if "://" in source:
         return "invalid", f"unsupported source URL scheme: {source}"
@@ -206,15 +230,21 @@ def _classify_source(
     if windows_path.is_absolute():
         if ".." in windows_path.parts:
             return "invalid", f"local source path contains traversal: {source}"
-        if not any(windows_path.is_relative_to(root) for root in PRIMARY_LOCAL_ROOTS):
+        matching_roots = [root for root in PRIMARY_LOCAL_ROOTS if windows_path.is_relative_to(root)]
+        if not matching_roots:
             return "invalid", f"local source is outside approved roots: {source}"
         try:
-            exists = Path(source).exists()
-        except OSError:
-            exists = False
-        if not exists:
-            return "invalid", f"local source does not exist: {source}"
-        return "primary", None
+            resolved_source = Path(source).resolve(strict=True)
+            resolved_roots = [Path(root).resolve(strict=True) for root in matching_roots]
+        except (OSError, RuntimeError):
+            return "invalid", f"local source cannot be resolved safely: {source}"
+        for resolved_root in resolved_roots:
+            try:
+                resolved_source.relative_to(resolved_root)
+            except ValueError:
+                continue
+            return "primary", None
+        return "invalid", f"local source resolves outside approved roots: {source}"
     return "invalid", f"unsupported source entry: {source}"
 
 
@@ -243,7 +273,7 @@ def _permanent_source_issues(
                 source_kinds.append(kind)
 
     quality = str(metadata.get("source_quality", ""))
-    if source_kinds and all(kind == "discovery" for kind in source_kinds) and quality != "discovery":
+    if source_kinds and all(kind == "discovery" for kind in source_kinds) and quality not in {"discovery", "personal"}:
         _issue(issues, "discovery-only-permanent", relative, "permanent note has discovery-only evidence")
     if quality != "personal" and verified is True and "primary" not in source_kinds:
         _issue(
@@ -259,15 +289,16 @@ def _read_snapshot(path: Path) -> object:
 
 
 def _protected_snapshot_hashes(vault: Path, keys: dict[str, str]) -> dict[str, str]:
-    root = vault.resolve()
+    root = vault.resolve(strict=True)
     actual: dict[str, str] = {}
     for key in keys:
         snapshot_path = Path(key)
         if snapshot_path.is_absolute():
-            target = snapshot_path
+            candidate = snapshot_path
         else:
-            target = (root / snapshot_path).resolve(strict=True)
-            target.relative_to(root)
+            candidate = root / snapshot_path
+        target = candidate.resolve(strict=True)
+        target.relative_to(root)
         digest = hash_files([target])[str(target)]
         actual[key] = digest
     return actual

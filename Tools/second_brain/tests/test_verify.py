@@ -4,7 +4,7 @@ import hashlib
 from io import StringIO
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
@@ -19,8 +19,10 @@ from Tools.second_brain.verify import (
     TEMPLATE_FILES,
     TEMPLATE_ROOT,
     VerificationIssue,
+    _classify_source,
     _json_output_path,
     _open_json_temp,
+    _protected_snapshot_hashes,
     _write_json_temp,
     main as verify_main,
     verify_vault,
@@ -163,6 +165,18 @@ class VerifyTests(unittest.TestCase):
                 self.assertIn("discovery-only-permanent", codes)
                 self.assertIn("missing-primary-source", codes)
 
+    def test_unverified_personal_permanent_can_cite_discovery_material(self):
+        personal = (
+            VALID.replace("source_quality: primary", "source_quality: personal")
+            .replace("verified: true", "verified: false")
+            .replace(OFFICIAL_SOURCE, "https://namu.wiki/w/RAG")
+        )
+
+        codes = self.issues_for(personal, "개인 해석 [[Target]]")
+
+        self.assertNotIn("discovery-only-permanent", codes)
+        self.assertNotIn("missing-primary-source", codes)
+
     def test_unknown_url_hosts_do_not_count_as_primary(self):
         codes = self.issues_for(VALID.replace(OFFICIAL_SOURCE, "https://example.com/research"))
 
@@ -172,19 +186,33 @@ class VerifyTests(unittest.TestCase):
     def test_current_approved_official_hosts_count_as_primary(self):
         approved_sources = (
             "https://arxiv.org/abs/2005.11401",
+            "https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/Welcome.html",
+            "https://docs.conda.io/projects/conda/en/stable/commands/env/create.html",
             "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401",
             "https://developers.openai.com/api/docs/quickstart",
             "https://dev.mysql.com/doc/refman/8.4/en/select.html",
             "https://docs.djangoproject.com/en/6.0/topics/db/models/",
             "https://docs.docker.com/compose/",
+            "https://docs.github.com/en/actions",
             "https://docs.langchain.com/oss/python/langgraph/graph-api",
+            "https://docs.python.org/3/tutorial/",
+            "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
             "https://docs.streamlit.io/develop/api-reference/execution-flow",
             "https://fastapi.tiangolo.com/tutorial/body/",
+            "https://git-scm.com/docs",
+            "https://github.com/actions/checkout",
+            "https://github.com/actions/setup-python",
+            "https://github.com/aws-actions/configure-aws-credentials",
+            "https://huggingface.co/docs/transformers/main_classes/tokenizer",
+            "https://matplotlib.org/stable/api/pyplot_summary.html",
             "https://mlflow.org/docs/latest/ml/tracking/",
             "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html",
+            "https://pip.pypa.io/en/stable/cli/pip_install/",
             "https://react.dev/reference/react/useEffect",
+            "https://reactrouter.com/start/declarative/routing",
             "https://requests.readthedocs.io/en/latest/user/quickstart/",
             "https://scikit-learn.org/stable/modules/model_evaluation.html",
+            "https://seaborn.pydata.org/api.html",
             "https://tanstack.com/query/latest/docs/reference/QueryClient",
             "https://www.sqlite.org/onefile.html",
             "https://xgboost.readthedocs.io/en/stable/tutorials/model.html",
@@ -194,12 +222,79 @@ class VerifyTests(unittest.TestCase):
             with self.subTest(source=source):
                 self.assertNotIn("missing-primary-source", self.issues_for(VALID.replace(OFFICIAL_SOURCE, source)))
 
+    def test_official_host_boundaries_and_unapproved_hosted_content_remain_secondary(self):
+        secondary_sources = (
+            "https://docs.python.org.evil.example/3/tutorial/",
+            "https://github.com.evil.example/actions/checkout",
+            "https://huggingface.co.evil.example/docs/transformers/main_classes/tokenizer",
+            "https://github.com/openai/openai-python",
+            "https://github.com/actions/../attacker/repository",
+            "https://github.com/%61ctions/checkout",
+            "https://huggingface.co/minhyeok328/model",
+            "https://huggingface.co/docs/../minhyeok328/model",
+            "https://huggingface.co/%64ocs/transformers/main_classes/tokenizer",
+        )
+
+        for source in secondary_sources:
+            with self.subTest(source=source):
+                codes = self.issues_for(VALID.replace(OFFICIAL_SOURCE, source))
+                self.assertNotIn("invalid-source", codes)
+                self.assertIn("missing-primary-source", codes)
+
     def test_existing_approved_local_roots_count_as_primary(self):
         for source in (r"C:\MinHyeok\lecture", r"C:\MinHyeok\skn26_projects"):
             with self.subTest(source=source):
                 codes = self.issues_for(VALID.replace(OFFICIAL_SOURCE, source))
                 self.assertNotIn("invalid-source", codes)
                 self.assertNotIn("missing-primary-source", codes)
+
+    def test_local_primary_source_rejects_mocked_reparse_escape(self):
+        approved = Path(r"C:\approved")
+        candidate = approved / "linked" / "evidence.md"
+        outside = Path(r"C:\outside\evidence.md")
+
+        def resolved(path: Path, *, strict: bool = False) -> Path:
+            self.assertTrue(strict)
+            if path == candidate:
+                return outside
+            if path == approved:
+                return approved
+            raise AssertionError(f"unexpected resolution: {path}")
+
+        with patch("Tools.second_brain.verify.PRIMARY_LOCAL_ROOTS", (PureWindowsPath(approved),)):
+            with patch.object(Path, "resolve", new=resolved):
+                kind, message = _classify_source(str(candidate), {}, {})
+
+        self.assertEqual("invalid", kind)
+        self.assertIn("outside approved roots", str(message))
+
+    def test_local_primary_source_resolve_error_is_invalid(self):
+        approved = Path(r"C:\approved")
+        candidate = approved / "evidence.md"
+        with patch("Tools.second_brain.verify.PRIMARY_LOCAL_ROOTS", (PureWindowsPath(approved),)):
+            with patch.object(Path, "resolve", side_effect=OSError("reparse inspection failed")):
+                kind, message = _classify_source(str(candidate), {}, {})
+
+        self.assertEqual("invalid", kind)
+        self.assertIn("cannot be resolved safely", str(message))
+
+    def test_local_primary_source_rejects_real_symlink_escape(self):
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            approved = root / "approved"
+            outside = root / "outside"
+            approved.mkdir()
+            outside.mkdir()
+            evidence = outside / "evidence.md"
+            evidence.write_text("outside evidence", encoding="utf-8")
+            create_symlink_or_skip(approved / "linked", outside, target_is_directory=True)
+            candidate = approved / "linked" / evidence.name
+
+            with patch("Tools.second_brain.verify.PRIMARY_LOCAL_ROOTS", (PureWindowsPath(approved),)):
+                kind, message = _classify_source(str(candidate), {}, {})
+
+            self.assertEqual("invalid", kind)
+            self.assertIn("outside approved roots", str(message))
 
     def test_sources_wikilink_must_resolve_uniquely_in_the_active_vault(self):
         secondary = VALID.replace("source_quality: primary", "source_quality: secondary").replace(
@@ -298,6 +393,34 @@ class VerifyTests(unittest.TestCase):
                 os.chdir(previous_cwd)
 
             self.assertNotIn("protected-settings-changed", codes)
+
+    def test_protected_snapshot_rejects_absolute_path_outside_vault_without_hashing(self):
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            vault = root / "vault"
+            vault.mkdir()
+            outside = root / "outside.json"
+            outside.write_text("{}", encoding="utf-8")
+
+            with patch("Tools.second_brain.verify.hash_files") as hash_files_mock:
+                with self.assertRaises(ValueError):
+                    _protected_snapshot_hashes(vault, {str(outside): "not-used"})
+
+            hash_files_mock.assert_not_called()
+
+    def test_protected_snapshot_rejects_relative_path_outside_vault_without_hashing(self):
+        with TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            vault = root / "vault"
+            vault.mkdir()
+            outside = root / "outside.json"
+            outside.write_text("{}", encoding="utf-8")
+
+            with patch("Tools.second_brain.verify.hash_files") as hash_files_mock:
+                with self.assertRaises(ValueError):
+                    _protected_snapshot_hashes(vault, {"../outside.json": "not-used"})
+
+            hash_files_mock.assert_not_called()
 
     def test_required_project_and_lecture_map_names_match_the_approved_contract(self):
         self.assertEqual(APPROVED_PROJECT_HUBS, REQUIRED_PROJECT_HUBS)
