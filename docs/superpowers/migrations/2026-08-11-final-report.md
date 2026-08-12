@@ -9,7 +9,7 @@
 
 | 검증 | 명령 | 종료 코드 | 결과 |
 |---|---|---:|---|
-| 전체 테스트 | `python -m unittest discover -s Tools/second_brain/tests -v` | 0 | 총 150개 중 142개 통과, Windows 심볼릭 링크 권한 관련 예상 스킵 8개 |
+| 전체 테스트 | `python -m unittest discover -s Tools/second_brain/tests -v` | 0 | 총 151개 중 143개 통과, Windows 심볼릭 링크 권한 관련 예상 스킵 8개 |
 | strict 최종 검증 | `python -m Tools.second_brain.verify --vault . --final --obsidian-snapshot docs/superpowers/migrations/2026-08-11-obsidian-snapshot.json --source-snapshot docs/superpowers/migrations/2026-08-11-source-snapshot.json --json docs/superpowers/migrations/2026-08-11-final-report.json` | 0 | JSON `[]\n` |
 | 레거시 표식 검색 | `rg -n 'llm_wiki|wiki-standardized|wiki-expanded|source-expanded|project-expanded|LLM Wiki 검색'`을 홈과 활성 루트에 실행 | 1 | 무매치(예상 결과) |
 | 이전 절대 경로 검색 | `rg -n 'C:\\lecture|C:\\MinHyeok\\skn26_(1st|2nd|3rd|4th)'`를 홈과 활성 루트에 실행 | 1 | 무매치(예상 결과) |
