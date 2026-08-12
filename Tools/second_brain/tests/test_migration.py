@@ -2,7 +2,6 @@ import errno
 import json
 import os
 from pathlib import Path
-import shutil
 from types import SimpleNamespace
 import subprocess
 import stat
@@ -973,7 +972,7 @@ class MigrationTests(unittest.TestCase):
             (vault / "B.md").write_bytes(second_bytes)
             existing_parent = vault / "Existing"
             existing_parent.mkdir()
-            real_move = shutil.move
+            real_rename = os.rename
             move_calls = 0
 
             def fail_second_move(source: str, target: str):
@@ -981,9 +980,9 @@ class MigrationTests(unittest.TestCase):
                 move_calls += 1
                 if move_calls == 2:
                     raise OSError("second move failed")
-                return real_move(source, target)
+                return real_rename(source, target)
 
-            with patch("Tools.second_brain.migration.shutil.move", side_effect=fail_second_move):
+            with patch("Tools.second_brain.migration._atomic_rename_noreplace", side_effect=fail_second_move):
                 with self.assertRaisesRegex(OSError, "second move failed"):
                     apply_actions(
                         vault,
@@ -1008,15 +1007,18 @@ class MigrationTests(unittest.TestCase):
             source = vault / "Old.md"
             target = vault / "Created" / "New.md"
             source.write_bytes(original)
-            real_write_text = Path.write_text
+            real_write = os.write
+            failed = False
 
-            def fail_normalization(candidate: Path, value: str, *args, **kwargs):
-                if candidate == target:
-                    candidate.write_bytes(b"partial normalization")
+            def fail_normalization(descriptor: int, value: bytes):
+                nonlocal failed
+                if not failed:
+                    failed = True
+                    real_write(descriptor, b"partial normalization")
                     raise OSError("normalization write failed")
-                return real_write_text(candidate, value, *args, **kwargs)
+                return real_write(descriptor, value)
 
-            with patch.object(Path, "write_text", new=fail_normalization):
+            with patch("Tools.second_brain.migration.os.write", side_effect=fail_normalization):
                 with self.assertRaisesRegex(OSError, "normalization write failed"):
                     apply_actions(
                         vault,
@@ -1042,15 +1044,18 @@ class MigrationTests(unittest.TestCase):
             source.write_bytes(source_bytes)
             first_active.write_bytes(first_active_bytes)
             second_active.write_bytes(second_active_bytes)
-            real_write_text = Path.write_text
+            real_write = os.write
+            write_calls = 0
 
-            def fail_second_rewrite(candidate: Path, value: str, *args, **kwargs):
-                if candidate == second_active:
-                    candidate.write_bytes(b"partial rewrite")
+            def fail_second_rewrite(descriptor: int, value: bytes):
+                nonlocal write_calls
+                write_calls += 1
+                if write_calls == 2:
+                    real_write(descriptor, b"partial rewrite")
                     raise OSError("rewrite write failed")
-                return real_write_text(candidate, value, *args, **kwargs)
+                return real_write(descriptor, value)
 
-            with patch.object(Path, "write_text", new=fail_second_rewrite):
+            with patch("Tools.second_brain.migration.os.write", side_effect=fail_second_rewrite):
                 with self.assertRaisesRegex(OSError, "rewrite write failed"):
                     apply_actions(
                         vault,
@@ -1073,7 +1078,7 @@ class MigrationTests(unittest.TestCase):
             first_target = vault / "Created" / "First.md"
             original_failure = OSError("second move failed")
             rollback_failure = OSError("rollback move failed")
-            real_move = shutil.move
+            real_rename = os.rename
 
             def fail_forward_and_rollback(source: str, target: str):
                 source_path = Path(source)
@@ -1081,10 +1086,10 @@ class MigrationTests(unittest.TestCase):
                     raise original_failure
                 if source_path == first_target:
                     raise rollback_failure
-                return real_move(source, target)
+                return real_rename(source, target)
 
             with patch(
-                "Tools.second_brain.migration.shutil.move",
+                "Tools.second_brain.migration._atomic_rename_noreplace",
                 side_effect=fail_forward_and_rollback,
             ):
                 with self.assertRaisesRegex(
@@ -1114,7 +1119,7 @@ class MigrationTests(unittest.TestCase):
             created = vault / "Created"
             first_target = created / "First.md"
             original_failure = OSError("second move failed after directory replacement")
-            real_move = shutil.move
+            real_rename = os.rename
 
             def replace_directory_then_fail(source: str, target: str):
                 if Path(source) == vault / "B.md":
@@ -1122,10 +1127,10 @@ class MigrationTests(unittest.TestCase):
                     created.rmdir()
                     created.mkdir()
                     raise original_failure
-                return real_move(source, target)
+                return real_rename(source, target)
 
             with patch(
-                "Tools.second_brain.migration.shutil.move",
+                "Tools.second_brain.migration._atomic_rename_noreplace",
                 side_effect=replace_directory_then_fail,
             ):
                 with self.assertRaisesRegex(
@@ -1144,6 +1149,240 @@ class MigrationTests(unittest.TestCase):
             self.assertIs(raised.exception.__cause__, original_failure)
             self.assertTrue(created.is_dir())
             self.assertEqual((vault / "B.md").read_text(encoding="utf-8"), "B")
+
+    def test_apply_rejects_cross_device_rename_without_copying(self):
+        """EXDEV must stop the transaction instead of falling back to a partial copy move."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source = vault / "A.md"
+            source.write_bytes(b"A\r\n")
+
+            with patch("Tools.second_brain.migration._atomic_rename_noreplace", side_effect=OSError(errno.EXDEV, "cross-device")):
+                with self.assertRaisesRegex(ValueError, "same filesystem volume"):
+                    apply_actions(
+                        vault,
+                        [MigrationAction("A.md", "Created/A.md", "move", {})],
+                        {},
+                    )
+
+            self.assertEqual(source.read_bytes(), b"A\r\n")
+            self.assertFalse((vault / "Created" / "A.md").exists())
+
+    def test_apply_reconciles_rename_that_moved_then_raised(self):
+        """An attempted move must be journaled before the syscall so ambiguous success can roll back."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source = vault / "A.md"
+            target = vault / "Created" / "A.md"
+            source.write_bytes(b"A\r\n")
+            real_rename = os.rename
+            calls = 0
+
+            def move_then_raise(old, new):
+                nonlocal calls
+                calls += 1
+                real_rename(old, new)
+                if calls == 1:
+                    raise OSError("rename result was not reported")
+
+            with patch("Tools.second_brain.migration._atomic_rename_noreplace", side_effect=move_then_raise):
+                with self.assertRaisesRegex(OSError, "rename result was not reported"):
+                    apply_actions(
+                        vault,
+                        [MigrationAction("A.md", "Created/A.md", "move", {})],
+                        {},
+                    )
+
+            self.assertEqual(source.read_bytes(), b"A\r\n")
+            self.assertFalse(target.exists())
+
+    def test_apply_rollback_preserves_concurrent_source_replacement(self):
+        """Rollback must never overwrite an unknown file installed at the original source name."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source = vault / "A.md"
+            second = vault / "B.md"
+            target = vault / "Created" / "A.md"
+            source.write_bytes(b"original A")
+            second.write_bytes(b"B")
+            original_failure = OSError("second rename failed")
+            real_rename = os.rename
+            calls = 0
+
+            def replace_source_then_fail(old, new):
+                nonlocal calls
+                calls += 1
+                if calls == 2:
+                    source.write_bytes(b"concurrent replacement")
+                    raise original_failure
+                return real_rename(old, new)
+
+            with patch("Tools.second_brain.migration._atomic_rename_noreplace", side_effect=replace_source_then_fail):
+                with self.assertRaisesRegex(RuntimeError, "rollback was incomplete") as raised:
+                    apply_actions(
+                        vault,
+                        [
+                            MigrationAction("A.md", "Created/A.md", "move", {}),
+                            MigrationAction("B.md", "Created/B.md", "move", {}),
+                        ],
+                        {},
+                    )
+
+            self.assertIs(raised.exception.__cause__, original_failure)
+            self.assertEqual(source.read_bytes(), b"concurrent replacement")
+            self.assertEqual(target.read_bytes(), b"original A")
+            self.assertEqual(second.read_bytes(), b"B")
+
+    def test_apply_rollback_preserves_concurrent_source_symlink(self):
+        """Rollback must not follow or replace a symlink installed at the source name."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source = vault / "A.md"
+            second = vault / "B.md"
+            outside = vault.parent / f"{vault.name}-outside.md"
+            outside.write_bytes(b"outside sentinel")
+            source.write_bytes(b"original A")
+            second.write_bytes(b"B")
+            original_failure = OSError("second rename failed")
+            real_rename = os.rename
+            calls = 0
+
+            def install_symlink_then_fail(old, new):
+                nonlocal calls
+                calls += 1
+                if calls == 2:
+                    _create_symlink_or_skip(source, outside)
+                    raise original_failure
+                return real_rename(old, new)
+
+            try:
+                with patch("Tools.second_brain.migration._atomic_rename_noreplace", side_effect=install_symlink_then_fail):
+                    with self.assertRaisesRegex(RuntimeError, "rollback was incomplete"):
+                        apply_actions(
+                            vault,
+                            [
+                                MigrationAction("A.md", "Created/A.md", "move", {}),
+                                MigrationAction("B.md", "Created/B.md", "move", {}),
+                            ],
+                            {},
+                        )
+
+                self.assertTrue(source.is_symlink())
+                self.assertEqual(outside.read_bytes(), b"outside sentinel")
+                self.assertEqual((vault / "Created" / "A.md").read_bytes(), b"original A")
+            finally:
+                outside.unlink(missing_ok=True)
+
+    def test_apply_revalidates_target_parent_after_creation_before_rename(self):
+        """A target-parent reparse swap between mkdir and rename must stop before mutation."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source = vault / "A.md"
+            source.write_bytes(b"A")
+            created = vault / "Created"
+            from Tools.second_brain import migration
+
+            real_create = migration._create_parent_directories
+            real_lstat = Path.lstat
+            swapped = False
+            reparse_flag = getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)
+
+            def create_then_swap(root, parent, journal):
+                nonlocal swapped
+                real_create(root, parent, journal)
+                swapped = True
+
+            def lstat(candidate: Path, *args, **kwargs):
+                status = real_lstat(candidate, *args, **kwargs)
+                if swapped and candidate == created:
+                    values = {
+                        name: getattr(status, name)
+                        for name in dir(status)
+                        if name.startswith("st_")
+                    }
+                    values["st_file_attributes"] = (
+                        values.get("st_file_attributes", 0) | reparse_flag
+                    )
+                    return SimpleNamespace(**values)
+                return status
+
+            with patch("Tools.second_brain.migration._create_parent_directories", side_effect=create_then_swap):
+                with patch.object(Path, "lstat", new=lstat):
+                    with self.assertRaisesRegex(RuntimeError, "reparse point"):
+                        apply_actions(
+                            vault,
+                            [MigrationAction("A.md", "Created/A.md", "move", {})],
+                            {},
+                        )
+
+            self.assertEqual(source.read_bytes(), b"A")
+            self.assertFalse((created / "A.md").exists())
+
+    def test_apply_revalidates_source_identity_immediately_before_rename(self):
+        """A source replacement after preflight must remain untouched and must not be moved."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source = vault / "A.md"
+            target = vault / "Created" / "A.md"
+            source.write_bytes(b"reviewed source")
+            from Tools.second_brain import migration
+
+            real_create = migration._create_parent_directories
+
+            def create_then_replace(root, parent, journal):
+                real_create(root, parent, journal)
+                source.unlink()
+                source.write_bytes(b"concurrent replacement")
+
+            with patch("Tools.second_brain.migration._create_parent_directories", side_effect=create_then_replace):
+                with self.assertRaisesRegex(RuntimeError, "file identity changed"):
+                    apply_actions(
+                        vault,
+                        [MigrationAction("A.md", "Created/A.md", "move", {})],
+                        {},
+                    )
+
+            self.assertEqual(source.read_bytes(), b"concurrent replacement")
+            self.assertFalse(target.exists())
+
+    def test_apply_rollback_restores_bytes_mode_and_timestamps(self):
+        """A partial content write must restore the complete file state, not only its bytes."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source = vault / "Old.md"
+            source.write_bytes(b"---\r\ncreated: 2026-08-11\r\n---\r\nBody\r\n")
+            os.chmod(source, 0o600)
+            original_atime_ns = 1_700_000_000_123_456_700
+            original_mtime_ns = 1_700_000_001_234_567_800
+            os.utime(source, ns=(original_atime_ns, original_mtime_ns))
+            original = source.read_bytes()
+            os.utime(source, ns=(original_atime_ns, original_mtime_ns))
+            original_mode = stat.S_IMODE(source.stat().st_mode)
+            real_write = os.write
+            failed = False
+
+            def write_part_then_fail(fd, value):
+                nonlocal failed
+                if not failed:
+                    failed = True
+                    real_write(fd, value[: max(1, len(value) // 2)])
+                    raise OSError("partial content write")
+                return real_write(fd, value)
+
+            with patch("Tools.second_brain.migration.os.write", side_effect=write_part_then_fail):
+                with self.assertRaisesRegex(OSError, "partial content write"):
+                    apply_actions(
+                        vault,
+                        [MigrationAction("Old.md", "Created/New.md", "move", {"aliases": ["Old"]})],
+                        {},
+                    )
+
+            restored = source.stat()
+            self.assertEqual(source.read_bytes(), original)
+            self.assertEqual(stat.S_IMODE(restored.st_mode), original_mode)
+            self.assertEqual(restored.st_atime_ns, original_atime_ns)
+            self.assertEqual(restored.st_mtime_ns, original_mtime_ns)
+            self.assertFalse((vault / "Created" / "New.md").exists())
 
     def test_rename_preserves_the_canonical_archive_while_updating_active_links(self):
         """Default rename traversal must not rewrite legacy Markdown under the canonical archive."""

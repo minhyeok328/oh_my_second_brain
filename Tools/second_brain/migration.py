@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import argparse
+import ctypes
 from dataclasses import asdict, dataclass
+import errno
 import hashlib
 import json
+import os
 from pathlib import Path, PureWindowsPath
 import re
-import shutil
 import stat
+import sys
 
 from Tools.second_brain.inventory import NoteRecord, scan_notes
 from Tools.second_brain.note_io import parse_markdown, render_markdown, rewrite_wikilinks
@@ -33,6 +36,25 @@ class MigrationAction:
     target: str
     action: str
     metadata: dict[str, object]
+
+
+@dataclass(frozen=True)
+class _FileState:
+    identity: tuple[int, int]
+    value: bytes
+    mode: int
+    atime_ns: int
+    mtime_ns: int
+
+
+@dataclass
+class _MoveAttempt:
+    source: Path
+    target: Path
+    identity: tuple[int, int]
+    source_parent_identity: tuple[int, int]
+    target_parent_identity: tuple[int, int]
+    state: str = "attempted"
 
 
 def make_id(old_relative_path: str, created: str) -> str:
@@ -101,6 +123,246 @@ def _has_link_or_reparse_component(root: Path, relative_path: Path) -> bool:
         ):
             return True
     return False
+
+
+def _identity(status: os.stat_result) -> tuple[int, int]:
+    return status.st_dev, status.st_ino
+
+
+def _lstat_without_links(path: Path) -> os.stat_result:
+    status = path.lstat()
+    attributes = getattr(status, "st_file_attributes", 0)
+    if stat.S_ISLNK(status.st_mode) or attributes & getattr(
+        stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0
+    ):
+        raise ValueError(f"migration path is a symbolic link or reparse point: {path}")
+    return status
+
+
+def _validate_contained_path(root: Path, path: Path) -> Path:
+    try:
+        relative = path.relative_to(root)
+    except ValueError as error:
+        raise ValueError(f"migration path is outside vault: {path}") from error
+    if _has_link_or_reparse_component(root, relative):
+        raise ValueError(f"migration path contains a symbolic link or reparse point: {path}")
+    try:
+        resolved = path.resolve(strict=True)
+    except (OSError, RuntimeError) as error:
+        raise ValueError(f"migration path cannot be resolved safely: {path}") from error
+    if not _inside(root, resolved):
+        raise ValueError(f"migration path resolves outside vault: {path}")
+    return resolved
+
+
+def _validate_directory(
+    root: Path,
+    path: Path,
+    expected_identity: tuple[int, int] | None = None,
+) -> os.stat_result:
+    _validate_contained_path(root, path)
+    status = _lstat_without_links(path)
+    if not stat.S_ISDIR(status.st_mode):
+        raise ValueError(f"migration directory changed: {path}")
+    if expected_identity is not None and _identity(status) != expected_identity:
+        raise ValueError(f"migration directory identity changed: {path}")
+    return status
+
+
+def _validate_regular_file(
+    root: Path,
+    path: Path,
+    expected_identity: tuple[int, int] | None = None,
+) -> os.stat_result:
+    _validate_contained_path(root, path)
+    status = _lstat_without_links(path)
+    if not stat.S_ISREG(status.st_mode):
+        raise ValueError(f"migration file changed: {path}")
+    if expected_identity is not None and _identity(status) != expected_identity:
+        raise ValueError(f"migration file identity changed: {path}")
+    return status
+
+
+def _path_identity_without_links(path: Path) -> tuple[int, int] | None:
+    try:
+        return _identity(_lstat_without_links(path))
+    except FileNotFoundError:
+        return None
+
+
+def _open_verified_file(
+    root: Path,
+    path: Path,
+    expected_identity: tuple[int, int],
+    *,
+    writable: bool,
+) -> int:
+    _validate_regular_file(root, path, expected_identity)
+    flags = os.O_RDWR if writable else os.O_RDONLY
+    flags |= getattr(os, "O_BINARY", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(path, flags)
+    try:
+        status = os.fstat(descriptor)
+        if not stat.S_ISREG(status.st_mode) or _identity(status) != expected_identity:
+            raise ValueError(f"migration file identity changed while opening: {path}")
+        return descriptor
+    except Exception:
+        os.close(descriptor)
+        raise
+
+
+def _read_descriptor(descriptor: int) -> bytes:
+    os.lseek(descriptor, 0, os.SEEK_SET)
+    chunks = []
+    while True:
+        chunk = os.read(descriptor, 1024 * 1024)
+        if not chunk:
+            return b"".join(chunks)
+        chunks.append(chunk)
+
+
+def _capture_file_state(
+    root: Path,
+    path: Path,
+    expected_identity: tuple[int, int] | None = None,
+) -> _FileState:
+    status = _validate_regular_file(root, path, expected_identity)
+    file_identity = _identity(status)
+    descriptor = _open_verified_file(root, path, file_identity, writable=False)
+    try:
+        value = _read_descriptor(descriptor)
+    finally:
+        os.close(descriptor)
+    return _FileState(
+        identity=file_identity,
+        value=value,
+        mode=stat.S_IMODE(status.st_mode),
+        atime_ns=status.st_atime_ns,
+        mtime_ns=status.st_mtime_ns,
+    )
+
+
+def _write_all(descriptor: int, value: bytes) -> None:
+    view = memoryview(value)
+    written = 0
+    while written < len(view):
+        count = os.write(descriptor, view[written:])
+        if count <= 0:
+            raise OSError("migration write made no progress")
+        written += count
+
+
+def _write_file_bytes(
+    root: Path,
+    path: Path,
+    expected_identity: tuple[int, int],
+    value: bytes,
+) -> None:
+    descriptor = _open_verified_file(root, path, expected_identity, writable=True)
+    try:
+        os.lseek(descriptor, 0, os.SEEK_SET)
+        os.ftruncate(descriptor, 0)
+        _write_all(descriptor, value)
+    finally:
+        os.close(descriptor)
+
+
+def _set_descriptor_times(descriptor: int, atime_ns: int, mtime_ns: int) -> None:
+    if os.name != "nt":
+        os.utime(descriptor, ns=(atime_ns, mtime_ns))
+        return
+    import msvcrt
+
+    class FileTime(ctypes.Structure):
+        _fields_ = [("low", ctypes.c_uint32), ("high", ctypes.c_uint32)]
+
+    def file_time(value_ns: int) -> FileTime:
+        ticks = value_ns // 100 + 116_444_736_000_000_000
+        return FileTime(ticks & 0xFFFFFFFF, ticks >> 32)
+
+    access = file_time(atime_ns)
+    modified = file_time(mtime_ns)
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    set_file_time = kernel32.SetFileTime
+    set_file_time.argtypes = [
+        ctypes.c_void_p,
+        ctypes.c_void_p,
+        ctypes.POINTER(FileTime),
+        ctypes.POINTER(FileTime),
+    ]
+    set_file_time.restype = ctypes.c_int
+    handle = msvcrt.get_osfhandle(descriptor)
+    if not set_file_time(handle, None, ctypes.byref(access), ctypes.byref(modified)):
+        error_number = ctypes.get_last_error()
+        raise OSError(error_number, ctypes.FormatError(error_number))
+
+
+def _restore_file_state(root: Path, path: Path, state: _FileState) -> None:
+    _write_file_bytes(root, path, state.identity, state.value)
+    descriptor = _open_verified_file(root, path, state.identity, writable=True)
+    try:
+        if hasattr(os, "fchmod"):
+            os.fchmod(descriptor, state.mode)
+        elif stat.S_IMODE(os.fstat(descriptor).st_mode) != state.mode:
+            raise NotImplementedError("identity-safe mode restoration is unavailable")
+        _set_descriptor_times(descriptor, state.atime_ns, state.mtime_ns)
+    finally:
+        os.close(descriptor)
+
+
+def _atomic_rename_noreplace(source: Path, target: Path) -> None:
+    """Rename on one volume without replacing an entry created at the destination."""
+    if os.name == "nt":
+        os.rename(source, target)
+        return
+    if sys.platform.startswith("linux"):
+        libc = ctypes.CDLL(None, use_errno=True)
+        renameat2 = getattr(libc, "renameat2", None)
+        if renameat2 is None:
+            raise OSError(errno.ENOTSUP, "atomic no-replace rename is unavailable")
+        renameat2.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint]
+        renameat2.restype = ctypes.c_int
+        result = renameat2(
+            -100,
+            os.fsencode(source),
+            -100,
+            os.fsencode(target),
+            1,
+        )
+        if result != 0:
+            error_number = ctypes.get_errno()
+            raise OSError(error_number, os.strerror(error_number), str(source), str(target))
+        return
+    raise OSError(errno.ENOTSUP, "atomic no-replace rename is unavailable")
+
+
+def _rename_same_volume(
+    root: Path,
+    source: Path,
+    target: Path,
+    source_identity: tuple[int, int],
+    source_parent_identity: tuple[int, int],
+    target_parent_identity: tuple[int, int],
+) -> None:
+    source_status = _validate_regular_file(root, source, source_identity)
+    _validate_directory(root, source.parent, source_parent_identity)
+    target_parent_status = _validate_directory(root, target.parent, target_parent_identity)
+    try:
+        _lstat_without_links(target)
+    except FileNotFoundError:
+        pass
+    else:
+        raise FileExistsError(f"migration target appeared concurrently: {target}")
+    if source_status.st_dev != target_parent_status.st_dev:
+        raise ValueError("migration move requires source and target on the same filesystem volume")
+    try:
+        _atomic_rename_noreplace(source, target)
+    except OSError as error:
+        if error.errno == errno.EXDEV:
+            raise ValueError(
+                "migration move requires source and target on the same filesystem volume"
+            ) from error
+        raise
 
 
 def _resolve_source(vault: Path, source: Path) -> tuple[Path, Path]:
@@ -222,14 +484,14 @@ def _validate_actions(vault: Path, actions: list[MigrationAction]) -> list[tuple
     return validated
 
 
-def _normalize_note(path: Path, metadata: dict[str, object], old_path: str) -> None:
+def _normalized_note_bytes(value: bytes, metadata: dict[str, object], old_path: str) -> bytes:
     if not metadata:
-        return
-    note = parse_markdown(path.read_text(encoding="utf-8"))
+        return value
+    note = parse_markdown(value.decode("utf-8"))
     note.metadata.update(metadata)
     if not note.metadata.get("id"):
         note.metadata["id"] = make_id(old_path, str(note.metadata.get("created", "")))
-    path.write_text(render_markdown(note), encoding="utf-8")
+    return render_markdown(note).encode("utf-8")
 
 
 def _rewrite_embedded_note_links(body: str, title_map: dict[str, str]) -> str:
@@ -268,54 +530,91 @@ def _create_parent_directories(
 ) -> None:
     missing = []
     candidate = parent
-    while candidate != root and not candidate.exists():
-        missing.append(candidate)
-        candidate = candidate.parent
+    while candidate != root:
+        try:
+            _lstat_without_links(candidate)
+        except FileNotFoundError:
+            missing.append(candidate)
+            candidate = candidate.parent
+            continue
+        _validate_directory(root, candidate)
+        break
+    if candidate == root:
+        _validate_directory(root, root)
     for directory in reversed(missing):
+        _validate_directory(root, directory.parent)
         try:
             directory.mkdir()
         except FileExistsError:
-            if not directory.is_dir():
-                raise
+            _validate_directory(root, directory)
         else:
             created_directories.append((directory, None))
-            status = directory.stat()
+            status = _validate_directory(root, directory)
             created_directories[-1] = (
                 directory,
-                (status.st_dev, status.st_ino),
+                _identity(status),
             )
 
 
+def _reconcile_move(attempt: _MoveAttempt) -> str:
+    try:
+        source_identity = _path_identity_without_links(attempt.source)
+    except (OSError, ValueError):
+        return "ambiguous"
+    try:
+        target_identity = _path_identity_without_links(attempt.target)
+    except (OSError, ValueError):
+        return "ambiguous"
+    if source_identity == attempt.identity and target_identity is None:
+        return "not-moved"
+    if source_identity is None and target_identity == attempt.identity:
+        return "moved"
+    return "ambiguous"
+
+
 def _rollback_actions(
-    moved: list[tuple[Path, Path]],
-    original_bytes: dict[Path, bytes],
+    root: Path,
+    attempts: list[_MoveAttempt],
+    original_states: dict[Path, _FileState],
     created_directories: list[tuple[Path, tuple[int, int] | None]],
 ) -> list[str]:
     failures = []
-    for path, value in reversed(tuple(original_bytes.items())):
+    for path, state in reversed(tuple(original_states.items())):
         try:
-            path.write_bytes(value)
+            _restore_file_state(root, path, state)
         except Exception as error:
             failures.append(
                 f"restore {path}: {type(error).__name__}: {error}"
             )
-    for source, target in reversed(moved):
+    for attempt in reversed(attempts):
         try:
-            if source.exists() or source.is_symlink():
-                raise FileExistsError(f"original source already exists: {source}")
-            if not target.exists() and not target.is_symlink():
-                raise FileNotFoundError(f"moved target is missing: {target}")
-            shutil.move(str(target), str(source))
+            state = _reconcile_move(attempt)
+            attempt.state = state
+            if state == "not-moved":
+                continue
+            if state != "moved":
+                raise RuntimeError("attempted move state is ambiguous")
+            _rename_same_volume(
+                root,
+                attempt.target,
+                attempt.source,
+                attempt.identity,
+                attempt.target_parent_identity,
+                attempt.source_parent_identity,
+            )
+            if _reconcile_move(attempt) != "not-moved":
+                raise RuntimeError("rollback rename result is ambiguous")
         except Exception as error:
             failures.append(
-                f"move {target} back to {source}: {type(error).__name__}: {error}"
+                f"move {attempt.target} back to {attempt.source}: "
+                f"{type(error).__name__}: {error}"
             )
     for directory, expected_identity in reversed(created_directories):
         try:
             if expected_identity is None:
                 raise RuntimeError("created directory identity is unavailable")
-            status = directory.stat()
-            actual_identity = status.st_dev, status.st_ino
+            status = _validate_directory(root, directory, expected_identity)
+            actual_identity = _identity(status)
             if actual_identity != expected_identity:
                 raise RuntimeError("created directory identity changed")
             directory.rmdir()
@@ -338,26 +637,68 @@ def apply_actions(
     """Validate every move, then relocate notes and rewrite active note links."""
     validated = _validate_actions(vault, actions)
     root = vault.resolve()
-    moved: list[tuple[Path, Path]] = []
-    original_bytes: dict[Path, bytes] = {}
+    _validate_directory(root, root)
+    source_identities = {
+        source: _identity(_validate_regular_file(root, source))
+        for _, source, _ in validated
+    }
+    source_parent_identities = {
+        source.parent: _identity(_validate_directory(root, source.parent))
+        for _, source, _ in validated
+    }
+    attempts: list[_MoveAttempt] = []
+    original_states: dict[Path, _FileState] = {}
     created_directories: list[tuple[Path, tuple[int, int] | None]] = []
 
-    def remember_bytes(path: Path) -> None:
-        if path not in original_bytes:
-            original_bytes[path] = path.read_bytes()
+    def remember_file(path: Path, expected_identity: tuple[int, int]) -> _FileState:
+        if path not in original_states:
+            original_states[path] = _capture_file_state(root, path, expected_identity)
+        return original_states[path]
 
     try:
         for _, source, target in validated:
             if source == target:
                 continue
             _create_parent_directories(root, target.parent, created_directories)
-            shutil.move(str(source), str(target))
-            moved.append((source, target))
+            source_identity = source_identities[source]
+            source_parent_identity = source_parent_identities[source.parent]
+            target_parent_identity = _identity(_validate_directory(root, target.parent))
+            attempt = _MoveAttempt(
+                source=source,
+                target=target,
+                identity=source_identity,
+                source_parent_identity=source_parent_identity,
+                target_parent_identity=target_parent_identity,
+            )
+            attempts.append(attempt)
+            try:
+                _rename_same_volume(
+                    root,
+                    source,
+                    target,
+                    source_identity,
+                    source_parent_identity,
+                    target_parent_identity,
+                )
+            except Exception:
+                attempt.state = _reconcile_move(attempt)
+                raise
+            attempt.state = _reconcile_move(attempt)
+            if attempt.state != "moved":
+                raise RuntimeError("migration rename result is ambiguous")
         for action, _, target in validated:
             if action.action != "archive":
                 if action.metadata:
-                    remember_bytes(target)
-                _normalize_note(target, action.metadata, action.source)
+                    target_identity = _path_identity_without_links(target)
+                    if target_identity is None:
+                        raise ValueError(f"migration target disappeared: {target}")
+                    state = remember_file(target, target_identity)
+                    normalized = _normalized_note_bytes(
+                        state.value,
+                        action.metadata,
+                        action.source,
+                    )
+                    _write_file_bytes(root, target, state.identity, normalized)
         archives = [(root / CANONICAL_ARCHIVE_ROOT).resolve()]
         if archive_root:
             archives.append((root / archive_root).resolve())
@@ -374,7 +715,11 @@ def apply_actions(
                 continue
             if any(_inside(archive, rewrite_path) for archive in archives):
                 continue
-            note = parse_markdown(rewrite_path.read_text(encoding="utf-8"))
+            rewrite_identity = _path_identity_without_links(rewrite_path)
+            if rewrite_identity is None:
+                continue
+            current_state = _capture_file_state(root, rewrite_path, rewrite_identity)
+            note = parse_markdown(current_state.value.decode("utf-8"))
             rewritten_body = _rewrite_embedded_note_links(
                 rewrite_wikilinks(note.body, title_map),
                 title_map,
@@ -386,18 +731,29 @@ def apply_actions(
                 else sources
             )
             if rewritten_body != note.body or rewritten_sources != sources:
-                remember_bytes(rewrite_path)
+                state = remember_file(rewrite_path, rewrite_identity)
                 if not note.metadata:
-                    rewrite_path.write_text(rewritten_body, encoding="utf-8")
+                    _write_file_bytes(
+                        root,
+                        rewrite_path,
+                        state.identity,
+                        rewritten_body.encode("utf-8"),
+                    )
                     continue
                 note.body = rewritten_body
                 if isinstance(sources, list):
                     note.metadata["sources"] = rewritten_sources
-                rewrite_path.write_text(render_markdown(note), encoding="utf-8")
+                _write_file_bytes(
+                    root,
+                    rewrite_path,
+                    state.identity,
+                    render_markdown(note).encode("utf-8"),
+                )
     except Exception as original_error:
         rollback_failures = _rollback_actions(
-            moved,
-            original_bytes,
+            root,
+            attempts,
+            original_states,
             created_directories,
         )
         if rollback_failures:
