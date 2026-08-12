@@ -177,6 +177,16 @@ class VerifyTests(unittest.TestCase):
         self.assertNotIn("discovery-only-permanent", codes)
         self.assertNotIn("missing-primary-source", codes)
 
+    def test_personal_permanent_cannot_claim_independent_verification(self):
+        personal = (
+            VALID.replace("source_quality: primary", "source_quality: personal")
+            .replace(OFFICIAL_SOURCE, "https://namu.wiki/w/RAG")
+        )
+
+        codes = self.issues_for(personal, "개인 해석 [[Target]]")
+
+        self.assertIn("invalid-verified", codes)
+
     def test_unknown_url_hosts_do_not_count_as_primary(self):
         codes = self.issues_for(VALID.replace(OFFICIAL_SOURCE, "https://example.com/research"))
 

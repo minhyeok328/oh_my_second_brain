@@ -273,6 +273,8 @@ def _permanent_source_issues(
                 source_kinds.append(kind)
 
     quality = str(metadata.get("source_quality", ""))
+    if quality == "personal" and verified is True:
+        _issue(issues, "invalid-verified", relative, "personal permanent note must remain unverified")
     if source_kinds and all(kind == "discovery" for kind in source_kinds) and quality not in {"discovery", "personal"}:
         _issue(issues, "discovery-only-permanent", relative, "permanent note has discovery-only evidence")
     if quality != "personal" and verified is True and "primary" not in source_kinds:
