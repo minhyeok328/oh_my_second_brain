@@ -10,7 +10,6 @@ import os
 from pathlib import Path, PureWindowsPath
 import re
 import stat
-import sys
 
 from Tools.second_brain.inventory import NoteRecord, scan_notes
 from Tools.second_brain.note_io import parse_markdown, render_markdown, rewrite_wikilinks
@@ -28,6 +27,7 @@ REWRITE_EXCLUDED_ROOTS = frozenset(
 )
 EMBED_WIKILINK_RE = re.compile(r"!\[\[([^\]|#^]+)([#^][^\]|]*)?(\|[^\]]+)?\]\]")
 WINDOWS_ILLEGAL_PATH_CHARACTERS = frozenset('<>:"|?*')
+WINDOWS_HANDLE_RELATIVE_MUTATIONS_SUPPORTED = True
 
 
 @dataclass(frozen=True)
@@ -55,6 +55,18 @@ class _MoveAttempt:
     source_parent_identity: tuple[int, int]
     target_parent_identity: tuple[int, int]
     state: str = "attempted"
+
+
+def _windows_handle_relative_mutations_supported() -> bool:
+    return WINDOWS_HANDLE_RELATIVE_MUTATIONS_SUPPORTED
+
+
+def _require_safe_mutation_primitives() -> None:
+    if os.name != "nt" or not _windows_handle_relative_mutations_supported():
+        raise OSError(
+            errno.ENOTSUP,
+            "safe handle-relative filesystem mutation is unavailable on this platform",
+        )
 
 
 def make_id(old_relative_path: str, created: str) -> str:
@@ -310,30 +322,279 @@ def _restore_file_state(root: Path, path: Path, state: _FileState) -> None:
         os.close(descriptor)
 
 
-def _atomic_rename_noreplace(source: Path, target: Path) -> None:
-    """Rename on one volume without replacing an entry created at the destination."""
-    if os.name == "nt":
-        os.rename(source, target)
-        return
-    if sys.platform.startswith("linux"):
-        libc = ctypes.CDLL(None, use_errno=True)
-        renameat2 = getattr(libc, "renameat2", None)
-        if renameat2 is None:
-            raise OSError(errno.ENOTSUP, "atomic no-replace rename is unavailable")
-        renameat2.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint]
-        renameat2.restype = ctypes.c_int
-        result = renameat2(
-            -100,
-            os.fsencode(source),
-            -100,
-            os.fsencode(target),
-            1,
+def _windows_open_path_fd(
+    path: Path,
+    expected_identity: tuple[int, int],
+    *,
+    directory: bool,
+    delete_access: bool = False,
+) -> int:
+    import msvcrt
+
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    create_file = kernel32.CreateFileW
+    create_file.argtypes = [
+        ctypes.c_wchar_p,
+        ctypes.c_uint32,
+        ctypes.c_uint32,
+        ctypes.c_void_p,
+        ctypes.c_uint32,
+        ctypes.c_uint32,
+        ctypes.c_void_p,
+    ]
+    create_file.restype = ctypes.c_void_p
+    desired_access = 0x80 | (0x1 | 0x20 if directory else 0) | (
+        0x10000 if delete_access else 0
+    )
+    flags = 0x00200000 | (0x02000000 if directory else 0)
+    handle = create_file(
+        str(path),
+        desired_access,
+        0x1 | 0x2,
+        None,
+        3,
+        flags,
+        None,
+    )
+    invalid_handle = ctypes.c_void_p(-1).value
+    if handle == invalid_handle:
+        error_number = ctypes.get_last_error()
+        raise OSError(error_number, ctypes.FormatError(error_number), str(path))
+    try:
+        descriptor = msvcrt.open_osfhandle(handle, os.O_RDONLY | getattr(os, "O_BINARY", 0))
+    except Exception:
+        kernel32.CloseHandle(handle)
+        raise
+    try:
+        status = os.fstat(descriptor)
+        expected_type = stat.S_ISDIR if directory else stat.S_ISREG
+        if not expected_type(status.st_mode) or _identity(status) != expected_identity:
+            raise ValueError(f"migration path identity changed while opening: {path}")
+        if _windows_fd_is_reparse(descriptor):
+            raise ValueError(f"migration path is a reparse point: {path}")
+        return descriptor
+    except Exception:
+        os.close(descriptor)
+        raise
+
+
+def _windows_fd_is_reparse(descriptor: int) -> bool:
+    import msvcrt
+
+    information = (ctypes.c_byte * 52)()
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    get_information = kernel32.GetFileInformationByHandle
+    get_information.argtypes = [ctypes.c_void_p, ctypes.c_void_p]
+    get_information.restype = ctypes.c_int
+    if not get_information(msvcrt.get_osfhandle(descriptor), ctypes.byref(information)):
+        error_number = ctypes.get_last_error()
+        raise OSError(error_number, ctypes.FormatError(error_number))
+    return bool(ctypes.c_uint32.from_buffer(information).value & 0x400)
+
+
+def _windows_create_directory_fd(parent_descriptor: int, name: str) -> int:
+    import msvcrt
+
+    class UnicodeString(ctypes.Structure):
+        _fields_ = [
+            ("Length", ctypes.c_ushort),
+            ("MaximumLength", ctypes.c_ushort),
+            ("Buffer", ctypes.c_wchar_p),
+        ]
+
+    class ObjectAttributes(ctypes.Structure):
+        _fields_ = [
+            ("Length", ctypes.c_ulong),
+            ("RootDirectory", ctypes.c_void_p),
+            ("ObjectName", ctypes.POINTER(UnicodeString)),
+            ("Attributes", ctypes.c_ulong),
+            ("SecurityDescriptor", ctypes.c_void_p),
+            ("SecurityQualityOfService", ctypes.c_void_p),
+        ]
+
+    class IoStatusBlock(ctypes.Structure):
+        _fields_ = [("Status", ctypes.c_void_p), ("Information", ctypes.c_size_t)]
+
+    name_buffer = ctypes.create_unicode_buffer(name)
+    object_name = UnicodeString(
+        len(name.encode("utf-16-le")),
+        len(name.encode("utf-16-le")) + 2,
+        ctypes.cast(name_buffer, ctypes.c_wchar_p),
+    )
+    attributes = ObjectAttributes(
+        ctypes.sizeof(ObjectAttributes),
+        msvcrt.get_osfhandle(parent_descriptor),
+        ctypes.pointer(object_name),
+        0x40,
+        None,
+        None,
+    )
+    io_status = IoStatusBlock()
+    handle = ctypes.c_void_p()
+    nt_create_file = ctypes.WinDLL("ntdll").NtCreateFile
+    nt_create_file.argtypes = [
+        ctypes.POINTER(ctypes.c_void_p),
+        ctypes.c_uint32,
+        ctypes.POINTER(ObjectAttributes),
+        ctypes.POINTER(IoStatusBlock),
+        ctypes.c_void_p,
+        ctypes.c_uint32,
+        ctypes.c_uint32,
+        ctypes.c_uint32,
+        ctypes.c_uint32,
+        ctypes.c_void_p,
+        ctypes.c_uint32,
+    ]
+    nt_create_file.restype = ctypes.c_long
+    status = nt_create_file(
+        ctypes.byref(handle),
+        0x00100000 | 0x80 | 0x1 | 0x4 | 0x20,
+        ctypes.byref(attributes),
+        ctypes.byref(io_status),
+        None,
+        0x10,
+        0x1 | 0x2,
+        2,
+        0x1 | 0x20 | 0x00200000,
+        None,
+        0,
+    )
+    if status < 0:
+        rtl_error = ctypes.WinDLL("ntdll").RtlNtStatusToDosError
+        rtl_error.argtypes = [ctypes.c_long]
+        rtl_error.restype = ctypes.c_ulong
+        error_number = rtl_error(status)
+        raise OSError(error_number, ctypes.FormatError(error_number), name)
+    try:
+        return msvcrt.open_osfhandle(
+            handle.value,
+            os.O_RDONLY | getattr(os, "O_BINARY", 0),
         )
-        if result != 0:
-            error_number = ctypes.get_errno()
-            raise OSError(error_number, os.strerror(error_number), str(source), str(target))
-        return
-    raise OSError(errno.ENOTSUP, "atomic no-replace rename is unavailable")
+    except Exception:
+        ctypes.WinDLL("kernel32").CloseHandle(handle)
+        raise
+
+
+def _windows_remove_directory(path: Path, expected_identity: tuple[int, int]) -> None:
+    import msvcrt
+
+    descriptor = _windows_open_path_fd(
+        path,
+        expected_identity,
+        directory=True,
+        delete_access=True,
+    )
+    try:
+        class IoStatusBlock(ctypes.Structure):
+            _fields_ = [("Status", ctypes.c_void_p), ("Information", ctypes.c_size_t)]
+
+        delete_file = ctypes.c_ubyte(1)
+        io_status = IoStatusBlock()
+        ntdll = ctypes.WinDLL("ntdll")
+        set_information = ntdll.NtSetInformationFile
+        set_information.argtypes = [
+            ctypes.c_void_p,
+            ctypes.POINTER(IoStatusBlock),
+            ctypes.c_void_p,
+            ctypes.c_uint32,
+            ctypes.c_int,
+        ]
+        set_information.restype = ctypes.c_long
+        status = set_information(
+            msvcrt.get_osfhandle(descriptor),
+            ctypes.byref(io_status),
+            ctypes.byref(delete_file),
+            ctypes.sizeof(delete_file),
+            13,
+        )
+        if status < 0:
+            rtl_error = ntdll.RtlNtStatusToDosError
+            rtl_error.argtypes = [ctypes.c_long]
+            rtl_error.restype = ctypes.c_ulong
+            error_number = rtl_error(status)
+            raise OSError(error_number, ctypes.FormatError(error_number), str(path))
+    finally:
+        os.close(descriptor)
+
+
+def _atomic_rename_noreplace(
+    source: Path,
+    target: Path,
+    *,
+    source_identity: tuple[int, int],
+    target_parent_identity: tuple[int, int],
+) -> None:
+    """Rename an opened source relative to a pinned target-directory handle."""
+    if os.name != "nt":
+        raise OSError(errno.ENOTSUP, "safe handle-relative rename is unavailable")
+    import msvcrt
+
+    source_descriptor = _windows_open_path_fd(
+        source,
+        source_identity,
+        directory=False,
+        delete_access=True,
+    )
+    target_parent_descriptor = None
+    try:
+        target_parent_descriptor = _windows_open_path_fd(
+            target.parent,
+            target_parent_identity,
+            directory=True,
+        )
+        class FileRenameInfo(ctypes.Structure):
+            _fields_ = [
+                ("ReplaceIfExists", ctypes.c_ubyte),
+                ("Padding", ctypes.c_ubyte * (ctypes.sizeof(ctypes.c_void_p) - 1)),
+                ("RootDirectory", ctypes.c_void_p),
+                ("FileNameLength", ctypes.c_uint32),
+                ("FileName", ctypes.c_wchar * 1),
+            ]
+
+        encoded_name = target.name.encode("utf-16-le")
+        name_offset = FileRenameInfo.FileName.offset
+        buffer = ctypes.create_string_buffer(name_offset + len(encoded_name))
+        information = FileRenameInfo.from_buffer(buffer)
+        information.ReplaceIfExists = 0
+        information.RootDirectory = msvcrt.get_osfhandle(target_parent_descriptor)
+        information.FileNameLength = len(encoded_name)
+        ctypes.memmove(ctypes.addressof(buffer) + name_offset, encoded_name, len(encoded_name))
+        class IoStatusBlock(ctypes.Structure):
+            _fields_ = [("Status", ctypes.c_void_p), ("Information", ctypes.c_size_t)]
+
+        io_status = IoStatusBlock()
+        ntdll = ctypes.WinDLL("ntdll")
+        set_information = ntdll.NtSetInformationFile
+        set_information.argtypes = [
+            ctypes.c_void_p,
+            ctypes.POINTER(IoStatusBlock),
+            ctypes.c_void_p,
+            ctypes.c_uint32,
+            ctypes.c_int,
+        ]
+        set_information.restype = ctypes.c_long
+        status = set_information(
+            msvcrt.get_osfhandle(source_descriptor),
+            ctypes.byref(io_status),
+            buffer,
+            len(buffer),
+            10,
+        )
+        if status < 0:
+            rtl_error = ntdll.RtlNtStatusToDosError
+            rtl_error.argtypes = [ctypes.c_long]
+            rtl_error.restype = ctypes.c_ulong
+            error_number = rtl_error(status)
+            raise OSError(
+                error_number,
+                ctypes.FormatError(error_number),
+                str(source),
+                str(target),
+            )
+    finally:
+        if target_parent_descriptor is not None:
+            os.close(target_parent_descriptor)
+        os.close(source_descriptor)
 
 
 def _rename_same_volume(
@@ -356,7 +617,12 @@ def _rename_same_volume(
     if source_status.st_dev != target_parent_status.st_dev:
         raise ValueError("migration move requires source and target on the same filesystem volume")
     try:
-        _atomic_rename_noreplace(source, target)
+        _atomic_rename_noreplace(
+            source,
+            target,
+            source_identity=source_identity,
+            target_parent_identity=target_parent_identity,
+        )
     except OSError as error:
         if error.errno == errno.EXDEV:
             raise ValueError(
@@ -541,19 +807,37 @@ def _create_parent_directories(
         break
     if candidate == root:
         _validate_directory(root, root)
-    for directory in reversed(missing):
-        _validate_directory(root, directory.parent)
-        try:
-            directory.mkdir()
-        except FileExistsError:
-            _validate_directory(root, directory)
-        else:
-            created_directories.append((directory, None))
-            status = _validate_directory(root, directory)
-            created_directories[-1] = (
-                directory,
-                _identity(status),
+    if not missing:
+        return
+    anchor_status = _validate_directory(root, candidate)
+    parent_descriptor = _windows_open_path_fd(
+        candidate,
+        _identity(anchor_status),
+        directory=True,
+    )
+    try:
+        for directory in reversed(missing):
+            child_descriptor = _windows_create_directory_fd(
+                parent_descriptor,
+                directory.name,
             )
+            try:
+                status = os.fstat(child_descriptor)
+                if not stat.S_ISDIR(status.st_mode) or _windows_fd_is_reparse(
+                    child_descriptor
+                ):
+                    raise ValueError(
+                        f"created migration directory is unsafe: {directory}"
+                    )
+                directory_identity = _identity(status)
+                created_directories.append((directory, directory_identity))
+            except Exception:
+                os.close(child_descriptor)
+                raise
+            os.close(parent_descriptor)
+            parent_descriptor = child_descriptor
+    finally:
+        os.close(parent_descriptor)
 
 
 def _reconcile_move(attempt: _MoveAttempt) -> str:
@@ -617,7 +901,7 @@ def _rollback_actions(
             actual_identity = _identity(status)
             if actual_identity != expected_identity:
                 raise RuntimeError("created directory identity changed")
-            directory.rmdir()
+            _windows_remove_directory(directory, expected_identity)
         except FileNotFoundError:
             continue
         except Exception as error:
@@ -635,6 +919,7 @@ def apply_actions(
     archive_roots: list[str] | None = None,
 ) -> None:
     """Validate every move, then relocate notes and rewrite active note links."""
+    _require_safe_mutation_primitives()
     validated = _validate_actions(vault, actions)
     root = vault.resolve()
     _validate_directory(root, root)

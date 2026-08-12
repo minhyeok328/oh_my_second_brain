@@ -77,6 +77,14 @@ def _write_plan(vault: Path, actions: object, name: str = "reviewed.json") -> Pa
 
 
 class MigrationTests(unittest.TestCase):
+    def setUp(self):
+        self.safe_mutations = patch(
+            "Tools.second_brain.migration._windows_handle_relative_mutations_supported",
+            return_value=True,
+        )
+        self.safe_mutations.start()
+        self.addCleanup(self.safe_mutations.stop)
+
     def test_migration_cli_helper_isolates_cwd_and_preserves_pythonpath(self):
         """Repository-CWD execution or a replaced environment could corrupt files or break imports."""
         with TemporaryDirectory() as directory:
@@ -975,7 +983,7 @@ class MigrationTests(unittest.TestCase):
             real_rename = os.rename
             move_calls = 0
 
-            def fail_second_move(source: str, target: str):
+            def fail_second_move(source: str, target: str, **_identities):
                 nonlocal move_calls
                 move_calls += 1
                 if move_calls == 2:
@@ -1080,7 +1088,7 @@ class MigrationTests(unittest.TestCase):
             rollback_failure = OSError("rollback move failed")
             real_rename = os.rename
 
-            def fail_forward_and_rollback(source: str, target: str):
+            def fail_forward_and_rollback(source: str, target: str, **_identities):
                 source_path = Path(source)
                 if source_path == vault / "B.md":
                     raise original_failure
@@ -1121,7 +1129,7 @@ class MigrationTests(unittest.TestCase):
             original_failure = OSError("second move failed after directory replacement")
             real_rename = os.rename
 
-            def replace_directory_then_fail(source: str, target: str):
+            def replace_directory_then_fail(source: str, target: str, **_identities):
                 if Path(source) == vault / "B.md":
                     first_target.unlink()
                     created.rmdir()
@@ -1178,7 +1186,7 @@ class MigrationTests(unittest.TestCase):
             real_rename = os.rename
             calls = 0
 
-            def move_then_raise(old, new):
+            def move_then_raise(old, new, **_identities):
                 nonlocal calls
                 calls += 1
                 real_rename(old, new)
@@ -1209,7 +1217,7 @@ class MigrationTests(unittest.TestCase):
             real_rename = os.rename
             calls = 0
 
-            def replace_source_then_fail(old, new):
+            def replace_source_then_fail(old, new, **_identities):
                 nonlocal calls
                 calls += 1
                 if calls == 2:
@@ -1247,7 +1255,7 @@ class MigrationTests(unittest.TestCase):
             real_rename = os.rename
             calls = 0
 
-            def install_symlink_then_fail(old, new):
+            def install_symlink_then_fail(old, new, **_identities):
                 nonlocal calls
                 calls += 1
                 if calls == 2:
@@ -1318,6 +1326,60 @@ class MigrationTests(unittest.TestCase):
             self.assertEqual(source.read_bytes(), b"A")
             self.assertFalse((created / "A.md").exists())
 
+    @unittest.skipUnless(os.name == "nt", "Windows handle-relative mutation regression")
+    def test_apply_pinned_parent_rejects_swap_after_final_check_before_rename(self):
+        """The native rename must reject a last-moment parent swap and leave outside data untouched."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source = vault / "A.md"
+            created = vault / "Created"
+            outside = vault.parent / f"{vault.name}-outside"
+            source.write_bytes(b"A")
+            created.mkdir()
+            (created / "outside sentinel.md").write_bytes(b"outside sentinel")
+            from Tools.second_brain import migration
+
+            real_atomic = migration._atomic_rename_noreplace
+            swapped = False
+
+            def swap_after_final_check(old, new, **identities):
+                nonlocal swapped
+                if not swapped:
+                    swapped = True
+                    os.rename(created, outside)
+                    created.mkdir()
+                    (created / "unknown sentinel.md").write_bytes(b"unknown sentinel")
+                return real_atomic(old, new, **identities)
+
+            try:
+                with patch(
+                    "Tools.second_brain.migration._atomic_rename_noreplace",
+                    side_effect=swap_after_final_check,
+                ):
+                    with self.assertRaisesRegex(ValueError, "identity changed while opening"):
+                        apply_actions(
+                            vault,
+                            [MigrationAction("A.md", "Created/A.md", "move", {})],
+                            {},
+                        )
+
+                self.assertEqual(source.read_bytes(), b"A")
+                self.assertEqual(
+                    (outside / "outside sentinel.md").read_bytes(),
+                    b"outside sentinel",
+                )
+                self.assertEqual(
+                    (created / "unknown sentinel.md").read_bytes(),
+                    b"unknown sentinel",
+                )
+                self.assertFalse((outside / "A.md").exists())
+                self.assertFalse((created / "A.md").exists())
+            finally:
+                if outside.exists():
+                    for child in outside.iterdir():
+                        child.unlink()
+                    outside.rmdir()
+
     def test_apply_revalidates_source_identity_immediately_before_rename(self):
         """A source replacement after preflight must remain untouched and must not be moved."""
         with TemporaryDirectory() as directory:
@@ -1344,6 +1406,29 @@ class MigrationTests(unittest.TestCase):
 
             self.assertEqual(source.read_bytes(), b"concurrent replacement")
             self.assertFalse(target.exists())
+
+    @unittest.skipUnless(os.name == "nt", "Windows handle-relative mutation policy")
+    def test_apply_aborts_when_windows_safe_handle_mutation_is_unavailable(self):
+        """Path-string mkdir or rename must never be used when parent handles cannot anchor them."""
+        with TemporaryDirectory() as directory:
+            vault = Path(directory)
+            source = vault / "A.md"
+            source.write_bytes(b"A")
+
+            self.safe_mutations.stop()
+            with patch("Tools.second_brain.migration._windows_handle_relative_mutations_supported", return_value=False):
+                with patch("Tools.second_brain.migration.os.rename") as unsafe_rename:
+                    with self.assertRaisesRegex(OSError, "safe handle-relative filesystem mutation"):
+                        apply_actions(
+                            vault,
+                            [MigrationAction("A.md", "Created/A.md", "move", {})],
+                            {},
+                        )
+            self.safe_mutations.start()
+
+            unsafe_rename.assert_not_called()
+            self.assertEqual(source.read_bytes(), b"A")
+            self.assertFalse((vault / "Created").exists())
 
     def test_apply_rollback_restores_bytes_mode_and_timestamps(self):
         """A partial content write must restore the complete file state, not only its bytes."""
