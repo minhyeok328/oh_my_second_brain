@@ -1,7 +1,7 @@
 # Second Brain 마이그레이션 최종 검증 보고서
 
 - 검증일: 2026-08-12
-- 검증 기준 커밋: `ed4a67d`
+- 검증 기준 커밋: `b24d0ba`
 - 검증 범위: 활성 Second Brain, 보관함, 템플릿, 보호된 Obsidian 설정, 외부 강의·프로젝트 소스 스냅샷
 - strict verifier 결과: 오류 0건 (`2026-08-11-final-report.json`의 정확한 바이트는 `5B 5D 0A`, 즉 `[]\n`)
 
